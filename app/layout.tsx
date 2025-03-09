@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
+import Nav from "@/components/layout/nav/nav";
+import Footer from "@/components/layout/footer";
+import Disclaimer from "@/components/layout/disclaimer";
+import { ReactQueryClientProvider } from "@/components/layout/QueryProvider";
+import { ThemeProvider } from "@/components/layout/theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserrat = Montserrat({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["100", "300", "400", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -23,11 +23,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body className={`min-h-screen ${montserrat.className}`}>
+        <ReactQueryClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Disclaimer />
+            <div className="flex min-h-screen flex-col">
+              <Nav />
+              {children}
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </ReactQueryClientProvider>
       </body>
     </html>
   );
