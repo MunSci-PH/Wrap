@@ -1,11 +1,4 @@
-import {
-  Album,
-  BookImage,
-  BookOpen,
-  Shield,
-  ShieldUser,
-  Users,
-} from "lucide-react";
+import { Album, ShieldUser, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import React, { ReactNode } from "react";
 
@@ -13,13 +6,13 @@ export default async function Home() {
   return (
     <>
       <main className="grow">
-        <section className="animate-change-color bg-[url(/bg.png)] bg-cover bg-center bg-no-repeat py-32 text-white md:py-48">
+        <section className="bg-[url(/bg.png)] bg-cover bg-center bg-no-repeat py-32 text-white md:py-48">
           <div className="container mx-auto px-4 lg:px-12 xl:px-24">
             <div className="flex flex-col items-center md:flex-row md:items-start md:justify-between">
               <div className="my-auto text-center md:order-1 md:w-3/4 md:text-left">
                 <h1 className="mb-6 text-5xl font-extrabold leading-tight md:text-6xl lg:text-7xl">
                   WELCOME TO <br />
-                  <span className="font-black text-6xl md:text-7xl lg:text-8xl text-white">
+                  <span className="font-black text-6xl md:text-7xl lg:text-8xl text-transparent bg-linear-to-r from-emerald-400 to-green-400 bg-clip-text animate-change-color">
                     MUNSCI WRAP
                   </span>
                 </h1>
@@ -71,8 +64,8 @@ export default async function Home() {
               Platform (MunSci WRAP) is a web application designed to simplify
               grade management and store academic records in a more organized
               manner. It allows teachers to efficiently access and manage
-              learner's records, while students can easily view their grades in
-              real-time.
+              learner&apos;s records, while students can easily view their
+              grades in real-time.
             </p>
           </div>
         </section>
