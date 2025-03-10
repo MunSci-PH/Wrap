@@ -12,7 +12,7 @@ export default async function Home() {
               <div className="my-auto text-center md:order-1 md:w-3/4 md:text-left">
                 <h1 className="mb-6 text-5xl font-extrabold leading-tight md:text-6xl lg:text-7xl">
                   WELCOME TO <br />
-                  <span className="font-black text-6xl md:text-7xl lg:text-8xl text-transparent bg-linear-to-r from-emerald-400 to-green-400 bg-clip-text animate-change-color">
+                  <span className="font-black text-6xl md:text-7xl lg:text-8xl">
                     MUNSCI WRAP
                   </span>
                 </h1>
