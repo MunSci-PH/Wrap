@@ -24,7 +24,7 @@ const Nav = () => {
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="ml-2 text-lg font-semibold">WRAP</span>
+              <span className="text-lg font-semibold">WRAP</span>
             </Link>
           </Button>
           <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
@@ -58,7 +58,7 @@ const Nav = () => {
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="ml-2 text-lg font-semibold">WRAP</span>
+              <span className="text-lg font-semibold">WRAP</span>
             </Link>
           </Button>
           <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
@@ -163,7 +163,7 @@ const Nav = () => {
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="ml-2 text-lg font-semibold">WRAP</span>
+              <span className="text-lg font-semibold">WRAP</span>
             </Link>
           </Button>
           <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
