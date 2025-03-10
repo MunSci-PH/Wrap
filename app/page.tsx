@@ -1,4 +1,11 @@
-import { BookOpen, Shield, Users } from "lucide-react";
+import {
+  Album,
+  BookImage,
+  BookOpen,
+  Shield,
+  ShieldUser,
+  Users,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import React, { ReactNode } from "react";
 
@@ -6,11 +13,11 @@ export default async function Home() {
   return (
     <>
       <main className="grow">
-        <section className="animate-change-color bg-linear-to-r from-emerald-600 to-green-600 bg-[length:150%_150%] py-32 text-white md:py-48">
+        <section className="animate-change-color bg-[url(/bg.png)] bg-cover bg-center bg-no-repeat py-32 text-white md:py-48">
           <div className="container mx-auto px-4 lg:px-12 xl:px-24">
             <div className="flex flex-col items-center md:flex-row md:items-start md:justify-between">
               <div className="my-auto text-center md:order-1 md:w-3/4 md:text-left">
-                <h1 className="mb-6 text-5xl font-extrabold leading-tight md:text-6xl lg:text-7xl text-green-100">
+                <h1 className="mb-6 text-5xl font-extrabold leading-tight md:text-6xl lg:text-7xl">
                   WELCOME TO <br />
                   <span className="font-black text-6xl md:text-7xl lg:text-8xl text-white">
                     MUNSCI WRAP
@@ -32,19 +39,26 @@ export default async function Home() {
             </h2>
             <div className="grid gap-8 md:grid-cols-3">
               <FeatureCard
-                icon={<BookOpen className="size-10 text-primary" />}
+                icon={<Album className="size-10 text-primary" />}
                 title="Easy Information Access"
-                description="Quickly retrieve student emergency contact details when needed."
+                description="Quickly upload, update, 
+                and organize learners' academic 
+                information."
               />
               <FeatureCard
-                icon={<Shield className="size-10 text-primary" />}
-                title="Secure Data Storage"
-                description="Keep sensitive information safe with our robust security measures."
+                icon={<ShieldUser className="size-10 text-primary" />}
+                title="Secured Data Sets"
+                description="Protected access 
+                to confidential academic 
+                records of learners.
+                "
               />
               <FeatureCard
                 icon={<Users className="size-10 text-primary" />}
-                title="User-Friendly Interface"
-                description="Intuitive design for easy navigation and information management."
+                title="User-Friendly Access"
+                description="Ensures an accessible
+                navigation and information
+                management for users."
               />
             </div>
           </div>
@@ -53,10 +67,12 @@ export default async function Home() {
           <div className="container mx-auto px-4 text-center">
             <h2 className="mb-6 text-3xl font-bold">About Wrap</h2>
             <p className="mx-auto max-w-3xl text-xl">
-              STERCOIN is a MunSci-SDRRM web application designed to store and
-              manage every student&apos;s emergency contact information. It
-              provides quick and easy access to crucial details in case of
-              disasters or emergencies that may occur to MunScians at school.
+              The Muntinlupa Science High School Web-based Real-time Academic
+              Platform (MunSci WRAP) is a web application designed to simplify
+              grade management and store academic records in a more organized
+              manner. It allows teachers to efficiently access and manage
+              learner's records, while students can easily view their grades in
+              real-time.
             </p>
           </div>
         </section>
@@ -70,12 +86,10 @@ export default async function Home() {
                 <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
                   1
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">
-                  Input Information
-                </h3>
+                <h3 className="mb-2 text-xl font-semibold">Input Grades</h3>
                 <p>
-                  Easily enter and update student emergency contact details
-                  through our secure platform.
+                  Teachers quickly upload and update student grades through a
+                  user-friendly platform.
                 </p>
               </div>
               <div>
@@ -84,18 +98,18 @@ export default async function Home() {
                 </div>
                 <h3 className="mb-2 text-xl font-semibold">Secure Storage</h3>
                 <p>
-                  All information is encrypted and stored securely in our
-                  state-of-the-art database.
+                  Grades are encrypted and safely stored in a centralized
+                  database.
                 </p>
               </div>
               <div>
                 <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
                   3
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">Quick Access</h3>
+                <h3 className="mb-2 text-xl font-semibold">Real-time Access</h3>
                 <p>
-                  In case of emergency, authorized personnel can quickly
-                  retrieve the necessary contact information.
+                  Students can instantly view their grades anytime with
+                  authorized access.
                 </p>
               </div>
             </div>
