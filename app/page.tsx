@@ -51,7 +51,7 @@ export default async function Home() {
         </section>
         <section id="about" className="py-20">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="mb-6 text-3xl font-bold">About STERCOIN</h2>
+            <h2 className="mb-6 text-3xl font-bold">About Wrap</h2>
             <p className="mx-auto max-w-3xl text-xl">
               STERCOIN is a MunSci-SDRRM web application designed to store and
               manage every student&apos;s emergency contact information. It
