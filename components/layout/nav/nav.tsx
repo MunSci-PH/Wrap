@@ -7,15 +7,20 @@ import { useState } from "react";
 import Logo from "@/public/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import useSupabaseBrowser from "@/utils/client";
+import { useQuery } from "@tanstack/react-query";
+import getUserInfo from "./getuserinfo";
 
 const Nav = () => {
+  const supabase = useSupabaseBrowser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const userInfo = {
-    isLoading: false,
-  };
+  const userInfo = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: getUserInfo,
+  });
 
   if (userInfo.isLoading)
     return (

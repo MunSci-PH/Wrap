@@ -1,7 +1,7 @@
 "use server";
 
 import { getUser } from "@/queries/getUser";
-import createSupabaseServer from "../../../utils/server";
+import createSupabaseServer from "@/utils/server";
 import checkRoleServer from "@/hooks/checkRoleServer";
 
 export default async function getUserInfo() {
