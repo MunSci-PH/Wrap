@@ -29,7 +29,9 @@ const Nav = () => {
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="text-lg font-semibold">WRAP</span>
+              <span className="text-lg font-black bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent animate-change-color">
+                MUNSCI WRAP
+              </span>
             </Link>
           </Button>
           <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
@@ -63,7 +65,9 @@ const Nav = () => {
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="text-lg font-semibold">WRAP</span>
+              <span className="text-lg font-black bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent animate-change-color">
+                WRAP
+              </span>
             </Link>
           </Button>
           <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
@@ -168,7 +172,9 @@ const Nav = () => {
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="text-lg font-semibold">WRAP</span>
+              <span className="text-lg font-black bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent animate-change-color animate-change-color">
+                MUNSCI WRAP
+              </span>
             </Link>
           </Button>
           <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
