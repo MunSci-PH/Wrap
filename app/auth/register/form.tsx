@@ -21,15 +21,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon, Check, ChevronsUpDown, Loader2 } from "lucide-react";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useSupabaseBrowser from "@/utils/client";
 import { useRef, useState } from "react";
@@ -37,9 +29,7 @@ import { getSectionsByGrade } from "@/queries/getSectionsByGrade";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { PhoneInput } from "@/components/ui/input-phone";
 import { TablesInsert } from "../../../database.types";
 import { storageClient } from "@/utils/storage";
 import { useRouter } from "next/navigation";
@@ -141,12 +131,13 @@ const grades = [
   { label: "12", value: 12 },
 ] as const;
 
-const relationships = [
+/** const relationships = [
   { label: "Parent", value: "Parent" },
   { label: "Guardian", value: "Guardian" },
   { label: "Sibling", value: "Sibling" },
   { label: "Other", value: "Other" },
 ] as const;
+*/
 
 const RegisterForm = ({
   sections,
@@ -461,7 +452,7 @@ const RegisterForm = ({
                         required
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select your grade level" />
                           </SelectTrigger>
                         </FormControl>
@@ -492,7 +483,7 @@ const RegisterForm = ({
                         required
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select your section." />
                           </SelectTrigger>
                         </FormControl>
@@ -512,6 +503,36 @@ const RegisterForm = ({
                   )}
                 />
               </div>
+              <Separator className="xl:hidden" />
+            </div>
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="idpic"
+                render={() => (
+                  <FormItem className="flex w-full flex-col">
+                    <FormLabel>Picture</FormLabel>
+                    <FormDescription>
+                      Please upload a recent and valid picture of yourself. The
+                      picture must have a plain background.
+                    </FormDescription>
+                    <Image
+                      src={
+                        idpic ? idpic : "https://avatar.iran.liara.run/public"
+                      }
+                      alt="ID Picture"
+                      width={200}
+                      height={200}
+                      draggable={false}
+                      className="self-center rounded-full xl:size-60"
+                    />
+                    <FormControl>
+                      <Input type="file" required {...fileRef} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Separator />
               <div className="flex flex-1 flex-col gap-2 align-bottom md:flex-row">
                 <FormField
@@ -526,33 +547,33 @@ const RegisterForm = ({
                             <Button
                               variant={"outline"}
                               className={cn(
-                                "w-full pl-3 text-left font-normal",
+                                "w-[240px] justify-start text-left font-normal",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
                               {field.value ? (
                                 format(field.value, "PPP")
                               ) : (
                                 <span>Pick a date</span>
                               )}
-                              <CalendarIcon className="ml-auto size-4 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
                             mode="single"
-                            fromYear={2000}
-                            toYear={2015}
-                            captionLayout="dropdown"
+                            startMonth={new Date("2000-01-01")}
+                            endMonth={new Date("2015-12-31")}
+                            yearFocus={false}
                             selected={field.value}
                             onSelect={field.onChange}
                             disabled={(date) =>
                               date > new Date("2015-12-31") ||
                               date < new Date("2000-01-01")
                             }
-                            initialFocus
                             defaultMonth={field.value}
+                            autoFocus
                           />
                         </PopoverContent>
                       </Popover>
@@ -600,424 +621,8 @@ const RegisterForm = ({
                   )}
                 />
               </div>
-              <Separator />
-              <FormField
-                control={form.control}
-                name="idpic"
-                render={() => (
-                  <FormItem className="flex w-full flex-col">
-                    <FormLabel>Picture</FormLabel>
-                    <FormDescription>
-                      Please upload a recent and valid picture of yourself. The
-                      picture must have a plain background.
-                    </FormDescription>
-                    <Image
-                      src={
-                        idpic ? idpic : "https://avatar.iran.liara.run/public"
-                      }
-                      alt="ID Picture"
-                      width={200}
-                      height={200}
-                      draggable={false}
-                      className="self-center rounded-full xl:size-60"
-                    />
-                    <FormControl>
-                      <Input type="file" required {...fileRef} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Separator className="xl:hidden" />
             </div>
-            <div className="space-y-4">
-              <div className="flex flex-1 flex-col gap-2">
-                <Label>Emergency Contact 1</Label>
-                <FormField
-                  control={form.control}
-                  name="e1Name"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Full Name</FormLabel>
-                      <FormDescription>
-                        The full name of your emergency contact.
-                      </FormDescription>
-                      <FormControl>
-                        <Input
-                          type="string"
-                          placeholder="Full Name"
-                          required
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e1Num"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormDescription>
-                        The phone number of your emergency contact.
-                      </FormDescription>
-                      <FormControl>
-                        <PhoneInput defaultCountry="PH" required {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e1FB"
-                  render={({ field }) => (
-                    <FormItem className="mt-auto w-full">
-                      <FormLabel>Facebook Profile</FormLabel>
-                      <FormDescription>
-                        The link to the facebook profile of your emergency
-                        contact.
-                      </FormDescription>
-                      <FormControl>
-                        <Input
-                          type="url"
-                          placeholder="URL"
-                          required
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e1Res"
-                  render={({ field }) => (
-                    <FormItem className="mt-auto">
-                      <FormLabel>Relationship</FormLabel>
-                      <FormDescription>
-                        How are you related to your emergency contact?
-                      </FormDescription>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value
-                                ? relationships.find(
-                                    (relationship) =>
-                                      relationship.value === field.value
-                                  )?.label
-                                : "Select relationship"}
-                              <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
-                          <Command>
-                            <CommandInput placeholder="Search relationship..." />
-                            <CommandList>
-                              <CommandEmpty>No language found.</CommandEmpty>
-                              <CommandGroup>
-                                {relationships.map((relationship) => (
-                                  <CommandItem
-                                    value={relationship.label}
-                                    key={relationship.value}
-                                    onSelect={() => {
-                                      form.setValue(
-                                        "e1Res",
-                                        relationship.value
-                                      );
-                                    }}
-                                  >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        relationship.value === field.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {relationship.label}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <Separator />
-              <div className="flex flex-1 flex-col gap-2">
-                <Label>Emergency Contact 2</Label>
-                <FormField
-                  control={form.control}
-                  name="e2Name"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Full Name</FormLabel>
-                      <FormDescription>
-                        The full name of your emergency contact.
-                      </FormDescription>
-                      <FormControl>
-                        <Input
-                          type="string"
-                          placeholder="Full Name"
-                          required
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e2Num"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormDescription>
-                        The phone number of your emergency contact.
-                      </FormDescription>
-                      <FormControl>
-                        <PhoneInput defaultCountry="PH" required {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e2FB"
-                  render={({ field }) => (
-                    <FormItem className="mt-auto w-full">
-                      <FormLabel>Facebook Profile</FormLabel>
-                      <FormDescription>
-                        The link to the facebook profile of your emergency
-                        contact.
-                      </FormDescription>
-                      <FormControl>
-                        <Input
-                          type="url"
-                          placeholder="URL"
-                          required
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e2Res"
-                  render={({ field }) => (
-                    <FormItem className="mt-auto">
-                      <FormLabel>Relationship</FormLabel>
-                      <FormDescription>
-                        How are you related to your emergency contact?
-                      </FormDescription>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value
-                                ? relationships.find(
-                                    (relationship) =>
-                                      relationship.value === field.value
-                                  )?.label
-                                : "Select relationship"}
-                              <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
-                          <Command>
-                            <CommandInput placeholder="Search relationship..." />
-                            <CommandList>
-                              <CommandEmpty>No language found.</CommandEmpty>
-                              <CommandGroup>
-                                {relationships.map((relationship) => (
-                                  <CommandItem
-                                    value={relationship.label}
-                                    key={relationship.value}
-                                    onSelect={() => {
-                                      form.setValue(
-                                        "e2Res",
-                                        relationship.value
-                                      );
-                                    }}
-                                  >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        relationship.value === field.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {relationship.label}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <Separator />
-              <div className="flex flex-1 flex-col gap-2">
-                <Label>
-                  Emergency Contact 3{" "}
-                  <span className="text-muted-foreground">(Optional)</span>
-                </Label>
-                <FormField
-                  control={form.control}
-                  name="e3Name"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Full Name</FormLabel>
-                      <FormDescription>
-                        The full name of your emergency contact.
-                      </FormDescription>
-                      <FormControl>
-                        <Input
-                          type="string"
-                          placeholder="Full Name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e3Num"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormDescription>
-                        The phone number of your emergency contact.
-                      </FormDescription>
-                      <FormControl>
-                        <PhoneInput defaultCountry="PH" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e3FB"
-                  render={({ field }) => (
-                    <FormItem className="mt-auto w-full">
-                      <FormLabel>Facebook Profile</FormLabel>
-                      <FormDescription>
-                        The link to the facebook profile of your emergency
-                        contact.
-                      </FormDescription>
-                      <FormControl>
-                        <Input type="url" placeholder="URL" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="e3Res"
-                  render={({ field }) => (
-                    <FormItem className="mt-auto">
-                      <FormLabel>Relationship</FormLabel>
-                      <FormDescription>
-                        How are you related to your emergency contact?
-                      </FormDescription>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value
-                                ? relationships.find(
-                                    (relationship) =>
-                                      relationship.value === field.value
-                                  )?.label
-                                : "Select relationship"}
-                              <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
-                          <Command>
-                            <CommandInput placeholder="Search relationship..." />
-                            <CommandList>
-                              <CommandEmpty>No language found.</CommandEmpty>
-                              <CommandGroup>
-                                {relationships.map((relationship) => (
-                                  <CommandItem
-                                    value={relationship.label}
-                                    key={relationship.value}
-                                    onSelect={() => {
-                                      form.setValue(
-                                        "e3Res",
-                                        relationship.value
-                                      );
-                                    }}
-                                  >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        relationship.value === field.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {relationship.label}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
+
             <Button
               type="submit"
               className="xl:col-span-2"
