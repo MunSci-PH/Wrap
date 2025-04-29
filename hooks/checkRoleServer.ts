@@ -1,6 +1,6 @@
 "use server";
 
-import { UserInfo } from "@/dashboard/types";
+import { UserInfo } from "@/app/dashboard/types";
 import { getUser } from "@/queries/getUser";
 import { getUserById } from "@/queries/getUserById";
 import { TypedSupabaseClient } from "@/utils/types";

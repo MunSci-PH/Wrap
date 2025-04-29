@@ -1,4 +1,4 @@
-import ForgotPasswordForm from "@/auth/password/reset/forgotPassword";
+import ForgotPasswordForm from "./forgotPassword";
 import {
   Card,
   CardDescription,

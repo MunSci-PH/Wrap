@@ -29,8 +29,7 @@ import { getSectionsByGrade } from "@/queries/getSectionsByGrade";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Checkbox } from "@/components/ui/checkbox";
-import { isValidPhoneNumber } from "react-phone-number-input";
-import { TablesInsert } from "../../../database.types";
+import { TablesInsert } from "@/database.types";
 import { storageClient } from "@/utils/storage";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -93,29 +92,6 @@ const formSchema = z
             ),
     birthday: z.date().min(new Date("2000-01-01")).max(new Date("2015-12-31")),
     address: z.string().trim().min(1).max(100),
-    e1Name: z.string().trim().min(1).max(100),
-    e1FB: z.string().trim().min(1).url(),
-    e1Res: z.string().trim().min(1, "Must select an option.").max(50),
-    e1Num: z
-      .string()
-      .trim()
-      .refine(isValidPhoneNumber, { message: "Invalid phone number" }),
-    e2Name: z.string().trim().min(1).max(100),
-    e2FB: z.string().trim().min(1).url(),
-    e2Res: z.string().trim().min(1, "Must select an option.").max(50),
-    e2Num: z
-      .string()
-      .trim()
-      .refine(isValidPhoneNumber, { message: "Invalid phone number" }),
-    e3Name: z.string().trim().max(100).optional(),
-    e3FB: z.string().trim().url().or(z.literal("")),
-    e3Res: z.string().trim().max(50).optional(),
-    e3Num: z
-      .string()
-      .trim()
-      .refine(isValidPhoneNumber, { message: "Invalid phone number" })
-      .optional()
-      .or(z.literal("")),
   })
   .refine((data) => data.confirmp === data.password, {
     message: "Passwords don't match",
@@ -130,14 +106,6 @@ const grades = [
   { label: "11", value: 11 },
   { label: "12", value: 12 },
 ] as const;
-
-/** const relationships = [
-  { label: "Parent", value: "Parent" },
-  { label: "Guardian", value: "Guardian" },
-  { label: "Sibling", value: "Sibling" },
-  { label: "Other", value: "Other" },
-] as const;
-*/
 
 const RegisterForm = ({
   sections,
@@ -162,18 +130,6 @@ const RegisterForm = ({
       idpic: [],
       birthday: new Date("2015-12-31"),
       address: "",
-      e1Name: "",
-      e1FB: "",
-      e1Res: "",
-      e1Num: "",
-      e2Name: "",
-      e2FB: "",
-      e2Res: "",
-      e2Num: "",
-      e3Name: "",
-      e3FB: "",
-      e3Res: "",
-      e3Num: "",
     },
   });
   const [isLoading, setLoading] = useState(false);
@@ -229,18 +185,6 @@ const RegisterForm = ({
       idpicfile: data.idpic.item(0)?.name,
       birthday: data.birthday.toLocaleDateString("en-us"),
       address: data.address.trim(),
-      ecname1: data.e1Name.trim(),
-      ecfb1: data.e1FB.trim(),
-      ecres1: data.e1Res.trim(),
-      ecnum1: data.e1Num.trim(),
-      ecname2: data.e2Name.trim(),
-      ecfb2: data.e2FB.trim(),
-      ecres2: data.e2Res.trim(),
-      ecnum2: data.e2Num.trim(),
-      ecname3: data.e3Name?.trim(),
-      ecfb3: data.e3FB?.trim(),
-      ecres3: data.e3Res?.trim(),
-      ecnum3: data.e3Num?.trim(),
     };
 
     setLoadingText("Uploading data to database");

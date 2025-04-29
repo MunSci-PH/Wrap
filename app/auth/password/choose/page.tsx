@@ -1,4 +1,4 @@
-import ResetPasswordForm from "@/auth/password/choose/passwordReset";
+import ResetPasswordForm from "./passwordReset";
 import {
   Card,
   CardHeader,
