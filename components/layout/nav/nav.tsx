@@ -74,23 +74,18 @@ const Nav = () => {
             <Button variant={"outline"} asChild>
               <Link href="/dashboard">Home</Link>
             </Button>
-            {userInfo.data?.data.role?.isAdmin && (
-              <Button variant={"outline"} asChild>
-                <Link href="/dashboard/admin/search">Search</Link>
-              </Button>
-            )}
             <Button variant={"outline"} asChild>
               <Link href="/dashboard/settings">Settings</Link>
             </Button>
             <Button
               variant={"default"}
-              /**onClick={async () => {
+              onClick={async () => {
                 const { error } = await supabase.auth.signOut({
                   scope: "local",
                 });
                 if (error) throw error;
                 return window.location.reload();
-              }}*/
+              }}
               type="button"
             >
               Sign Out
@@ -131,14 +126,6 @@ const Nav = () => {
               >
                 Home
               </Link>
-              {userInfo.data?.data.role?.isAdmin && (
-                <Link
-                  className="block py-2 text-sm font-medium underline-offset-4 hover:underline"
-                  href="/dashboard/admin/search"
-                >
-                  Search
-                </Link>
-              )}
               <Link
                 className="block py-2 text-sm font-medium underline-offset-4 hover:underline"
                 href="/dashboard/settings"
