@@ -24,13 +24,12 @@ import { Button } from "@/components/ui/button";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useSupabaseBrowser from "@/utils/client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getSectionsByGrade } from "@/queries/getSectionsByGrade";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TablesInsert } from "@/database.types";
-import { storageClient } from "@/utils/storage";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
@@ -48,17 +47,9 @@ const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png"];
 
 const formSchema = z
   .object({
-    lrn: z
-      .string()
-      .length(12, "Must be 12 characters.")
-      .refine(
-        (v) => {
-          const n = Number(v);
-          console.log(v.length, v);
-          return !isNaN(n) && v?.length > 0;
-        },
-        { message: "Must be a number" }
-      ),
+    lrn: z.coerce
+      .number()
+      .refine((v) => `${v}`.length, { message: "Must be 12 digits" }),
     firstname: z.string().trim().min(1).max(50),
     middlename: z.string().trim().max(50).optional(),
     lastname: z.string().min(1).max(50),
@@ -73,7 +64,7 @@ const formSchema = z
       .trim()
       .min(8)
       .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,}$/),
-    grade: z.number().min(7).max(12),
+    grade: z.coerce.number().min(7).max(12),
     section: z.string(),
     pwd: z.boolean(),
     idpic:
@@ -107,17 +98,13 @@ const grades = [
   { label: "12", value: 12 },
 ] as const;
 
-const RegisterForm = ({
-  sections,
-}: {
-  sections: { label: string; value: string }[];
-}) => {
+const RegisterForm = () => {
   const router = useRouter();
   const supabase = useSupabaseBrowser();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      lrn: "",
+      lrn: 0,
       firstname: "",
       middlename: "",
       lastname: "",
@@ -140,15 +127,31 @@ const RegisterForm = ({
   const [idpic, setIdpic] = useState<string>();
   const turnstileRef = useRef<TurnstileInstance>(undefined);
   const fileRef = form.register("idpic");
-  const [sectionList, setSectionList] =
-    useState<{ label: string; value: string }[]>(sections);
+  const [sectionList, setSectionList] = useState<
+    { label: string; value: string }[]
+  >([]);
+
+  useEffect(() => {
+    const sectionList = async () => {
+      const sections = await getSectionsByGrade(supabase, 7);
+      if (sections) {
+        const sectionsList = sections.data?.map((e) => {
+          return { label: e.section!, value: e.section! };
+        });
+        if (sectionsList) {
+          setSectionList(sectionsList);
+        }
+      }
+    };
+    sectionList();
+  }, [supabase]);
 
   const onGradeChange = async (value: number) => {
     const sectionList = await getSectionsByGrade(supabase, value);
 
     if (sectionList) {
       const sections = sectionList.data?.map((e) => {
-        return { label: e.sectionName!, value: e.sectionName! };
+        return { label: e.section!, value: e.section! };
       });
       if (sections) {
         setSectionList(sections);
@@ -171,35 +174,37 @@ const RegisterForm = ({
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
-    console.log(data);
 
-    const studentData: TablesInsert<"studentData"> = {
-      lrn: Number(data.lrn.trim()),
-      email: data.email.trim(),
+    const studentData: TablesInsert<"userProfiles"> = {
+      lrn: Number(data.lrn),
       firstname: data.firstname.trim(),
-      middlename: data.middlename?.trim(),
+      middlename: data.middlename?.trim() || "",
       lastname: data.lastname.trim(),
-      grade: data.grade,
+      grade: data.grade.toString(),
       section: data.section.trim(),
       pwd: data.pwd,
-      idpicfile: data.idpic.item(0)?.name,
+      picture: data.idpic.item(0)?.name,
       birthday: data.birthday.toLocaleDateString("en-us"),
       address: data.address.trim(),
     };
 
-    setLoadingText("Uploading data to database");
+    setLoadingText("Registering account");
 
-    const dataUpload = await supabase.from("studentData").insert(studentData);
+    const registerAcc = await supabase.auth.signUp({
+      email: data.email.trim(),
+      password: data.password.trim(),
+      options: { captchaToken: captchaToken, data: studentData },
+    });
 
-    if (dataUpload.error) {
+    if (registerAcc.error) {
       setLoading(false);
-      setError(dataUpload.error.message);
-      return dataUpload.error;
+      setError(registerAcc.error.message);
+      return registerAcc.error;
     }
 
     setLoadingText("Uploading picture");
 
-    const pictureUpload = await storageClient
+    const pictureUpload = await supabase.storage
       .from("idpics")
       .upload(`${data.lrn}/${data.idpic.item(0)!.name}`, data.idpic[0]);
 
@@ -207,20 +212,6 @@ const RegisterForm = ({
       setLoading(false);
       setError(pictureUpload.error.message);
       return pictureUpload.error;
-    }
-
-    setLoadingText("Registering account");
-
-    const registerAcc = await supabase.auth.signUp({
-      email: data.email.trim(),
-      password: data.password.trim(),
-      options: { captchaToken: captchaToken },
-    });
-
-    if (registerAcc.error) {
-      setLoading(false);
-      setError(registerAcc.error.message);
-      return registerAcc.error;
     }
 
     router.push("/auth/register/success");
@@ -424,6 +415,7 @@ const RegisterForm = ({
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={!sectionList.length}
                         required
                       >
                         <FormControl>
