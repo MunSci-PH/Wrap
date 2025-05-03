@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook } from "lucide-react";
+import { FaFacebook } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -14,7 +14,7 @@ const Footer = () => {
           className=" underline-offset-4 hover:underline md:text-xl"
           href="https://www.facebook.com/profile.php?id=61556414725090"
         >
-          <Facebook color="default" />
+          <FaFacebook color="default" />
         </Link>
       </nav>
     </footer>

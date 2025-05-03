@@ -175,14 +175,14 @@ const RegisterForm = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
 
-    const studentData: TablesInsert<"userProfiles"> = {
-      lrn: Number(data.lrn),
+    const studentData: TablesInsert<"userprofiles"> = {
+      lrn: data.lrn.toString(),
       firstname: data.firstname.trim(),
       middlename: data.middlename?.trim() || "",
       lastname: data.lastname.trim(),
       grade: data.grade.toString(),
       section: data.section.trim(),
-      pwd: data.pwd,
+      pwd: data.pwd.toString(),
       picture: data.idpic.item(0)?.name,
       birthday: data.birthday.toLocaleDateString("en-us"),
       address: data.address.trim(),

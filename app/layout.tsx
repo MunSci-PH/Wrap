@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/layout/nav/nav";
-import Footer from "@/components/layout/footer";
-import Disclaimer from "@/components/layout/disclaimer";
-import { ReactQueryClientProvider } from "@/components/layout/QueryProvider";
-import { ThemeProvider } from "@/components/layout/theme-provider";
+import { ReactQueryClientProvider } from "@/components/providers/query-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import Disclaimer from "@/components/app-layout/disclaimer";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -60,11 +58,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Disclaimer />
-            <div className="flex min-h-screen flex-col">
-              <Nav />
-              {children}
-              <Footer />
-            </div>
+            <div className="flex min-h-screen flex-col">{children}</div>
           </ThemeProvider>
         </ReactQueryClientProvider>
       </body>

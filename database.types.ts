@@ -7,6 +7,31 @@ export type Json =
   | Json[];
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+          extensions?: Json;
+        };
+        Returns: Json;
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
       classes: {
@@ -48,7 +73,25 @@ export type Database = {
         };
         Relationships: [];
       };
-      userProfiles: {
+      userdata: {
+        Row: {
+          enrolled: string[] | null;
+          id: string;
+          role: string | null;
+        };
+        Insert: {
+          enrolled?: string[] | null;
+          id: string;
+          role?: string | null;
+        };
+        Update: {
+          enrolled?: string[] | null;
+          id?: string;
+          role?: string | null;
+        };
+        Relationships: [];
+      };
+      userprofiles: {
         Row: {
           address: string;
           birthday: string;
@@ -56,10 +99,11 @@ export type Database = {
           grade: string;
           id: string;
           lastname: string;
-          lrn: number;
+          lrn: string;
           middlename: string;
           picture: string;
-          pwd: boolean;
+          pwd: string;
+          role: string | null;
           section: string;
         };
         Insert: {
@@ -69,10 +113,11 @@ export type Database = {
           grade: string;
           id?: string;
           lastname: string;
-          lrn?: number;
+          lrn: string;
           middlename: string;
           picture: string;
-          pwd: boolean;
+          pwd: string;
+          role?: string | null;
           section: string;
         };
         Update: {
@@ -82,10 +127,11 @@ export type Database = {
           grade?: string;
           id?: string;
           lastname?: string;
-          lrn?: number;
+          lrn?: string;
           middlename?: string;
           picture?: string;
-          pwd?: boolean;
+          pwd?: string;
+          role?: string | null;
           section?: string;
         };
         Relationships: [];
@@ -212,6 +258,9 @@ export type CompositeTypes<
     : never;
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
