@@ -33,6 +33,11 @@ export function UserNav() {
     return user_data.data;
   };
 
+  const user = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
+
   const getUserPicture = async () => {
     const user = await getUser();
 
@@ -47,19 +52,12 @@ export function UserNav() {
 
     if (!user_picture.data) return "#";
 
-    console.log(user_picture.data);
-
     return user_picture.data?.signedUrl;
   };
 
   const userPicture = useQuery({
     queryKey: ["user_picture"],
     queryFn: getUserPicture,
-  });
-
-  const user = useQuery({
-    queryKey: ["user"],
-    queryFn: getUser,
   });
 
   return (
