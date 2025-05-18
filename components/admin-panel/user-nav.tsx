@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutGrid, LogOut, Settings } from "lucide-react";
+import { LayoutGrid, LoaderCircle, LogOut, Settings } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -76,7 +76,7 @@ export function UserNav() {
                     alt="Avatar"
                   />
                   <AvatarFallback className="bg-transparent">
-                    {`${user.data?.user?.user_metadata?.firstname.charAt(0)}${user.data?.user?.user_metadata?.lastname.charAt(0)}`}
+                    <LoaderCircle className="animate-spin" />
                   </AvatarFallback>
                 </Avatar>
               </Button>
@@ -89,7 +89,7 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{`${user.data?.user?.user_metadata?.firstname} ${user.data?.user?.user_metadata?.middlename.charAt(0)}. ${user.data?.user?.user_metadata?.lastname}`}</p>
+            <p className="text-sm font-medium leading-none">{`${user.data?.user?.user_metadata?.firstname} ${user.data?.user?.user_metadata?.middlename.charAt(0)}${user.data?.user?.user_metadata?.middlename ? "." : ""} ${user.data?.user?.user_metadata?.lastname}`}</p>
             <p className="text-xs leading-none text-muted-foreground">
               {user.data?.user?.email}
             </p>
@@ -111,7 +111,14 @@ export function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" onClick={() => {}}>
+        <DropdownMenuItem
+          className="hover:cursor-pointer"
+          onClick={async () => {
+            const { error } = await supabase.auth.signOut({ scope: "local" });
+            if (error) throw error;
+            return window.location.reload();
+          }}
+        >
           <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
           Sign out
         </DropdownMenuItem>

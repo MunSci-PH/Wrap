@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import createSupabaseServer from "@/utils/server";
 import { UserInfo } from "./types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,12 +6,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
-
-export const metadata: Metadata = {
-  title: "Dashboard | Wrap",
-  description:
-    "MunSci's Web-based Real-time Academic Platform (WRAP) is a student grade information system that ensures secure, efficient, and real-time access to academic records.",
-};
 
 export default async function Dashboard() {
   const supabase = await createSupabaseServer();
@@ -91,7 +84,7 @@ export default async function Dashboard() {
                         <p className="font-extrabold text-xl w-1/3 text-start">
                           {classData.name}
                         </p>
-                        <p className="text-xl w-1/3">{`${classData.owner_data.lastname}, ${classData.owner_data.firstname} ${classData.owner_data.middlename.split("")[0]}.`}</p>
+                        <p className="text-xl w-1/3">{`${classData.owner_data.lastname}, ${classData.owner_data.firstname} ${classData.owner_data.middlename.charAt(0)}${classData.owner_data.middlename ? "." : ""}`}</p>
                         <p className="text-xl text-muted-foreground w-1/3 text-end">
                           View{" "}
                           <ChevronRight

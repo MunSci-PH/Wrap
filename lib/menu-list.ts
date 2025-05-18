@@ -33,16 +33,16 @@ export function getMenuList(pathname: string): Group[] {
       ],
     },
     {
-      groupLabel: "Settings",
+      groupLabel: "Manage",
       menus: [
         {
-          href: "/users",
+          href: "/dashboard/users",
           label: "Users",
           icon: Users,
         },
         {
-          href: "/account",
-          label: "Account",
+          href: "/dashboard/settings",
+          label: "Settings",
           icon: Settings,
         },
       ],

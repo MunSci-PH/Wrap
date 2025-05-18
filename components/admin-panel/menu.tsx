@@ -13,14 +13,16 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-  TooltipProvider
+  TooltipProvider,
 } from "@/components/ui/tooltip";
+import useSupabaseBrowser from "@/utils/client";
 
 interface MenuProps {
   isOpen: boolean | undefined;
 }
 
 export function Menu({ isOpen }: MenuProps) {
+  const supabase = useSupabaseBrowser();
   const pathname = usePathname();
   const menuList = getMenuList(pathname);
 
@@ -118,7 +120,13 @@ export function Menu({ isOpen }: MenuProps) {
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
                   <Button
-                    onClick={() => {}}
+                    onClick={async () => {
+                      const { error } = await supabase.auth.signOut({
+                        scope: "local",
+                      });
+                      if (error) throw error;
+                      return window.location.reload();
+                    }}
                     variant="outline"
                     className="w-full justify-center h-10 mt-5"
                   >
