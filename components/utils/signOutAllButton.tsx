@@ -16,9 +16,9 @@ export const SignOutAllButton = () => {
       type="button"
       variant={"destructive"}
       title="Sign Out Globally"
-      className="rounded-full"
     >
       <LogOut />
+      Log Out
     </Button>
   );
 };
