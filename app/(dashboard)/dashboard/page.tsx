@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
+import { toast } from "sonner";
 
 export default async function Dashboard() {
   const supabase = await createSupabaseServer();
@@ -26,22 +27,13 @@ export default async function Dashboard() {
         .select("*")
         .eq("id", user_data.data[0].enrolled[i]);
 
-      if (!class_response.data) {
-        break;
-      }
-
-      const owner_data = await supabase
-        .from("userprofiles")
-        .select("*")
-        .eq("id", class_response.data[0].owner);
-
-      if (!owner_data.data) {
-        break;
+      if (class_response.error) {
+        toast.error(class_response.error.message);
+        return;
       }
 
       const class_fulldata = {
         ...class_response.data[0],
-        owner_data: owner_data.data[0],
       };
 
       class_data.push(class_fulldata);
@@ -84,7 +76,7 @@ export default async function Dashboard() {
                         <p className="font-extrabold text-xl w-1/3 text-start">
                           {classData.name}
                         </p>
-                        <p className="text-xl w-1/3">{`${classData.owner_data.lastname}, ${classData.owner_data.firstname} ${classData.owner_data.middlename.charAt(0)}${classData.owner_data.middlename ? "." : ""}`}</p>
+                        <p className="text-xl w-1/3">{`${classData.owner_name}`}</p>
                         <p className="text-xl text-muted-foreground w-1/3 text-end">
                           View{" "}
                           <ChevronRight
