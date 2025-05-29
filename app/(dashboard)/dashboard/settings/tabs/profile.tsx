@@ -245,7 +245,7 @@ export function ProfileTab() {
     <div className="flex flex-col md:flex-row gap-8">
       {/* Personal Information Form */}
       <div className="md:w-2/3">
-        <div className="border rounded-md p-6">
+        <div className="border rounded-md p-6 bg-card text-card-foreground">
           <h2 className="text-xl font-semibold mb-6">Personal Information</h2>
 
           <Form {...form} control={form.control}>
@@ -278,7 +278,7 @@ export function ProfileTab() {
                     <FormItem>
                       <FormLabel>First Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="John" {...field} />
+                        <Input placeholder="First Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -291,7 +291,7 @@ export function ProfileTab() {
                     <FormItem>
                       <FormLabel>Middle Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="David" {...field} />
+                        <Input placeholder="Middle Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -304,7 +304,7 @@ export function ProfileTab() {
                     <FormItem>
                       <FormLabel>Last Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Doe" {...field} />
+                        <Input placeholder="Last Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -322,7 +322,7 @@ export function ProfileTab() {
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="john.doe@example.com"
+                        placeholder="Email"
                         {...field}
                         disabled
                         className="bg-muted"
@@ -411,8 +411,8 @@ export function ProfileTab() {
                     <FormLabel>Address</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="123 Main St, City, Country"
-                        className="min-h-[80px]"
+                        placeholder="Address"
+                        className="min-h-[80px] field-sizing-content resize-none"
                         {...field}
                       />
                     </FormControl>
@@ -446,7 +446,7 @@ export function ProfileTab() {
 
       {/* Profile Picture Section */}
       <div className="md:w-1/3">
-        <div className="border rounded-md p-6">
+        <div className="border rounded-md p-6 bg-card text-card-foreground">
           <h2 className="text-xl font-semibold mb-4">Profile Picture</h2>
           <div className="flex flex-col items-center">
             <div className="mb-6">

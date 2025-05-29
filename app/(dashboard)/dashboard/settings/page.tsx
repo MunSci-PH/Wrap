@@ -6,6 +6,7 @@ import { Shield, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProfileTab } from "./tabs/profile";
 import { SecurityTab } from "./tabs/security";
+import { Button } from "@/components/ui/button";
 
 type TabType = "profile" | "security";
 
@@ -20,30 +21,32 @@ export default function Settings() {
             Account Settings
           </h1>
 
-          <div className="flex flex-col md:flex-row gap-8">
+          <div className="flex flex-col md:flex-row gap-4">
             {/* Left sidebar with tabs */}
-            <div className="md:w-1/4">
-              <nav className="flex flex-col space-y-1 border rounded-md overflow-hidden">
-                <button
+            <div className="md:w-1/4 ">
+              <nav className="flex flex-col rounded-md overflow-hidden bg-card text-card-foreground">
+                <Button
                   onClick={() => setActiveTab("profile")}
                   className={cn(
-                    "flex items-center gap-2 px-4 py-3 text-left hover:bg-muted/50 transition-colors",
+                    "flex rounded-b-none justify-start items-center text-md gap-2 px-10 py-6 text-left transition-colors",
                     activeTab === "profile" && "bg-muted font-medium"
                   )}
+                  variant={"outline"}
                 >
-                  <User className="h-4 w-4" />
+                  <User className="size-4" />
                   Profile
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setActiveTab("security")}
                   className={cn(
-                    "flex items-center gap-2 px-4 py-3 text-left hover:bg-muted/50 transition-colors",
+                    "flex rounded-t-none justify-start items-center text-md gap-2 px-10 py-6 text-left transition-colors",
                     activeTab === "security" && "bg-muted font-medium"
                   )}
+                  variant={"outline"}
                 >
-                  <Shield className="h-4 w-4" />
+                  <Shield className="size-4" />
                   Security
-                </button>
+                </Button>
               </nav>
             </div>
 

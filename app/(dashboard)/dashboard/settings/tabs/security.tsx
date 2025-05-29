@@ -70,7 +70,7 @@ export function SecurityTab() {
   };
 
   return (
-    <div className="border rounded-md p-6">
+    <div className="border rounded-md p-6 bg-card text-card-foreground">
       <h2 className="text-xl font-semibold mb-6">Change Password</h2>
 
       <Form {...form} control={form.control}>
