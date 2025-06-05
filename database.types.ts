@@ -30,6 +30,7 @@ export type Database = {
       classes: {
         Row: {
           created_at: string;
+          enrolled: string[] | null;
           id: string;
           metadata: Json;
           name: string;
@@ -38,6 +39,7 @@ export type Database = {
         };
         Insert: {
           created_at?: string;
+          enrolled?: string[] | null;
           id: string;
           metadata: Json;
           name: string;
@@ -46,6 +48,7 @@ export type Database = {
         };
         Update: {
           created_at?: string;
+          enrolled?: string[] | null;
           id?: string;
           metadata?: Json;
           name?: string;
