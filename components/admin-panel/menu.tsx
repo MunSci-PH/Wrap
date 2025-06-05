@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Ellipsis, LogOut } from "lucide-react";
+import { Ellipsis, LogOut, Notebook } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -16,6 +16,9 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import useSupabaseBrowser from "@/utils/client";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getEnrolledClasses } from "@/queries/getEnrolledClasses";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -24,7 +27,28 @@ interface MenuProps {
 export function Menu({ isOpen }: MenuProps) {
   const supabase = useSupabaseBrowser();
   const pathname = usePathname();
-  const menuList = getMenuList(pathname);
+  const [menuList, setMenuList] = useState(getMenuList(pathname, []));
+
+  useQuery({
+    queryKey: ["enrolledClasses", pathname, supabase],
+    queryFn: async () => {
+      const classes = await getEnrolledClasses(supabase);
+
+      const list = classes.map((classData) => ({
+        href: `/dashboard/class/${classData.id}`,
+        label: classData.name,
+        icon: Notebook,
+        submenus: [],
+      }));
+
+      if (list.length === 0) {
+        setMenuList(getMenuList(pathname, []));
+        return null;
+      }
+      setMenuList(getMenuList(pathname, list));
+      return null;
+    },
+  });
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">

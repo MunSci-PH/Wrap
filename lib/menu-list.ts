@@ -1,4 +1,4 @@
-import { Users, Settings, LayoutGrid, LucideIcon } from "lucide-react";
+import { Settings, LayoutGrid, LucideIcon } from "lucide-react";
 
 type Submenu = {
   href: string;
@@ -19,7 +19,35 @@ type Group = {
   menus: Menu[];
 };
 
-export function getMenuList(pathname: string): Group[] {
+export function getMenuList(pathname: string, classList: Menu[]): Group[] {
+  if (classList.length === 0) {
+    return [
+      {
+        groupLabel: "",
+        menus: [
+          {
+            href: "/dashboard",
+            label: "Dashboard",
+            icon: LayoutGrid,
+            submenus: [],
+            active: pathname === "/dashboard",
+          },
+        ],
+      },
+      {
+        groupLabel: "Manage",
+        menus: [
+          {
+            href: "/dashboard/settings",
+            label: "Settings",
+            icon: Settings,
+            active: pathname === "/dashboard/settings",
+          },
+        ],
+      },
+    ];
+  }
+
   return [
     {
       groupLabel: "",
@@ -29,21 +57,22 @@ export function getMenuList(pathname: string): Group[] {
           label: "Dashboard",
           icon: LayoutGrid,
           submenus: [],
+          active: pathname === "/dashboard",
         },
       ],
+    },
+    {
+      groupLabel: "Classes",
+      menus: classList,
     },
     {
       groupLabel: "Manage",
       menus: [
         {
-          href: "/dashboard/users",
-          label: "Users",
-          icon: Users,
-        },
-        {
           href: "/dashboard/settings",
           label: "Settings",
           icon: Settings,
+          active: pathname === "/dashboard/settings",
         },
       ],
     },
