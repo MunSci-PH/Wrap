@@ -348,7 +348,12 @@ export default function Dashboard() {
                       </Button>
                     ))
                   ) : (
-                    <p>No classes enrolled</p>
+                    <p>
+                      No classes enrolled.
+                      {user_data.data?.data?.role == "teacher"
+                        ? "Create a class to get started grading work."
+                        : "Join a class using the class code provided by your teacher."}
+                    </p>
                   )}
                 </>
               )}

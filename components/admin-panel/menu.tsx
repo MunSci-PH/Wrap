@@ -19,6 +19,7 @@ import useSupabaseBrowser from "@/utils/client";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getEnrolledClasses } from "@/queries/getEnrolledClasses";
+import { Menu as MenuType } from "@/lib/menu-list";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -33,12 +34,35 @@ export function Menu({ isOpen }: MenuProps) {
     queryKey: ["enrolledClasses", pathname, supabase],
     queryFn: async () => {
       const classes = await getEnrolledClasses(supabase);
+      const user = await supabase.auth.getUser();
 
-      const list = classes.map((classData) => ({
+      const list: MenuType[] = classes.map((classData) => ({
         href: `/dashboard/class/${classData.id}`,
         label: classData.name,
         icon: Notebook,
-        submenus: [],
+        submenus:
+          classData.owner == user.data.user?.id
+            ? [
+                {
+                  href: `/dashboard/class/${classData.id}/home`,
+                  label: "Home",
+                  active:
+                    pathname === `/dashboard/class/${classData.id}/classview`,
+                },
+                {
+                  href: `/dashboard/class/${classData.id}/grading`,
+                  label: "Grading",
+                  active:
+                    pathname === `/dashboard/class/${classData.id}/classview`,
+                },
+                {
+                  href: `/dashboard/class/${classData.id}/settings`,
+                  label: "Settings",
+                  active:
+                    pathname === `/dashboard/class/${classData.id}/classview`,
+                },
+              ]
+            : [],
       }));
 
       if (list.length === 0) {

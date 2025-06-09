@@ -9,7 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      abcde_class: {
+      "1ukmk_class": {
         Row: {
           grade_metadata: Json | null;
           joined_at: string;
@@ -75,17 +75,32 @@ export type Database = {
       userdata: {
         Row: {
           enrolled: string[] | null;
+          firstname: string;
           id: string;
+          lastname: string;
+          lrn: number;
+          middlename: string | null;
+          picture: string;
           role: string | null;
         };
         Insert: {
           enrolled?: string[] | null;
+          firstname?: string;
           id: string;
+          lastname?: string;
+          lrn?: number;
+          middlename?: string | null;
+          picture?: string;
           role?: string | null;
         };
         Update: {
           enrolled?: string[] | null;
+          firstname?: string;
           id?: string;
+          lastname?: string;
+          lrn?: number;
+          middlename?: string | null;
+          picture?: string;
           role?: string | null;
         };
         Relationships: [];
