@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
-import { Loader2 } from "lucide-react";
+import { Loader2, ShieldAlert } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { redirect } from "next/navigation";
 
@@ -77,7 +77,10 @@ const LoginForm = () => {
         <CardContent className="space-y-4">
           {error && (
             <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription className="inline-flex items-center gap-2">
+                <ShieldAlert size={24} />
+                {error}
+              </AlertDescription>
             </Alert>
           )}
           <FormField
