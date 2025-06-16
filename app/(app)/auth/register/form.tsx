@@ -29,7 +29,6 @@ import { getSectionsByGrade } from "@/queries/getSectionsByGrade";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Checkbox } from "@/components/ui/checkbox";
-import { TablesInsert } from "@/database.types";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
@@ -175,7 +174,7 @@ const RegisterForm = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
 
-    const studentData: TablesInsert<"userprofiles"> = {
+    const studentData = {
       lrn: data.lrn.toString(),
       firstname: data.firstname.trim(),
       middlename: data.middlename?.trim() || "",
