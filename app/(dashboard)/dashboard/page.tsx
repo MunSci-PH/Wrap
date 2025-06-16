@@ -184,6 +184,20 @@ export default function Dashboard() {
       return;
     }
 
+    const addtolist = await supabase
+      .from("classes")
+      .update({
+        enrolled: [...(classCheck.enrolled || []), user.data!.data.user!.id],
+      })
+      .eq("id", data.code);
+
+    if (addtolist.error) {
+      toast.dismiss(loadingtoast);
+      toast.error(`Failed to join the class: ${addtolist.error.message}`);
+      setIsSubmitting(false);
+      return;
+    }
+
     toast.dismiss(loadingtoast);
     toast.success("Joined the class successfully.");
     createClassForm.reset();
