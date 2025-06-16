@@ -15,12 +15,12 @@ export const metadata: Metadata = {
   title: "Wrap",
   description:
     "MunSci's Web-based Real-time Academic Platform (WRAP) is a student grade information system that ensures secure, efficient, and real-time access to academic records.",
-  metadataBase: new URL("https://stercoin.vercel.app"),
+  metadataBase: new URL("https://wrap.sappy.eu.org"),
   openGraph: {
     title: "Wrap",
     description:
       "MunSci's Web-based Real-time Academic Platform (WRAP) is a student grade information system that ensures secure, efficient, and real-time access to academic records.",
-    url: "https://stercoin.vercel.app",
+    url: "https://wrap.sappy.eu.org",
     siteName: "Wrap",
     images: [
       {
