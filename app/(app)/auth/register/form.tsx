@@ -343,7 +343,6 @@ const RegisterForm = () => {
                         <Input
                           type="string"
                           placeholder="Middle Name"
-                          required
                           {...field}
                         />
                       </FormControl>

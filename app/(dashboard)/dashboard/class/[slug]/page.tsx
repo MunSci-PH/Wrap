@@ -17,7 +17,7 @@ export default async function Grade(props: {
     permanentRedirect(`${slug}/home/`);
     return null; // This line is necessary to satisfy the return type
   } else {
-    permanentRedirect(`${slug}/grades/`);
+    permanentRedirect(`${slug}/home/`);
     return null; // This line is necessary to satisfy the return type
   }
 }
