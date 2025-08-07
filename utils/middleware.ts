@@ -36,15 +36,8 @@ export async function updateSession(request: NextRequest) {
   // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
-  const startTime = Date.now();
-
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
-
-  console.log(
-    `Supabase auth.getClaims took ${Date.now() - startTime}ms for user:`,
-    user
-  );
 
   if (
     !user &&
