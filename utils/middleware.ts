@@ -4,12 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
-    request,
+    request: {
+      headers: request.headers,
+    },
   });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!,
     {
       cookies: {
         getAll() {
@@ -31,12 +33,18 @@ export async function updateSession(request: NextRequest) {
   );
 
   // IMPORTANT: Avoid writing any logic between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
+  // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const startTime = Date.now();
+
+  const { data } = await supabase.auth.getClaims();
+  const user = data?.claims;
+
+  console.log(
+    `Supabase auth.getClaims took ${Date.now() - startTime}ms for user:`,
+    user
+  );
 
   if (
     !user &&
@@ -54,7 +62,7 @@ export async function updateSession(request: NextRequest) {
     }
 
     if (request.nextUrl.pathname.startsWith("/dashboard/admin/")) {
-      const { data, error } = await getUserById(supabase, user!.id);
+      const { data, error } = await getUserById(supabase, user.sub);
 
       if (error) throw error;
       if (data) {

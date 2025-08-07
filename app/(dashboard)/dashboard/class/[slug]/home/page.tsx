@@ -32,6 +32,7 @@ export default async function Grade(props: {
                 .select("*")
                 .eq("id", studentId)
                 .single();
+              console.log(data, studentId);
               return data;
             })
           )

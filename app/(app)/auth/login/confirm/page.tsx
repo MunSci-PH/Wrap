@@ -16,9 +16,9 @@ export default async function Dashboard(props: {
 
   const supabase = await createSupabaseServer();
 
-  const { data } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
-  if (data.user) {
+  if (data?.claims) {
     redirect("/dashboard");
   }
 

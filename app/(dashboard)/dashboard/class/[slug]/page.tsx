@@ -13,7 +13,7 @@ export default async function Grade(props: {
     return <div>Class not found</div>;
   }
 
-  if (classData.owner == (await supabase.auth.getUser()).data.user?.id) {
+  if (classData.owner == (await supabase.auth.getClaims()).data?.claims?.sub) {
     permanentRedirect(`${slug}/home/`);
     return null; // This line is necessary to satisfy the return type
   } else {

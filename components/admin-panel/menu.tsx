@@ -34,14 +34,14 @@ export function Menu({ isOpen }: MenuProps) {
     queryKey: ["enrolledClasses", pathname, supabase],
     queryFn: async () => {
       const classes = await getEnrolledClasses(supabase);
-      const user = await supabase.auth.getUser();
+      const user = await supabase.auth.getClaims();
 
       const list: MenuType[] = classes.map((classData) => ({
         href: `/dashboard/class/${classData.id}`,
         label: classData.name,
         icon: Notebook,
         submenus:
-          classData.owner == user.data.user?.id
+          classData.owner == user.data?.claims?.sub
             ? [
                 {
                   href: `/dashboard/class/${classData.id}/home`,

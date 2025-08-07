@@ -35,7 +35,7 @@ import { useQuery } from "@tanstack/react-query";
 const formSchema = z.object({
   lrn: z.coerce
     .number()
-    .refine((v) => `${v}`.length, { message: "Must be 12 digits" }),
+    .refine((v) => `${v}`.length === 12, { message: "Must be 12 digits" }),
   firstname: z.string().trim().min(1).max(50),
   middlename: z.string().trim().max(50).optional(),
   lastname: z.string().min(1).max(50),
