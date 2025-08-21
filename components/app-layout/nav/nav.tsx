@@ -25,22 +25,35 @@ const Nav = () => {
   if (userInfo.isLoading)
     return (
       <>
-        <header className="flex h-16 items-center border-b px-4 lg:px-6">
+        <header className={`
+          flex h-16 items-center border-b px-4
+          lg:px-6
+        `}>
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="text-lg font-black bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent animate-change-color">
+              <span className={`
+                animate-change-color bg-linear-to-r from-emerald-600
+                to-green-600 bg-clip-text text-lg font-black text-transparent
+              `}>
                 MUNSCI WRAP
               </span>
             </Link>
           </Button>
-          <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
+          <nav className={`
+            ml-auto hidden gap-4
+            sm:gap-6
+            md:flex
+          `}>
             <Button variant={"outline"} disabled>
               <Loader2 className="animate-spin" />
             </Button>
           </nav>
           <Button
-            className="ml-auto md:hidden"
+            className={`
+              ml-auto
+              md:hidden
+            `}
             variant="outline"
             size="icon"
             aria-label="Toggle Menu"
@@ -61,16 +74,26 @@ const Nav = () => {
   if (!userInfo.isLoading && userInfo.data?.data.user) {
     return (
       <>
-        <header className="flex h-16 items-center border-b px-4 lg:px-6">
+        <header className={`
+          flex h-16 items-center border-b px-4
+          lg:px-6
+        `}>
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="text-lg font-black bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent animate-change-color">
+              <span className={`
+                animate-change-color bg-linear-to-r from-emerald-600
+                to-green-600 bg-clip-text text-lg font-black text-transparent
+              `}>
                 WRAP
               </span>
             </Link>
           </Button>
-          <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
+          <nav className={`
+            ml-auto hidden gap-4
+            sm:gap-6
+            md:flex
+          `}>
             <Button variant={"outline"} asChild>
               <Link href="/dashboard">Home</Link>
             </Button>
@@ -92,7 +115,10 @@ const Nav = () => {
             </Button>
           </nav>
           <Button
-            className="ml-auto md:hidden"
+            className={`
+              ml-auto
+              md:hidden
+            `}
             variant="outline"
             size="icon"
             aria-label="Toggle Menu"
@@ -114,20 +140,29 @@ const Nav = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.nav
-              className="border-b px-4 py-2 md:hidden"
+              className={`
+                border-b px-4 py-2
+                md:hidden
+              `}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.2 }}
             >
               <Link
-                className="block py-2 text-sm font-medium underline-offset-4 hover:underline"
+                className={`
+                  block py-2 text-sm font-medium underline-offset-4
+                  hover:underline
+                `}
                 href="/dashboard"
               >
                 Home
               </Link>
               <Link
-                className="block py-2 text-sm font-medium underline-offset-4 hover:underline"
+                className={`
+                  block py-2 text-sm font-medium underline-offset-4
+                  hover:underline
+                `}
                 href="/dashboard/settings"
               >
                 Settings
@@ -155,16 +190,26 @@ const Nav = () => {
   if (!userInfo.isLoading) {
     return (
       <>
-        <header className="flex h-16 items-center border-b px-4 lg:px-6">
+        <header className={`
+          flex h-16 items-center border-b px-4
+          lg:px-6
+        `}>
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className="text-lg font-black bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent animate-change-color animate-change-color">
+              <span className={`
+                animate-change-color bg-linear-to-r from-emerald-600
+                to-green-600 bg-clip-text text-lg font-black text-transparent
+              `}>
                 MUNSCI WRAP
               </span>
             </Link>
           </Button>
-          <nav className="ml-auto hidden gap-4 sm:gap-6 md:flex">
+          <nav className={`
+            ml-auto hidden gap-4
+            sm:gap-6
+            md:flex
+          `}>
             <Button variant={"outline"} asChild>
               <Link href="/auth/register">Sign Up</Link>
             </Button>
@@ -173,7 +218,10 @@ const Nav = () => {
             </Button>
           </nav>
           <Button
-            className="ml-auto md:hidden"
+            className={`
+              ml-auto
+              md:hidden
+            `}
             variant="outline"
             size="icon"
             aria-label="Toggle Menu"
@@ -195,7 +243,10 @@ const Nav = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.nav
-              className="border-b px-4 py-2 md:hidden"
+              className={`
+                border-b px-4 py-2
+                md:hidden
+              `}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}

@@ -23,14 +23,20 @@ export default async function Dashboard() {
     <>
       <main className="container mx-auto flex flex-1">
         <div className="m-auto">
-          <Card className="w-[325px] md:w-[350px]">
+          <Card className={`
+            w-[325px]
+            md:w-[350px]
+          `}>
             <CardHeader>
               <CardTitle>Sign In</CardTitle>
               <CardDescription>
                 Enter your credentials to access your account.{" "}
                 <Link
                   href="/auth/register"
-                  className="text-sm text-foreground hover:underline"
+                  className={`
+                    text-sm text-foreground
+                    hover:underline
+                  `}
                 >
                   Don&apos;t have an account yet?
                 </Link>

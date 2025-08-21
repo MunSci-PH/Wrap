@@ -61,14 +61,17 @@ export function CollapseMenuButton({
       className="w-full"
     >
       <CollapsibleTrigger
-        className="[&[data-state=open]>div>div>svg]:rotate-180 mb-1"
+        className={`
+          mb-1
+          [&[data-state=open]>div>div>svg]:rotate-180
+        `}
         asChild
       >
         <Button
           variant={isSubmenuActive ? "secondary" : "ghost"}
-          className="w-full justify-start h-10"
+          className="h-10 w-full justify-start"
         >
-          <div className="w-full items-center flex justify-between">
+          <div className="flex w-full items-center justify-between">
             <div className="flex items-center">
               <span className="mr-4">
                 <Icon size={18} />
@@ -100,7 +103,11 @@ export function CollapseMenuButton({
           </div>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+      <CollapsibleContent className={`
+        overflow-hidden
+        data-[state=closed]:animate-collapsible-up
+        data-[state=open]:animate-collapsible-down
+      `}>
         {submenus.map(({ href, label, active }, index) => (
           <Button
             key={index}
@@ -109,7 +116,7 @@ export function CollapseMenuButton({
                 ? "secondary"
                 : "ghost"
             }
-            className="w-full justify-start h-10 mb-1"
+            className="mb-1 h-10 w-full justify-start"
             asChild
           >
             <Link href={href}>
@@ -139,9 +146,9 @@ export function CollapseMenuButton({
             <DropdownMenuTrigger asChild>
               <Button
                 variant={isSubmenuActive ? "secondary" : "ghost"}
-                className="w-full justify-start h-10 mb-1"
+                className="mb-1 h-10 w-full justify-start"
               >
-                <div className="w-full items-center flex justify-between">
+                <div className="flex w-full items-center justify-between">
                   <div className="flex items-center">
                     <span className={cn(isOpen === false ? "" : "mr-4")}>
                       <Icon size={18} />
@@ -172,10 +179,13 @@ export function CollapseMenuButton({
         {submenus.map(({ href, label, active }, index) => (
           <DropdownMenuItem key={index} asChild>
             <Link
-              className={`cursor-pointer ${
+              className={`
+                cursor-pointer
+                ${
                 ((active === undefined && pathname === href) || active) &&
                 "bg-secondary"
-              }`}
+              }
+              `}
               href={href}
             >
               <p className="max-w-[180px] truncate">{label}</p>

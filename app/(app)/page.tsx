@@ -6,17 +6,41 @@ export default async function Home() {
   return (
     <>
       <main className="grow">
-        <section className="bg-[url(/bg.png)] bg-cover bg-center bg-no-repeat py-32 text-white md:py-48">
-          <div className="container mx-auto px-4 lg:px-12 xl:px-24">
-            <div className="flex flex-col items-center md:flex-row md:items-start md:justify-between">
-              <div className="my-auto text-center md:order-1 md:w-3/4 md:text-left">
-                <h1 className="mb-6 text-5xl font-extrabold leading-tight md:text-6xl lg:text-7xl">
+        <section className={`
+          bg-[url(/bg.png)] bg-cover bg-center bg-no-repeat py-32 text-white
+          md:py-48
+        `}>
+          <div className={`
+            container mx-auto px-4
+            lg:px-12
+            xl:px-24
+          `}>
+            <div className={`
+              flex flex-col items-center
+              md:flex-row md:items-start md:justify-between
+            `}>
+              <div className={`
+                my-auto text-center
+                md:order-1 md:w-3/4 md:text-left
+              `}>
+                <h1 className={`
+                  mb-6 text-5xl leading-tight font-extrabold
+                  md:text-6xl
+                  lg:text-7xl
+                `}>
                   WELCOME TO <br />
-                  <span className="font-black text-6xl md:text-7xl lg:text-8xl">
+                  <span className={`
+                    text-6xl font-black
+                    md:text-7xl
+                    lg:text-8xl
+                  `}>
                     MUNSCI WRAP
                   </span>
                 </h1>
-                <p className="mx-auto mb-8 text-xl font-bold md:mx-0 md:text-2xl">
+                <p className={`
+                  mx-auto mb-8 text-xl font-bold
+                  md:mx-0 md:text-2xl
+                `}>
                   MunSci&apos;s Web-based Real-time Academic Platform (WRAP) is
                   a student grade information system that ensures secure,
                   efficient, and real-time access to academic records.
@@ -30,7 +54,10 @@ export default async function Home() {
             <h2 className="mb-12 text-center text-3xl font-bold">
               Key Features
             </h2>
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className={`
+              grid gap-8
+              md:grid-cols-3
+            `}>
               <FeatureCard
                 icon={<Album className="size-10 text-primary" />}
                 title="Easy Information Access"
@@ -74,9 +101,15 @@ export default async function Home() {
             <h2 className="mb-12 text-center text-3xl font-bold">
               How It Works
             </h2>
-            <div className="grid gap-8 text-center md:grid-cols-3">
+            <div className={`
+              grid gap-8 text-center
+              md:grid-cols-3
+            `}>
               <div>
-                <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <div className={`
+                  mx-auto mb-4 flex size-12 items-center justify-center
+                  rounded-full bg-primary text-primary-foreground
+                `}>
                   1
                 </div>
                 <h3 className="mb-2 text-xl font-semibold">Input Grades</h3>
@@ -86,7 +119,10 @@ export default async function Home() {
                 </p>
               </div>
               <div>
-                <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <div className={`
+                  mx-auto mb-4 flex size-12 items-center justify-center
+                  rounded-full bg-primary text-primary-foreground
+                `}>
                   2
                 </div>
                 <h3 className="mb-2 text-xl font-semibold">Secure Storage</h3>
@@ -96,7 +132,10 @@ export default async function Home() {
                 </p>
               </div>
               <div>
-                <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <div className={`
+                  mx-auto mb-4 flex size-12 items-center justify-center
+                  rounded-full bg-primary text-primary-foreground
+                `}>
                   3
                 </div>
                 <h3 className="mb-2 text-xl font-semibold">Real-time Access</h3>

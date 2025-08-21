@@ -70,8 +70,8 @@ export function SecurityTab() {
   };
 
   return (
-    <div className="border rounded-md p-6 bg-card text-card-foreground">
-      <h2 className="text-xl font-semibold mb-6">Change Password</h2>
+    <div className="rounded-md border bg-card p-6 text-card-foreground">
+      <h2 className="mb-6 text-xl font-semibold">Change Password</h2>
 
       <Form {...form} control={form.control}>
         <form onSubmit={form.handleSubmit(tryLogin)} className="space-y-6">
@@ -104,10 +104,12 @@ export function SecurityTab() {
           />
 
           <div className="pt-2">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">
+            <h3 className="mb-2 text-sm font-medium text-muted-foreground">
               Password requirements:
             </h3>
-            <ul className="text-xs text-muted-foreground list-disc pl-5 space-y-1">
+            <ul className={`
+              list-disc space-y-1 pl-5 text-xs text-muted-foreground
+            `}>
               <li>At least 6 characters long</li>
               <li>Include at least one uppercase letter</li>
               <li>Include at least one number</li>
@@ -134,14 +136,14 @@ export function SecurityTab() {
         </form>
       </Form>
 
-      <div className="mt-8 pt-6 border-t">
-        <h2 className="text-xl font-semibold mb-4">Log Out of All Devices</h2>
+      <div className="mt-8 border-t pt-6">
+        <h2 className="mb-4 text-xl font-semibold">Log Out of All Devices</h2>
         <div className="flex items-start gap-4">
           <div className="mt-0.5">
             <KeyRound className="size-4 text-muted-foreground" />
           </div>
           <div>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="mb-4 text-sm text-muted-foreground">
               This will sign you out of all your devices, including your
               browser, and you will need to sign in again.
             </p>

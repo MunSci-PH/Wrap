@@ -59,7 +59,7 @@ export default async function Grade(props: {
             {students.map(async (student) => (
               <Tooltip key={student?.lrn}>
                 <TooltipTrigger asChild>
-                  <Button variant={"outline"} className="py-6 px-4">
+                  <Button variant={"outline"} className="px-4 py-6">
                     <Avatar>
                       <AvatarImage
                         src={

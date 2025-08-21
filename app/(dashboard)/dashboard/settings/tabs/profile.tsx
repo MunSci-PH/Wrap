@@ -234,7 +234,7 @@ export function ProfileTab() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-8 flex-row">
+      <div className="flex flex-row items-center justify-center py-8">
         <Loader2 className="h-6 w-6 animate-spin text-primary" />
         Loading User Data...
       </div>
@@ -242,11 +242,14 @@ export function ProfileTab() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-8">
+    <div className={`
+      flex flex-col gap-8
+      md:flex-row
+    `}>
       {/* Personal Information Form */}
       <div className="md:w-2/3">
-        <div className="border rounded-md p-6 bg-card text-card-foreground">
-          <h2 className="text-xl font-semibold mb-6">Personal Information</h2>
+        <div className="rounded-md border bg-card p-6 text-card-foreground">
+          <h2 className="mb-6 text-xl font-semibold">Personal Information</h2>
 
           <Form {...form} control={form.control}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -270,7 +273,10 @@ export function ProfileTab() {
                 )}
               />
               {/* First Name, Middle Name, Last Name (inline) */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className={`
+                grid grid-cols-1 gap-4
+                md:grid-cols-3
+              `}>
                 <FormField
                   control={form.control}
                   name="firstname"
@@ -334,7 +340,10 @@ export function ProfileTab() {
               />
 
               {/* Grade and Section (inline) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className={`
+                grid grid-cols-1 gap-4
+                md:grid-cols-2
+              `}>
                 <FormField
                   control={form.control}
                   name="grade"
@@ -412,7 +421,9 @@ export function ProfileTab() {
                     <FormControl>
                       <Textarea
                         placeholder="Address"
-                        className="min-h-[80px] field-sizing-content resize-none"
+                        className={`
+                          field-sizing-content min-h-[80px] resize-none
+                        `}
                         {...field}
                       />
                     </FormControl>
@@ -446,18 +457,18 @@ export function ProfileTab() {
 
       {/* Profile Picture Section */}
       <div className="md:w-1/3">
-        <div className="border rounded-md p-6 bg-card text-card-foreground">
-          <h2 className="text-xl font-semibold mb-4">Profile Picture</h2>
+        <div className="rounded-md border bg-card p-6 text-card-foreground">
+          <h2 className="mb-4 text-xl font-semibold">Profile Picture</h2>
           <div className="flex flex-col items-center">
             <div className="mb-6">
-              <Avatar className="w-40 h-40">
+              <Avatar className="h-40 w-40">
                 <AvatarImage
                   src={idpic ? idpic : userPicture ? userPicture.data : "#"}
                   alt="Avatar"
                   draggable={false}
                 />
                 <AvatarFallback className="bg-transparent text-4xl">
-                  <LoaderCircle className="animate-spin w-max" />
+                  <LoaderCircle className="w-max animate-spin" />
                 </AvatarFallback>
               </Avatar>
             </div>
@@ -473,7 +484,11 @@ export function ProfileTab() {
               />
               <Label
                 htmlFor="picture"
-                className="flex items-center justify-center gap-2 cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 rounded-md"
+                className={`
+                  flex h-10 cursor-pointer items-center justify-center gap-2
+                  rounded-md bg-primary px-4 py-2 text-primary-foreground
+                  hover:bg-primary/90
+                `}
               >
                 <Upload className="h-4 w-4" />
                 Change Picture

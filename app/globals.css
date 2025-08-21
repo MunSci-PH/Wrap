@@ -124,3 +124,69 @@
     @apply bg-background text-foreground;
   }
 }
+
+@theme {
+  --animate-caret-blink: "caret-blink 1.25s ease-out infinite";
+  --animate-change-color: "change-color 5s ease-in-out infinite";
+  --animate-accordion-down: "accordion-down 0.2s ease-out";
+  --animate-accordion-up: "accordion-up 0.2s ease-out";
+  --animate-collapsible-down: "collapsible-down 0.2s ease-out";
+  --animate-collapsible-up: "collapsible-up 0.2s ease-out";
+
+  @keyframes caret-blink {
+    0%, 70%, 100%: {
+      opacity: "1";
+    }
+    20%, 50%: {
+      opacity: "0";
+    }
+  }
+
+  @keyframes change-color {
+    0%: {
+      backgroundposition: "0% 50%;";
+    }
+    50%: {
+      backgroundposition: "100% 50%;";
+    }
+    100%: {
+      backgroundposition: "0% 50%;";
+    }
+  }
+
+  @keyframes accordion-down {
+    from: {
+      height: "0";
+    }
+    to: {
+      height: "var(--radix-accordion-content-height)";
+    }
+  }
+
+  @keyframes accordion-up {
+    from: {
+      height: "var(--radix-accordion-content-height)";
+    }
+    to: {
+      height: "0";
+    }
+  }
+
+  @keyframes collapsible-down {
+    from: {
+      height: "0";
+    }
+    to: {
+      height: "var(--radix-collapsible-content-height)";
+    }
+  }
+
+  @keyframes collapsible-up {
+    from: {
+      height: "var(--radix-collapsible-content-height)";
+    }
+    to: {
+      height: "0";
+    }
+  }
+}

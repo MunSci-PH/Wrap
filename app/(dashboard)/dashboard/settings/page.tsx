@@ -17,18 +17,31 @@ export default function Settings() {
     <ContentLayout title="Settings">
       <main className="container mx-auto flex flex-1 px-4">
         <div className="container mx-auto py-5">
-          <h1 className="text-3xl font-bold mb-8 text-left">
+          <h1 className="mb-8 text-left text-3xl font-bold">
             Account Settings
           </h1>
 
-          <div className="flex flex-col md:flex-row gap-4">
+          <div
+            className={`
+              flex flex-col gap-4
+              md:flex-row
+            `}
+          >
             {/* Left sidebar with tabs */}
-            <div className="md:w-1/4 ">
-              <nav className="flex flex-col rounded-md overflow-hidden bg-card text-card-foreground">
+            <div className="md:w-1/4">
+              <nav
+                className={`
+                  flex flex-col overflow-hidden rounded-md bg-card
+                  text-card-foreground
+                `}
+              >
                 <Button
                   onClick={() => setActiveTab("profile")}
                   className={cn(
-                    "flex rounded-b-none justify-start items-center text-md gap-2 px-10 py-6 text-left transition-colors",
+                    `
+                      flex items-center justify-start gap-2 rounded-b-none px-10
+                      py-6 text-left font-medium transition-colors
+                    `,
                     activeTab === "profile" && "bg-muted font-medium"
                   )}
                   variant={"outline"}
@@ -39,7 +52,10 @@ export default function Settings() {
                 <Button
                   onClick={() => setActiveTab("security")}
                   className={cn(
-                    "flex rounded-t-none justify-start items-center text-md gap-2 px-10 py-6 text-left transition-colors",
+                    `
+                      flex items-center justify-start gap-2 rounded-t-none px-10
+                      py-6 text-left font-medium transition-colors
+                    `,
                     activeTab === "security" && "bg-muted font-medium"
                   )}
                   variant={"outline"}

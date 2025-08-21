@@ -5,6 +5,7 @@ import { ReactQueryClientProvider } from "@/components/providers/query-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Disclaimer from "@/components/app-layout/disclaimer";
 import { Toaster } from "@/components/ui/sonner";
+import { cn } from "@/lib/utils";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -50,7 +51,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className={`min-h-screen ${montserrat.className}`}>
+      <body
+        className={cn("min-h-screen", montserrat.className)}
+      >
         <ReactQueryClientProvider>
           <ThemeProvider
             attribute="class"

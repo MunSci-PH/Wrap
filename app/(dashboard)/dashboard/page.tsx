@@ -206,21 +206,29 @@ export default function Dashboard() {
 
   return (
     <ContentLayout title="Dashboard">
-      <main className="container mx-auto flex flex-1 flex-col items-center px-4 text-center">
+      <main
+        className={
+          `container mx-auto flex flex-1 flex-col items-center px-4 text-center`
+        }
+      >
         <div className="mt-12 flex w-full flex-nowrap justify-between">
           {user.isLoading || user_metadata.isLoading ? (
             <Skeleton className="h-12 w-1/2 rounded" />
           ) : (
-            <p className="my-auto inline w-fit text-left font-sans text-4xl font-bold">
+            <p
+              className={
+                `my-auto inline w-fit text-left font-sans text-4xl font-bold`
+              }
+            >
               Good {time < 12 ? "Morning" : "Afternoon"},{" "}
               {user_metadata.data?.firstname}
             </p>
           )}
         </div>
-        <div className="py-10 w-11/12 h-full">
+        <div className="h-full w-11/12 py-10">
           <Card className="h-full items-start">
             <CardHeader className="w-full">
-              <div className="flex flex-row flex-1 justify-between items-center">
+              <div className="flex flex-1 flex-row items-center justify-between">
                 {user_data.isLoading ? (
                   <>
                     <Skeleton className="h-8 w-1/4 rounded" />
@@ -228,11 +236,11 @@ export default function Dashboard() {
                   </>
                 ) : (
                   <>
-                    <CardTitle className="font-extrabold text-2xl">
+                    <CardTitle className="text-2xl font-extrabold">
                       Enrolled Classes
                     </CardTitle>
                     {user_data.data?.data &&
-                    user_data.data?.data.role == "teacher" ? (
+                      user_data.data?.data.role == "teacher" ? (
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button>New Class</Button>
@@ -332,7 +340,7 @@ export default function Dashboard() {
             <CardContent className="w-full">
               {class_data.isLoading ? (
                 <div className="space-y-4">
-                  <Skeleton className="w-full h-20 rounded" />
+                  <Skeleton className="h-20 w-full rounded" />
                 </div>
               ) : (
                 <>
@@ -345,12 +353,26 @@ export default function Dashboard() {
                         key={classData.id}
                       >
                         <Link href={`/dashboard/class/${classData.id}`}>
-                          <div className="flex flex-row flex-1 justify-between items-center">
-                            <p className="font-extrabold text-xl w-1/3 text-start">
+                          <div
+                            className={
+                              `
+                                flex flex-1 flex-row items-center
+                                justify-between
+                              `
+                            }
+                          >
+                            <p
+                              className={
+                                `w-1/3 text-start text-xl font-extrabold`}
+                            >
                               {classData.name}
                             </p>
-                            <p className="text-xl w-1/3">{`${classData.owner_name}`}</p>
-                            <p className="text-xl text-muted-foreground w-1/3 text-end">
+                            <p className="w-1/3 text-xl">{`${classData.owner_name}`}</p>
+                            <p
+                              className={
+                                `w-1/3 text-end text-xl text-muted-foreground`
+                              }
+                            >
                               View{" "}
                               <ChevronRight
                                 className="inline"

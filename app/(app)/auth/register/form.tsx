@@ -220,7 +220,10 @@ const RegisterForm = () => {
     <>
       <Form {...form} control={form.control}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+          <CardContent className={`
+            grid grid-cols-1 gap-4
+            xl:grid-cols-2
+          `}>
             {error && (
               <Alert variant="destructive" className="xl:col-span-2">
                 <AlertDescription>{error}</AlertDescription>
@@ -315,7 +318,10 @@ const RegisterForm = () => {
                 )}
               />
               <Separator />
-              <div className="flex flex-1 flex-col gap-2 align-bottom md:flex-row">
+              <div className={`
+                flex flex-1 flex-col gap-2 align-bottom
+                md:flex-row
+              `}>
                 <FormField
                   control={form.control}
                   name="firstname"
@@ -369,7 +375,10 @@ const RegisterForm = () => {
                 />
               </div>
               <Separator />
-              <div className="flex flex-1 flex-col gap-2 align-bottom md:flex-row">
+              <div className={`
+                flex flex-1 flex-col gap-2 align-bottom
+                md:flex-row
+              `}>
                 <FormField
                   control={form.control}
                   name="grade"
@@ -458,7 +467,10 @@ const RegisterForm = () => {
                       width={200}
                       height={200}
                       draggable={false}
-                      className="self-center rounded-full xl:size-60"
+                      className={`
+                        self-center rounded-full
+                        xl:size-60
+                      `}
                     />
                     <FormControl>
                       <Input type="file" required {...fileRef} />
@@ -468,7 +480,10 @@ const RegisterForm = () => {
                 )}
               />
               <Separator />
-              <div className="flex flex-1 flex-col gap-2 align-bottom md:flex-row">
+              <div className={`
+                flex flex-1 flex-col gap-2 align-bottom
+                md:flex-row
+              `}>
                 <FormField
                   control={form.control}
                   name="birthday"
@@ -534,19 +549,26 @@ const RegisterForm = () => {
                   </FormItem>
                 )}
               />
-              <div className="flex flex-1 flex-col gap-2 align-bottom md:flex-row">
+              <div className={`
+                flex flex-1 flex-col gap-2 align-bottom
+                md:flex-row
+              `}>
                 <FormField
                   control={form.control}
                   name="pwd"
                   render={({ field }) => (
-                    <FormItem className="flex w-full flex-row items-start space-x-3 space-y-0 rounded-md border p-4 hover:bg-secondary">
+                    <FormItem className={`
+                      flex w-full flex-row items-start space-y-0 space-x-3
+                      rounded-md border p-4
+                      hover:bg-secondary
+                    `}>
                       <FormControl>
                         <Checkbox
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
-                      <div className="cursor-pointer space-y-1 leading-none ">
+                      <div className="cursor-pointer space-y-1 leading-none">
                         <FormLabel className="cursor-pointer">
                           Are you a person with disability?
                         </FormLabel>
@@ -563,7 +585,9 @@ const RegisterForm = () => {
               disabled={isLoading || captchaLoading}
             >
               {isLoading || captchaLoading ? (
-                <span className="flex flex-1 flex-row items-center justify-center gap-1">
+                <span className={`
+                  flex flex-1 flex-row items-center justify-center gap-1
+                `}>
                   <Loader2 className="animate-spin" />
                   {loadingText}
                 </span>
@@ -587,7 +611,10 @@ const RegisterForm = () => {
                 setError(e);
                 console.error(e);
               }}
-              className="mx-auto xl:col-span-2"
+              className={`
+                mx-auto
+                xl:col-span-2
+              `}
             />
           </CardContent>
         </form>

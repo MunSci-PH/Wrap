@@ -89,7 +89,7 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{`${user.data?.user?.user_metadata?.firstname} ${user.data?.user?.user_metadata?.middlename.charAt(0)}${user.data?.user?.user_metadata?.middlename ? "." : ""} ${user.data?.user?.user_metadata?.lastname}`}</p>
+            <p className="text-sm leading-none font-medium">{`${user.data?.user?.user_metadata?.firstname} ${user.data?.user?.user_metadata?.middlename.charAt(0)}${user.data?.user?.user_metadata?.middlename ? "." : ""} ${user.data?.user?.user_metadata?.lastname}`}</p>
             <p className="text-xs leading-none text-muted-foreground">
               {user.data?.user?.email}
             </p>
@@ -99,13 +99,13 @@ export function UserNav() {
         <DropdownMenuGroup>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
             <Link href="/dashboard" className="flex items-center">
-              <LayoutGrid className="w-4 h-4 mr-3 text-muted-foreground" />
+              <LayoutGrid className="mr-3 h-4 w-4 text-muted-foreground" />
               Dashboard
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
             <Link href="/dashboard/settings" className="flex items-center">
-              <Settings className="w-4 h-4 mr-3 text-muted-foreground" />
+              <Settings className="mr-3 h-4 w-4 text-muted-foreground" />
               Settings
             </Link>
           </DropdownMenuItem>
@@ -119,7 +119,7 @@ export function UserNav() {
             return window.location.reload();
           }}
         >
-          <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
+          <LogOut className="mr-3 h-4 w-4 text-muted-foreground" />
           Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>

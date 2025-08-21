@@ -117,7 +117,10 @@ const LoginForm = () => {
           <div>
             <Link
               href="/auth/password/reset"
-              className="text-sm hover:underline"
+              className={`
+                text-sm
+                hover:underline
+              `}
             >
               Forgot your password?
             </Link>

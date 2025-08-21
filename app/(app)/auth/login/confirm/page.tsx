@@ -26,7 +26,10 @@ export default async function Dashboard(props: {
     <>
       <main className="container mx-auto flex flex-1 px-4">
         <div className="m-auto">
-          <Card className="w-[325px] md:w-[350px]">
+          <Card className={`
+            w-[325px]
+            md:w-[350px]
+          `}>
             <CardHeader>
               <CardTitle>Confirm Your Email</CardTitle>
               <CardDescription>
