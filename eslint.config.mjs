@@ -26,6 +26,7 @@ const eslintConfig = [
       "better-tailwindcss": {
         entryPoint: "app/globals.css",
         group: "newLine",
+        lineBreakStyle: "windows"
       },
     },
   }),

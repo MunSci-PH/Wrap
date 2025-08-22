@@ -22,10 +22,12 @@ export default function Settings() {
           </h1>
 
           <div
-            className={`
-              flex flex-col gap-4
-              md:flex-row
-            `}
+            className={
+              `
+                flex flex-col gap-4
+                md:flex-row
+              `
+            }
           >
             {/* Left sidebar with tabs */}
             <div className="md:w-1/4">
