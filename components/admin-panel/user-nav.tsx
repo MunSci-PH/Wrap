@@ -29,7 +29,7 @@ export function UserNav() {
   const getUser = async () => {
     const user_data = await supabase.auth.getUser();
 
-    if (!user_data.data) return;
+    if (!user_data.data) return null;
     return user_data.data;
   };
 

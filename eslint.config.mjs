@@ -1,4 +1,8 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig } from "eslint/config";
+import pluginQuery from '@tanstack/eslint-plugin-query'
+import eslintParserTypeScript from "@typescript-eslint/parser";
+import eslintPluginBetterTailwindcss from "eslint-plugin-better-tailwindcss";
 import js from "@eslint/js";
 
 const compat = new FlatCompat({
@@ -6,30 +10,45 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
 });
 
-const eslintConfig = [
-  ...compat.config({
-    ignorePatterns: [
+export default defineConfig([
+  {
+    ignores: [
       "node_modules/**",
       ".next/**",
       "out/**",
       "build/**",
       "next-env.d.ts",
     ],
-    extends: [
-      "next/core-web-vitals",
-      "next/typescript",
-      "prettier",
-      "plugin:@tanstack/eslint-plugin-query/recommended",
-      "plugin:better-tailwindcss/recommended-warn",
-    ],
+  },
+  {
+    files: ["**/*.{ts,tsx,cts,mts}"],
+    languageOptions: {
+      parser: eslintParserTypeScript,
+      parserOptions: {
+        project: true
+      }
+    }
+  },
+  {
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
+    },
+    plugins: {
+      "better-tailwindcss": eslintPluginBetterTailwindcss
+    },
+    rules: {
+      ...eslintPluginBetterTailwindcss.configs["recommended-warn"].rules,
+    },
     settings: {
       "better-tailwindcss": {
         entryPoint: "app/globals.css",
-        group: "newLine",
-        lineBreakStyle: "windows"
-      },
-    },
-  }),
-];
-
-export default eslintConfig;
+      }
+    }
+  },
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...pluginQuery.configs['flat/recommended'],
+]);
