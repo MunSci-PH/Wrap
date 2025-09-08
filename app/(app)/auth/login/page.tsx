@@ -23,10 +23,12 @@ export default async function Dashboard() {
     <>
       <main className="container mx-auto flex flex-1">
         <div className="m-auto">
-          <Card className={`
+          <Card
+            className={`
             w-[325px]
             md:w-[350px]
-          `}>
+          `}
+          >
             <CardHeader>
               <CardTitle>Sign In</CardTitle>
               <CardDescription>

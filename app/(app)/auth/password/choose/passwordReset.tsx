@@ -49,7 +49,7 @@ const ResetPasswordForm = ({
 
     if (searchParams.code) {
       const { error } = await supabase.auth.exchangeCodeForSession(
-        searchParams.code
+        searchParams.code,
       );
 
       if (error) {

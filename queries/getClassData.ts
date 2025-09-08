@@ -2,7 +2,7 @@ import { TypedSupabaseClient } from "@/utils/types";
 
 export async function getClassData(
   client: TypedSupabaseClient,
-  classId: string
+  classId: string,
 ) {
   const classResponse = await client
     .from("classes")
@@ -12,7 +12,7 @@ export async function getClassData(
 
   if (classResponse.error) {
     throw new Error(
-      `Error fetching class data: ${classResponse.error.message}`
+      `Error fetching class data: ${classResponse.error.message}`,
     );
   }
 

@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as SelectPrimitive from "@radix-ui/react-select"
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
+import * as React from "react";
+import * as SelectPrimitive from "@radix-ui/react-select";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  return <SelectPrimitive.Root data-slot="select" {...props} />
+  return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
 
 function SelectGroup({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Group>) {
-  return <SelectPrimitive.Group data-slot="select-group" {...props} />
+  return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
 function SelectValue({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
-  return <SelectPrimitive.Value data-slot="select-value" {...props} />
+  return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
 function SelectTrigger({
@@ -51,7 +51,7 @@ function SelectTrigger({
           [&_svg:not([class*='size-'])]:size-4
           [&_svg:not([class*='text-'])]:text-muted-foreground
         `,
-        className
+        className,
       )}
       {...props}
     >
@@ -60,7 +60,7 @@ function SelectTrigger({
         <ChevronDownIcon className="size-4 opacity-50" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
-  )
+  );
 }
 
 function SelectContent({
@@ -93,7 +93,7 @@ function SelectContent({
               data-[side=right]:translate-x-1
               data-[side=top]:-translate-y-1
             `,
-          className
+          className,
         )}
         position={position}
         {...props}
@@ -106,7 +106,7 @@ function SelectContent({
               `
                 h-[var(--radix-select-trigger-height)] w-full
                 min-w-[var(--radix-select-trigger-width)] scroll-my-1
-              `
+              `,
           )}
         >
           {children}
@@ -114,7 +114,7 @@ function SelectContent({
         <SelectScrollDownButton />
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
-  )
+  );
 }
 
 function SelectLabel({
@@ -127,7 +127,7 @@ function SelectLabel({
       className={cn("px-2 py-1.5 text-sm font-medium", className)}
       {...props}
     />
-  )
+  );
 }
 
 function SelectItem({
@@ -149,20 +149,22 @@ function SelectItem({
           [&_svg:not([class*='text-'])]:text-muted-foreground
           *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2
         `,
-        className
+        className,
       )}
       {...props}
     >
-      <span className={`
+      <span
+        className={`
         absolute right-2 flex size-3.5 items-center justify-center
-      `}>
+      `}
+      >
         <SelectPrimitive.ItemIndicator>
           <CheckIcon className="size-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
-  )
+  );
 }
 
 function SelectSeparator({
@@ -175,7 +177,7 @@ function SelectSeparator({
       className={cn("pointer-events-none -mx-1 my-1 h-px bg-border", className)}
       {...props}
     />
-  )
+  );
 }
 
 function SelectScrollUpButton({
@@ -187,13 +189,13 @@ function SelectScrollUpButton({
       data-slot="select-scroll-up-button"
       className={cn(
         "flex cursor-default items-center justify-center py-1",
-        className
+        className,
       )}
       {...props}
     >
       <ChevronUpIcon className="size-4" />
     </SelectPrimitive.ScrollUpButton>
-  )
+  );
 }
 
 function SelectScrollDownButton({
@@ -205,13 +207,13 @@ function SelectScrollDownButton({
       data-slot="select-scroll-down-button"
       className={cn(
         "flex cursor-default items-center justify-center py-1",
-        className
+        className,
       )}
       {...props}
     >
       <ChevronDownIcon className="size-4" />
     </SelectPrimitive.ScrollDownButton>
-  )
+  );
 }
 
 export {
@@ -225,4 +227,4 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-}
+};

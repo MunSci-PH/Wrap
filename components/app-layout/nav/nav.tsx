@@ -25,26 +25,32 @@ const Nav = () => {
   if (userInfo.isLoading)
     return (
       <>
-        <header className={`
+        <header
+          className={`
           flex h-16 items-center border-b px-4
           lg:px-6
-        `}>
+        `}
+        >
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className={`
-                animate-change-color bg-linear-to-r from-emerald-600
-                to-green-600 bg-clip-text text-lg font-black text-transparent
-              `}>
+              <span
+                className={`
+                  animate-change-color bg-linear-to-r from-emerald-600
+                  to-green-600 bg-clip-text text-lg font-black text-transparent
+                `}
+              >
                 MUNSCI WRAP
               </span>
             </Link>
           </Button>
-          <nav className={`
+          <nav
+            className={`
             ml-auto hidden gap-4
             sm:gap-6
             md:flex
-          `}>
+          `}
+          >
             <Button variant={"outline"} disabled>
               <Loader2 className="animate-spin" />
             </Button>
@@ -74,26 +80,32 @@ const Nav = () => {
   if (!userInfo.isLoading && userInfo.data?.data.user) {
     return (
       <>
-        <header className={`
+        <header
+          className={`
           flex h-16 items-center border-b px-4
           lg:px-6
-        `}>
+        `}
+        >
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className={`
-                animate-change-color bg-linear-to-r from-emerald-600
-                to-green-600 bg-clip-text text-lg font-black text-transparent
-              `}>
+              <span
+                className={`
+                  animate-change-color bg-linear-to-r from-emerald-600
+                  to-green-600 bg-clip-text text-lg font-black text-transparent
+                `}
+              >
                 WRAP
               </span>
             </Link>
           </Button>
-          <nav className={`
+          <nav
+            className={`
             ml-auto hidden gap-4
             sm:gap-6
             md:flex
-          `}>
+          `}
+          >
             <Button variant={"outline"} asChild>
               <Link href="/dashboard">Home</Link>
             </Button>
@@ -190,26 +202,32 @@ const Nav = () => {
   if (!userInfo.isLoading) {
     return (
       <>
-        <header className={`
+        <header
+          className={`
           flex h-16 items-center border-b px-4
           lg:px-6
-        `}>
+        `}
+        >
           <Button variant={"ghost"} asChild>
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <span className={`
-                animate-change-color bg-linear-to-r from-emerald-600
-                to-green-600 bg-clip-text text-lg font-black text-transparent
-              `}>
+              <span
+                className={`
+                  animate-change-color bg-linear-to-r from-emerald-600
+                  to-green-600 bg-clip-text text-lg font-black text-transparent
+                `}
+              >
                 MUNSCI WRAP
               </span>
             </Link>
           </Button>
-          <nav className={`
+          <nav
+            className={`
             ml-auto hidden gap-4
             sm:gap-6
             md:flex
-          `}>
+          `}
+          >
             <Button variant={"outline"} asChild>
               <Link href="/auth/register">Sign Up</Link>
             </Button>

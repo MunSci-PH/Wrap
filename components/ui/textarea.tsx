@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
@@ -19,11 +19,11 @@ function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
           md:text-sm
           dark:bg-input/30 dark:aria-invalid:ring-destructive/40
         `,
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Textarea }
+export { Textarea };

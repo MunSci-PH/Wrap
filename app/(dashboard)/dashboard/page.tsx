@@ -207,18 +207,18 @@ export default function Dashboard() {
   return (
     <ContentLayout title="Dashboard">
       <main
-        className={
-          `container mx-auto flex flex-1 flex-col items-center px-4 text-center`
-        }
+        className={`
+          container mx-auto flex flex-1 flex-col items-center px-4 text-center
+        `}
       >
         <div className="mt-12 flex w-full flex-nowrap justify-between">
           {user.isLoading || user_metadata.isLoading ? (
             <Skeleton className="h-12 w-1/2 rounded" />
           ) : (
             <p
-              className={
-                `my-auto inline w-fit text-left font-sans text-4xl font-bold`
-              }
+              className={`
+                my-auto inline w-fit text-left font-sans text-4xl font-bold
+              `}
             >
               Good {time < 12 ? "Morning" : "Afternoon"},{" "}
               {user_metadata.data?.firstname}
@@ -240,7 +240,7 @@ export default function Dashboard() {
                       Enrolled Classes
                     </CardTitle>
                     {user_data.data?.data &&
-                      user_data.data?.data.role == "teacher" ? (
+                    user_data.data?.data.role == "teacher" ? (
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button>New Class</Button>
@@ -260,7 +260,7 @@ export default function Dashboard() {
                             <form
                               className="flex flex-col space-y-4"
                               onSubmit={createClassForm.handleSubmit(
-                                createClass
+                                createClass,
                               )}
                             >
                               <FormField
@@ -354,24 +354,22 @@ export default function Dashboard() {
                       >
                         <Link href={`/dashboard/class/${classData.id}`}>
                           <div
-                            className={
-                              `
-                                flex flex-1 flex-row items-center
-                                justify-between
-                              `
-                            }
+                            className={`
+                              flex flex-1 flex-row items-center justify-between
+                            `}
                           >
                             <p
-                              className={
-                                `w-1/3 text-start text-xl font-extrabold`}
+                              className={`
+                                w-1/3 text-start text-xl font-extrabold
+                              `}
                             >
                               {classData.name}
                             </p>
                             <p className="w-1/3 text-xl">{`${classData.owner_name}`}</p>
                             <p
-                              className={
-                                `w-1/3 text-end text-xl text-muted-foreground`
-                              }
+                              className={`
+                                w-1/3 text-end text-xl text-muted-foreground
+                              `}
                             >
                               View{" "}
                               <ChevronRight

@@ -74,11 +74,11 @@ const formSchema = z
             .refine((file) => file?.length == 1, "File is required.")
             .refine(
               (file) => ACCEPTED_FILE_TYPES.includes(file?.item(0)!.type),
-              "Invalid file type."
+              "Invalid file type.",
             )
             .refine(
               (file) => file?.item(0)!.size < MAX_UPLOAD_SIZE,
-              "File too large."
+              "File too large.",
             ),
     birthday: z.date().min(new Date("2000-01-01")).max(new Date("2015-12-31")),
     address: z.string().trim().min(1).max(100),
@@ -315,10 +315,12 @@ const RegisterForm = () => {
                 )}
               />
               <Separator />
-              <div className={`
+              <div
+                className={`
                 flex flex-1 flex-col gap-2 align-bottom
                 md:flex-row
-              `}>
+              `}
+              >
                 <FormField
                   control={form.control}
                   name="firstname"
@@ -372,10 +374,12 @@ const RegisterForm = () => {
                 />
               </div>
               <Separator />
-              <div className={`
+              <div
+                className={`
                 flex flex-1 flex-col gap-2 align-bottom
                 md:flex-row
-              `}>
+              `}
+              >
                 <FormField
                   control={form.control}
                   name="grade"
@@ -474,10 +478,12 @@ const RegisterForm = () => {
                 )}
               />
               <Separator />
-              <div className={`
+              <div
+                className={`
                 flex flex-1 flex-col gap-2 align-bottom
                 md:flex-row
-              `}>
+              `}
+              >
                 <FormField
                   control={form.control}
                   name="birthday"
@@ -491,7 +497,7 @@ const RegisterForm = () => {
                               variant={"outline"}
                               className={cn(
                                 "w-[240px] justify-start text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                !field.value && "text-muted-foreground",
                               )}
                             >
                               <CalendarIcon className="mr-2 h-4 w-4" />
@@ -543,19 +549,23 @@ const RegisterForm = () => {
                   </FormItem>
                 )}
               />
-              <div className={`
+              <div
+                className={`
                 flex flex-1 flex-col gap-2 align-bottom
                 md:flex-row
-              `}>
+              `}
+              >
                 <FormField
                   control={form.control}
                   name="pwd"
                   render={({ field }) => (
-                    <FormItem className={`
-                      flex w-full flex-row items-start space-y-0 space-x-3
-                      rounded-md border p-4
-                      hover:bg-secondary
-                    `}>
+                    <FormItem
+                      className={`
+                        flex w-full flex-row items-start space-y-0 space-x-3
+                        rounded-md border p-4
+                        hover:bg-secondary
+                      `}
+                    >
                       <FormControl>
                         <Checkbox
                           checked={field.value}
@@ -579,9 +589,11 @@ const RegisterForm = () => {
               disabled={isLoading || captchaLoading}
             >
               {isLoading || captchaLoading ? (
-                <span className={`
-                  flex flex-1 flex-row items-center justify-center gap-1
-                `}>
+                <span
+                  className={`
+                    flex flex-1 flex-row items-center justify-center gap-1
+                  `}
+                >
                   <Loader2 className="animate-spin" />
                   {loadingText}
                 </span>

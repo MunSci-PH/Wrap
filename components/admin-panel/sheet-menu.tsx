@@ -21,10 +21,13 @@ export function SheetMenu() {
           <MenuIcon size={20} />
         </Button>
       </SheetTrigger>
-      <SheetContent className={`
+      <SheetContent
+        className={`
         flex h-full flex-col px-3
         sm:w-72
-      `} side="left">
+      `}
+        side="left"
+      >
         <SheetHeader>
           <Button
             className="flex items-center justify-center pt-1 pb-2"
@@ -33,10 +36,12 @@ export function SheetMenu() {
           >
             <Link href="/dashboard" className="flex items-center gap-2">
               <Image src={Logo} alt="Logo" className="size-6" />
-              <SheetTitle className={`
-                animate-change-color bg-linear-to-r from-emerald-600
-                to-green-600 bg-clip-text text-lg font-black text-transparent
-              `}>
+              <SheetTitle
+                className={`
+                  animate-change-color bg-linear-to-r from-emerald-600
+                  to-green-600 bg-clip-text text-lg font-black text-transparent
+                `}
+              >
                 WRAP
               </SheetTitle>
             </Link>

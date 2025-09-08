@@ -10,10 +10,12 @@ interface SidebarToggleProps {
 
 export function SidebarToggle({ isOpen, setIsOpen }: SidebarToggleProps) {
   return (
-    <div className={`
+    <div
+      className={`
       invisible absolute top-[12px] -right-[16px] z-20
       lg:visible
-    `}>
+    `}
+    >
       <Button
         onClick={() => setIsOpen?.()}
         className="h-8 w-8 rounded-md"
@@ -23,7 +25,7 @@ export function SidebarToggle({ isOpen, setIsOpen }: SidebarToggleProps) {
         <ChevronLeft
           className={cn(
             "h-4 w-4 transition-transform duration-700 ease-in-out",
-            isOpen === false ? "rotate-180" : "rotate-0"
+            isOpen === false ? "rotate-180" : "rotate-0",
           )}
         />
       </Button>

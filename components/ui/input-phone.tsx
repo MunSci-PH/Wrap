@@ -53,7 +53,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
           {...props}
         />
       );
-    }
+    },
   );
 PhoneInput.displayName = "PhoneInput";
 
@@ -103,7 +103,7 @@ const CountrySelect = ({
           <ChevronsUpDown
             className={cn(
               "-mr-2 size-4 opacity-50",
-              disabled ? "hidden" : "opacity-100"
+              disabled ? "hidden" : "opacity-100",
             )}
           />
         </Button>
@@ -124,7 +124,7 @@ const CountrySelect = ({
                       selectedCountry={selectedCountry}
                       onChange={onChange}
                     />
-                  ) : null
+                  ) : null,
                 )}
               </CommandGroup>
             </ScrollArea>
@@ -151,14 +151,12 @@ const CountrySelectOption = ({
       <FlagComponent country={country} countryName={countryName} />
       <span className="flex-1 text-sm">{countryName}</span>
       <span className="text-sm text-foreground/50">{`+${RPNInput.getCountryCallingCode(
-        country
+        country,
       )}`}</span>
       <CheckIcon
         className={`
           ml-auto size-4
-          ${
-          country === selectedCountry ? "opacity-100" : "opacity-0"
-        }
+          ${country === selectedCountry ? "opacity-100" : "opacity-0"}
         `}
       />
     </CommandItem>
@@ -169,10 +167,12 @@ const FlagComponent = ({ country, countryName }: RPNInput.FlagProps) => {
   const Flag = flags[country];
 
   return (
-    <span className={`
-      flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20
-      [&_svg]:size-full
-    `}>
+    <span
+      className={`
+        flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20
+        [&_svg]:size-full
+      `}
+    >
       {Flag && <Flag title={countryName} />}
     </span>
   );

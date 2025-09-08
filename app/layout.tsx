@@ -51,9 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body
-        className={cn("min-h-screen", montserrat.className)}
-      >
+      <body className={cn("min-h-screen", montserrat.className)}>
         <ReactQueryClientProvider>
           <ThemeProvider
             attribute="class"

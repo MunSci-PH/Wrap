@@ -47,7 +47,7 @@ export function UserNav() {
       .from("idpics")
       .createSignedUrl(
         `${user?.user.user_metadata?.lrn}/${user?.user.user_metadata?.picture}`,
-        3600
+        3600,
       );
 
     if (!user_picture.data) return "#";

@@ -7,7 +7,7 @@ export async function getEnrolledClasses(client: TypedSupabaseClient) {
 
   if (user_data.error) {
     return Promise.reject(
-      new Error(`Error fetching user data: ${user_data.error.message}`)
+      new Error(`Error fetching user data: ${user_data.error.message}`),
     );
   }
 
@@ -27,7 +27,7 @@ export async function getEnrolledClasses(client: TypedSupabaseClient) {
 
     if (class_response.error) {
       return Promise.reject(
-        new Error(`Error fetching class data: ${class_response.error.message}`)
+        new Error(`Error fetching class data: ${class_response.error.message}`),
       );
     }
 

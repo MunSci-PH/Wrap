@@ -83,10 +83,13 @@ const ForgotPasswordForm = ({}: {
             )}
           />
           <div>
-            <Link href="/auth/login" className={`
+            <Link
+              href="/auth/login"
+              className={`
               text-sm
               hover:underline
-            `}>
+            `}
+            >
               Remember your password?
             </Link>
           </div>

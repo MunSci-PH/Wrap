@@ -82,7 +82,7 @@ export function ProfileTab() {
       .from("idpics")
       .createSignedUrl(
         `${user?.user.user_metadata?.lrn}/${user?.user.user_metadata?.picture}`,
-        3600
+        3600,
       );
 
     if (!user_picture.data) return "#";
@@ -169,7 +169,7 @@ export function ProfileTab() {
 
     if (removePicture.error) {
       toast.error(
-        `Failed to remove old picture: ${removePicture.error.message}`
+        `Failed to remove old picture: ${removePicture.error.message}`,
       );
       toast.dismiss(loadingToast);
       setIsUploading(false);
@@ -182,7 +182,7 @@ export function ProfileTab() {
 
     if (uploadPicture.error) {
       toast.error(
-        `Failed to upload new picture: ${uploadPicture.error.message}`
+        `Failed to upload new picture: ${uploadPicture.error.message}`,
       );
       toast.dismiss(loadingToast);
       setIsUploading(false);
@@ -242,10 +242,12 @@ export function ProfileTab() {
   }
 
   return (
-    <div className={`
+    <div
+      className={`
       flex flex-col gap-8
       md:flex-row
-    `}>
+    `}
+    >
       {/* Personal Information Form */}
       <div className="md:w-2/3">
         <div className="rounded-md border bg-card p-6 text-card-foreground">
@@ -273,10 +275,12 @@ export function ProfileTab() {
                 )}
               />
               {/* First Name, Middle Name, Last Name (inline) */}
-              <div className={`
+              <div
+                className={`
                 grid grid-cols-1 gap-4
                 md:grid-cols-3
-              `}>
+              `}
+              >
                 <FormField
                   control={form.control}
                   name="firstname"
@@ -340,10 +344,12 @@ export function ProfileTab() {
               />
 
               {/* Grade and Section (inline) */}
-              <div className={`
+              <div
+                className={`
                 grid grid-cols-1 gap-4
                 md:grid-cols-2
-              `}>
+              `}
+              >
                 <FormField
                   control={form.control}
                   name="grade"
@@ -386,7 +392,7 @@ export function ProfileTab() {
                             variant="outline"
                             className={cn(
                               "w-full justify-start text-left font-normal",
-                              !field.value && "text-muted-foreground"
+                              !field.value && "text-muted-foreground",
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />

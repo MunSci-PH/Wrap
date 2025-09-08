@@ -22,7 +22,7 @@ export function Sidebar() {
           lg:translate-x-0
         `,
         !getOpenState() ? "w-[90px]" : "w-72",
-        settings.disabled && "hidden"
+        settings.disabled && "hidden",
       )}
     >
       <SidebarToggle isOpen={isOpen} setIsOpen={toggleOpen} />
@@ -37,7 +37,7 @@ export function Sidebar() {
         <Button
           className={cn(
             "mb-1 transition-transform duration-300 ease-in-out",
-            !getOpenState() ? "translate-x-1" : "translate-x-0"
+            !getOpenState() ? "translate-x-1" : "translate-x-0",
           )}
           variant="link"
           asChild
@@ -54,7 +54,7 @@ export function Sidebar() {
                 `,
                 !getOpenState()
                   ? "hidden -translate-x-96 opacity-0"
-                  : "translate-x-0 opacity-100"
+                  : "translate-x-0 opacity-100",
               )}
             >
               MUNSCI WRAP

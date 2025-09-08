@@ -33,7 +33,7 @@ export default async function Grade(props: {
                 .eq("id", studentId)
                 .single();
               return data;
-            })
+            }),
           )
         ).filter(Boolean)
       : [];
@@ -68,7 +68,7 @@ export default async function Grade(props: {
                               .from("idpics")
                               .createSignedUrl(
                                 `${student?.lrn}/${student?.picture}`,
-                                3600
+                                3600,
                               )
                           )?.data?.signedUrl || "#"
                         }

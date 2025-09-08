@@ -1,6 +1,6 @@
 import { FlatCompat } from "@eslint/eslintrc";
 import { defineConfig } from "eslint/config";
-import pluginQuery from '@tanstack/eslint-plugin-query'
+import pluginQuery from "@tanstack/eslint-plugin-query";
 import eslintParserTypeScript from "@typescript-eslint/parser";
 import eslintPluginBetterTailwindcss from "eslint-plugin-better-tailwindcss";
 import js from "@eslint/js";
@@ -25,31 +25,38 @@ export default defineConfig([
     languageOptions: {
       parser: eslintParserTypeScript,
       parserOptions: {
-        project: true
-      }
-    }
+        project: true,
+      },
+    },
   },
   {
     languageOptions: {
       parserOptions: {
         ecmaFeatures: {
-          jsx: true
-        }
-      }
+          jsx: true,
+        },
+      },
     },
     plugins: {
-      "better-tailwindcss": eslintPluginBetterTailwindcss
+      "better-tailwindcss": eslintPluginBetterTailwindcss,
     },
     rules: {
       ...eslintPluginBetterTailwindcss.configs["recommended-warn"].rules,
-      "better-tailwindcss/enforce-consistent-line-wrapping": ["warn", { preferSingleLine: true, lineBreakStyle: "windows" }]
+      "better-tailwindcss/enforce-consistent-line-wrapping": [
+        "warn",
+        { preferSingleLine: true, lineBreakStyle: "windows" },
+      ],
     },
     settings: {
       "better-tailwindcss": {
         entryPoint: "app/globals.css",
-      }
-    }
+      },
+    },
   },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  ...pluginQuery.configs['flat/recommended'],
+  ...compat.extends(
+    "next/core-web-vitals",
+    "next/typescript",
+    "prettier",
+  ),
+  ...pluginQuery.configs["flat/recommended"],
 ]);
