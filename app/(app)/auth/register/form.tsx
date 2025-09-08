@@ -220,10 +220,7 @@ const RegisterForm = () => {
     <>
       <Form {...form} control={form.control}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className={`
-            grid grid-cols-1 gap-4
-            xl:grid-cols-2
-          `}>
+          <CardContent className={`grid grid-cols-1 gap-4 xl:grid-cols-2`}>
             {error && (
               <Alert variant="destructive" className="xl:col-span-2">
                 <AlertDescription>{error}</AlertDescription>
@@ -467,10 +464,7 @@ const RegisterForm = () => {
                       width={200}
                       height={200}
                       draggable={false}
-                      className={`
-                        self-center rounded-full
-                        xl:size-60
-                      `}
+                      className={`self-center rounded-full xl:size-60`}
                     />
                     <FormControl>
                       <Input type="file" required {...fileRef} />
@@ -611,10 +605,7 @@ const RegisterForm = () => {
                 setError(e);
                 console.error(e);
               }}
-              className={`
-                mx-auto
-                xl:col-span-2
-              `}
+              className={`mx-auto xl:col-span-2`}
             />
           </CardContent>
         </form>
