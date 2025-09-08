@@ -30,18 +30,12 @@ export default function Settings() {
             {/* Left sidebar with tabs */}
             <div className="md:w-1/4">
               <nav
-                className={`
-                  flex flex-col overflow-hidden rounded-md bg-card
-                  text-card-foreground
-                `}
+                className={`flex flex-col overflow-hidden rounded-md bg-card text-card-foreground`}
               >
                 <Button
                   onClick={() => setActiveTab("profile")}
                   className={cn(
-                    `
-                      flex items-center justify-start gap-2 rounded-b-none px-10
-                      py-6 text-left font-medium transition-colors
-                    `,
+                    `flex items-center justify-start gap-2 rounded-b-none px-10 py-6 text-left font-medium transition-colors`,
                     activeTab === "profile" && "bg-muted font-medium",
                   )}
                   variant={"outline"}
@@ -52,10 +46,7 @@ export default function Settings() {
                 <Button
                   onClick={() => setActiveTab("security")}
                   className={cn(
-                    `
-                      flex items-center justify-start gap-2 rounded-t-none px-10
-                      py-6 text-left font-medium transition-colors
-                    `,
+                    `flex items-center justify-start gap-2 rounded-t-none px-10 py-6 text-left font-medium transition-colors`,
                     activeTab === "security" && "bg-muted font-medium",
                   )}
                   variant={"outline"}

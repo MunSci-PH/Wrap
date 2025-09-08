@@ -104,11 +104,7 @@ export function CollapseMenuButton({
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent
-        className={`
-          overflow-hidden
-          data-[state=closed]:animate-collapsible-up
-          data-[state=open]:animate-collapsible-down
-        `}
+        className={`overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down`}
       >
         {submenus.map(({ href, label, active }, index) => (
           <Button

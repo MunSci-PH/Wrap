@@ -16,11 +16,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        `
-          fixed top-0 left-0 z-20 h-screen -translate-x-full transition-[width]
-          duration-300 ease-in-out
-          lg:translate-x-0
-        `,
+        `fixed top-0 left-0 z-20 h-screen -translate-x-full transition-[width] duration-300 ease-in-out lg:translate-x-0`,
         !getOpenState() ? "w-[90px]" : "w-72",
         settings.disabled && "hidden",
       )}
@@ -29,10 +25,7 @@ export function Sidebar() {
       <div
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        className={`
-          relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md
-          dark:shadow-zinc-800
-        `}
+        className={`relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md dark:shadow-zinc-800`}
       >
         <Button
           className={cn(
@@ -46,12 +39,7 @@ export function Sidebar() {
             <Image src={Logo} alt="Logo" className="mr-1 size-6" />
             <span
               className={cn(
-                `
-                  animate-change-color bg-linear-to-r from-emerald-600
-                  to-green-600 bg-clip-text text-lg font-black text-transparent
-                  transition-[transform,opacity,display] duration-300
-                  ease-in-out
-                `,
+                `animate-change-color bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-lg font-black text-transparent transition-[transform,opacity,display] duration-300 ease-in-out`,
                 !getOpenState()
                   ? "hidden -translate-x-96 opacity-0"
                   : "translate-x-0 opacity-100",

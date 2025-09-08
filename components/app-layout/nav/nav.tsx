@@ -35,10 +35,7 @@ const Nav = () => {
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
               <span
-                className={`
-                  animate-change-color bg-linear-to-r from-emerald-600
-                  to-green-600 bg-clip-text text-lg font-black text-transparent
-                `}
+                className={`animate-change-color bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-lg font-black text-transparent`}
               >
                 MUNSCI WRAP
               </span>
@@ -90,10 +87,7 @@ const Nav = () => {
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
               <span
-                className={`
-                  animate-change-color bg-linear-to-r from-emerald-600
-                  to-green-600 bg-clip-text text-lg font-black text-transparent
-                `}
+                className={`animate-change-color bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-lg font-black text-transparent`}
               >
                 WRAP
               </span>
@@ -162,19 +156,13 @@ const Nav = () => {
               transition={{ duration: 0.2 }}
             >
               <Link
-                className={`
-                  block py-2 text-sm font-medium underline-offset-4
-                  hover:underline
-                `}
+                className={`block py-2 text-sm font-medium underline-offset-4 hover:underline`}
                 href="/dashboard"
               >
                 Home
               </Link>
               <Link
-                className={`
-                  block py-2 text-sm font-medium underline-offset-4
-                  hover:underline
-                `}
+                className={`block py-2 text-sm font-medium underline-offset-4 hover:underline`}
                 href="/dashboard/settings"
               >
                 Settings
@@ -212,10 +200,7 @@ const Nav = () => {
             <Link className="flex items-center justify-center" href="/">
               <Image src={Logo} alt="Logo" className="size-6" />
               <span
-                className={`
-                  animate-change-color bg-linear-to-r from-emerald-600
-                  to-green-600 bg-clip-text text-lg font-black text-transparent
-                `}
+                className={`animate-change-color bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-lg font-black text-transparent`}
               >
                 MUNSCI WRAP
               </span>

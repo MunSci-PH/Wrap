@@ -44,7 +44,7 @@ export default defineConfig([
       ...eslintPluginBetterTailwindcss.configs["recommended-warn"].rules,
       "better-tailwindcss/enforce-consistent-line-wrapping": [
         "warn",
-        { preferSingleLine: true, lineBreakStyle: "windows" },
+        { preferSingleLine: true, lineBreakStyle: "windows", group: "never", printWidth: 0 },
       ],
     },
     settings: {

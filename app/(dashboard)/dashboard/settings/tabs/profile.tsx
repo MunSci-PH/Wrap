@@ -427,9 +427,7 @@ export function ProfileTab() {
                     <FormControl>
                       <Textarea
                         placeholder="Address"
-                        className={`
-                          field-sizing-content min-h-[80px] resize-none
-                        `}
+                        className={`field-sizing-content min-h-[80px] resize-none`}
                         {...field}
                       />
                     </FormControl>
@@ -490,11 +488,7 @@ export function ProfileTab() {
               />
               <Label
                 htmlFor="picture"
-                className={`
-                  flex h-10 cursor-pointer items-center justify-center gap-2
-                  rounded-md bg-primary px-4 py-2 text-primary-foreground
-                  hover:bg-primary/90
-                `}
+                className={`flex h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90`}
               >
                 <Upload className="h-4 w-4" />
                 Change Picture

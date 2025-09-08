@@ -37,10 +37,7 @@ export function SheetMenu() {
             <Link href="/dashboard" className="flex items-center gap-2">
               <Image src={Logo} alt="Logo" className="size-6" />
               <SheetTitle
-                className={`
-                  animate-change-color bg-linear-to-r from-emerald-600
-                  to-green-600 bg-clip-text text-lg font-black text-transparent
-                `}
+                className={`animate-change-color bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-lg font-black text-transparent`}
               >
                 WRAP
               </SheetTitle>

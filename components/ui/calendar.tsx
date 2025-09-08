@@ -144,10 +144,7 @@ function Calendar({
   );
   const _dayButtonClassName = cn(
     buttonVariants({ variant: "ghost" }),
-    `
-      size-8 rounded-md p-0 font-normal transition-none
-      aria-selected:opacity-100
-    `,
+    `size-8 rounded-md p-0 font-normal transition-none aria-selected:opacity-100`,
     props.dayButtonClassName,
   );
   const buttonRangeClassName =
@@ -163,18 +160,11 @@ function Calendar({
     props.rangeEndClassName,
   );
   const _rangeMiddleClassName = cn(
-    `
-      bg-accent !text-foreground
-      [&>button]:bg-transparent [&>button]:!text-foreground
-      [&>button]:hover:bg-transparent [&>button]:hover:!text-foreground
-    `,
+    `bg-accent !text-foreground [&>button]:bg-transparent [&>button]:!text-foreground [&>button]:hover:bg-transparent [&>button]:hover:!text-foreground`,
     props.rangeMiddleClassName,
   );
   const _selectedClassName = cn(
-    `
-      [&>button]:bg-primary [&>button]:text-primary-foreground
-      [&>button]:hover:bg-primary [&>button]:hover:text-primary-foreground
-    `,
+    `[&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary [&>button]:hover:text-primary-foreground`,
     props.selectedClassName,
   );
   const _todayClassName = cn(
@@ -182,11 +172,7 @@ function Calendar({
     props.todayClassName,
   );
   const _outsideClassName = cn(
-    `
-      day-outside text-muted-foreground opacity-50
-      aria-selected:bg-accent/50 aria-selected:text-muted-foreground
-      aria-selected:opacity-30
-    `,
+    `day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30`,
     props.outsideClassName,
   );
   const _disabledClassName = cn(
@@ -390,10 +376,7 @@ function Nav({
     <nav className={cn("flex items-center", className)}>
       <Button
         variant="outline"
-        className={`
-          absolute left-0 h-7 w-7 bg-transparent p-0 opacity-80
-          hover:opacity-100
-        `}
+        className={`absolute left-0 h-7 w-7 bg-transparent p-0 opacity-80 hover:opacity-100`}
         type="button"
         tabIndex={isPreviousDisabled ? undefined : -1}
         disabled={isPreviousDisabled}
@@ -411,10 +394,7 @@ function Nav({
 
       <Button
         variant="outline"
-        className={`
-          absolute right-0 h-7 w-7 bg-transparent p-0 opacity-80
-          hover:opacity-100
-        `}
+        className={`absolute right-0 h-7 w-7 bg-transparent p-0 opacity-80 hover:opacity-100`}
         type="button"
         tabIndex={isNextDisabled ? undefined : -1}
         disabled={isNextDisabled}

@@ -560,11 +560,7 @@ const RegisterForm = () => {
                   name="pwd"
                   render={({ field }) => (
                     <FormItem
-                      className={`
-                        flex w-full flex-row items-start space-y-0 space-x-3
-                        rounded-md border p-4
-                        hover:bg-secondary
-                      `}
+                      className={`flex w-full flex-row items-start space-y-0 space-x-3 rounded-md border p-4 hover:bg-secondary`}
                     >
                       <FormControl>
                         <Checkbox
@@ -590,9 +586,7 @@ const RegisterForm = () => {
             >
               {isLoading || captchaLoading ? (
                 <span
-                  className={`
-                    flex flex-1 flex-row items-center justify-center gap-1
-                  `}
+                  className={`flex flex-1 flex-row items-center justify-center gap-1`}
                 >
                   <Loader2 className="animate-spin" />
                   {loadingText}

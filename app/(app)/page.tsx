@@ -7,10 +7,7 @@ export default async function Home() {
     <>
       <main className="grow">
         <section
-          className={`
-            bg-[url(/bg.png)] bg-cover bg-center bg-no-repeat py-32 text-white
-            md:py-48
-          `}
+          className={`bg-[url(/bg.png)] bg-cover bg-center bg-no-repeat py-32 text-white md:py-48`}
         >
           <div
             className={`
@@ -20,23 +17,13 @@ export default async function Home() {
           `}
           >
             <div
-              className={`
-                flex flex-col items-center
-                md:flex-row md:items-start md:justify-between
-              `}
+              className={`flex flex-col items-center md:flex-row md:items-start md:justify-between`}
             >
               <div
-                className={`
-                  my-auto text-center
-                  md:order-1 md:w-3/4 md:text-left
-                `}
+                className={`my-auto text-center md:order-1 md:w-3/4 md:text-left`}
               >
                 <h1
-                  className={`
-                    mb-6 text-5xl leading-tight font-extrabold
-                    md:text-6xl
-                    lg:text-7xl
-                  `}
+                  className={`mb-6 text-5xl leading-tight font-extrabold md:text-6xl lg:text-7xl`}
                 >
                   WELCOME TO <br />
                   <span
@@ -50,10 +37,7 @@ export default async function Home() {
                   </span>
                 </h1>
                 <p
-                  className={`
-                    mx-auto mb-8 text-xl font-bold
-                    md:mx-0 md:text-2xl
-                  `}
+                  className={`mx-auto mb-8 text-xl font-bold md:mx-0 md:text-2xl`}
                 >
                   MunSci&apos;s Web-based Real-time Academic Platform (WRAP) is
                   a student grade information system that ensures secure,
@@ -125,10 +109,7 @@ export default async function Home() {
             >
               <div>
                 <div
-                  className={`
-                    mx-auto mb-4 flex size-12 items-center justify-center
-                    rounded-full bg-primary text-primary-foreground
-                  `}
+                  className={`mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground`}
                 >
                   1
                 </div>
@@ -140,10 +121,7 @@ export default async function Home() {
               </div>
               <div>
                 <div
-                  className={`
-                    mx-auto mb-4 flex size-12 items-center justify-center
-                    rounded-full bg-primary text-primary-foreground
-                  `}
+                  className={`mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground`}
                 >
                   2
                 </div>
@@ -155,10 +133,7 @@ export default async function Home() {
               </div>
               <div>
                 <div
-                  className={`
-                    mx-auto mb-4 flex size-12 items-center justify-center
-                    rounded-full bg-primary text-primary-foreground
-                  `}
+                  className={`mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground`}
                 >
                   3
                 </div>

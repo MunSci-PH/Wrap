@@ -108,9 +108,7 @@ export function SecurityTab() {
               Password requirements:
             </h3>
             <ul
-              className={`
-                list-disc space-y-1 pl-5 text-xs text-muted-foreground
-              `}
+              className={`list-disc space-y-1 pl-5 text-xs text-muted-foreground`}
             >
               <li>At least 6 characters long</li>
               <li>Include at least one uppercase letter</li>
