@@ -60,8 +60,9 @@ export default function Dashboard() {
     queryFn: () => getUserData(supabase),
   });
   const class_data = useQuery({
-    queryKey: ["enrolled_classes", supabase],
-    queryFn: () => getEnrolledClasses(supabase),
+    queryKey: ["enrolled_classes", supabase, user_data.data],
+    queryFn: () => getEnrolledClasses(supabase, user_data.data!),
+    enabled: user_data.isFetched,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -116,7 +117,7 @@ export default function Dashboard() {
     }
 
     const enroll = await supabase
-      .from("userdata")
+      .from("users")
       .update({
         enrolled: [...(user_data.data?.data?.enrolled || []), id],
       })
@@ -171,7 +172,7 @@ export default function Dashboard() {
     }
 
     const enroll = await supabase
-      .from("userdata")
+      .from("users")
       .update({
         enrolled: [...(user_data.data?.data?.enrolled || []), data.code],
       })
@@ -334,13 +335,13 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent className="w-full">
-              {class_data.isLoading ? (
+              {class_data.isLoading || !class_data.isEnabled ? (
                 <div className="space-y-4">
                   <Skeleton className="h-20 w-full rounded" />
                 </div>
               ) : (
                 <>
-                  {class_data.data!.length > 0 ? (
+                  {class_data.data !== undefined && class_data.data.length > 0 ? (
                     class_data.data!.map((classData) => (
                       <Button
                         asChild

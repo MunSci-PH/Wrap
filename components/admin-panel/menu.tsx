@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getEnrolledClasses } from "@/queries/getEnrolledClasses";
 import { Menu as MenuType } from "@/lib/menu-list";
+import { getUserData } from "@/queries/getUserData";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -33,8 +34,9 @@ export function Menu({ isOpen }: MenuProps) {
   useQuery({
     queryKey: ["enrolledClasses", pathname, supabase],
     queryFn: async () => {
-      const classes = await getEnrolledClasses(supabase);
       const user = await supabase.auth.getClaims();
+      const user_data = await getUserData(supabase);
+      const classes = await getEnrolledClasses(supabase, user_data);
 
       const list: MenuType[] = classes.map((classData) => ({
         href: `/dashboard/class/${classData.id}`,

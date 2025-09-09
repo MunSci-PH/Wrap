@@ -22,31 +22,27 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useSupabaseBrowser from "@/utils/client";
 import { useQuery } from "@tanstack/react-query";
+import { getUserById } from "@/queries/getUserById";
+import { getUser } from "@/queries/getUser";
 
 export function UserNav() {
   const supabase = useSupabaseBrowser();
 
-  const getUser = async () => {
-    const user_data = await supabase.auth.getUser();
-
-    if (!user_data.data) return null;
-    return user_data.data;
-  };
-
   const user = useQuery({
-    queryKey: ["user"],
-    queryFn: getUser,
+    queryKey: ["user", supabase],
+    queryFn: () => getUser(supabase),
   });
 
   const getUserPicture = async () => {
-    const user = await getUser();
+    if (!user?.data?.data) return "#";
+    const user_data = await getUserById(supabase, user.data.data.user!.id);
 
-    if (!user?.user) return "#";
+    if (user_data.error) return "#";
 
     const user_picture = await supabase.storage
       .from("idpics")
       .createSignedUrl(
-        `${user?.user.user_metadata?.lrn}/${user?.user.user_metadata?.picture}`,
+        `${user_data.data.lrn}/${user_data.data.picture}`,
         3600,
       );
 
@@ -58,6 +54,7 @@ export function UserNav() {
   const userPicture = useQuery({
     queryKey: ["user_picture"],
     queryFn: getUserPicture,
+    enabled: !!user.data
   });
 
   return (
@@ -89,9 +86,9 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm leading-none font-medium">{`${user.data?.user?.user_metadata?.firstname} ${user.data?.user?.user_metadata?.middlename.charAt(0)}${user.data?.user?.user_metadata?.middlename ? "." : ""} ${user.data?.user?.user_metadata?.lastname}`}</p>
+            <p className="text-sm leading-none font-medium">{`${user.data?.data.user!.user_metadata?.firstname} ${user.data?.data.user!.user_metadata?.middlename.charAt(0)}${user.data?.data.user!.user_metadata?.middlename ? "." : ""} ${user.data?.data.user!.user_metadata?.lastname}`}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {user.data?.user?.email}
+              {user.data?.data.user!.email}
             </p>
           </div>
         </DropdownMenuLabel>

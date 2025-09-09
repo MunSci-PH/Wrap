@@ -28,7 +28,7 @@ export default async function Grade(props: {
           await Promise.all(
             classData.enrolled.map(async (studentId: string) => {
               const { data } = await supabase
-                .from("userdata")
+                .from("users")
                 .select("*")
                 .eq("id", studentId)
                 .single();
@@ -37,6 +37,8 @@ export default async function Grade(props: {
           )
         ).filter(Boolean)
       : [];
+  
+  console.log(students);
 
   return (
     <ContentLayout title="Class View">
