@@ -18,19 +18,19 @@ export function Sidebar() {
       className={cn(
         `fixed top-0 left-0 z-20 h-screen -translate-x-full transition-[width] duration-300 ease-in-out lg:translate-x-0`,
         !getOpenState() ? "w-[90px]" : "w-72",
-        settings.disabled && "hidden",
+        settings.disabled && "hidden"
       )}
     >
       <SidebarToggle isOpen={isOpen} setIsOpen={toggleOpen} />
       <div
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        className={`relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md dark:shadow-zinc-800`}
+        className={`relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md`}
       >
         <Button
           className={cn(
             "mb-1 transition-transform duration-300 ease-in-out",
-            !getOpenState() ? "translate-x-1" : "translate-x-0",
+            !getOpenState() ? "translate-x-1" : "translate-x-0"
           )}
           variant="link"
           asChild
@@ -42,7 +42,7 @@ export function Sidebar() {
                 `animate-change-color bg-linear-to-r from-emerald-600 to-green-600 bg-clip-text text-lg font-black text-transparent transition-[transform,opacity,display] duration-300 ease-in-out`,
                 !getOpenState()
                   ? "hidden -translate-x-96 opacity-0"
-                  : "translate-x-0 opacity-100",
+                  : "translate-x-0 opacity-100"
               )}
             >
               MUNSCI WRAP

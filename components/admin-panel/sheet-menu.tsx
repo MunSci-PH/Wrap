@@ -24,7 +24,7 @@ export function SheetMenu() {
       <SheetContent
         className={`
         flex h-full flex-col px-3
-        sm:w-72
+        sm:w-72 bg-sidebar 
       `}
         side="left"
       >

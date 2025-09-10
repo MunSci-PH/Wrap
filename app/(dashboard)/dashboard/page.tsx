@@ -51,10 +51,9 @@ export default function Dashboard() {
     queryKey: ["user", supabase],
     queryFn: () => getUser(supabase),
   });
-  const user_metadata = useQuery({
-    queryKey: ["user_metadata", supabase],
-    queryFn: () => getUserMetadata(supabase),
-  });
+  const user_metadata = !user.isLoading
+    ? user.data?.data.user?.user_metadata
+    : null;
   const user_data = useQuery({
     queryKey: ["user_data", supabase],
     queryFn: () => getUserData(supabase),
@@ -104,7 +103,11 @@ export default function Dashboard() {
     const { error } = await supabase.from("classes").insert({
       id,
       name: data.name,
-      owner_name: `${user_metadata.data?.lastname}, ${user_metadata.data?.firstname} ${user_metadata.data?.middlename?.charAt(0)}${user_metadata.data?.middlename ? "." : ""}`,
+      owner_name: `${user_metadata?.lastname}, ${
+        user_metadata?.firstname
+      } ${user_metadata?.middlename?.charAt(0)}${
+        user_metadata?.middlename ? "." : ""
+      }`,
       metadata: {},
       enrolled: [user.data!.data.user!.id],
     });
@@ -211,14 +214,14 @@ export default function Dashboard() {
         className={`container mx-auto flex flex-1 flex-col items-center px-4 text-center`}
       >
         <div className="mt-12 flex w-full flex-nowrap justify-between">
-          {user.isLoading || user_metadata.isLoading ? (
-            <Skeleton className="h-12 w-1/2 rounded" />
+          {user.isLoading || !user_metadata ? (
+            <Skeleton className="h-12 w-1/2 rounded bg-card" />
           ) : (
             <p
               className={`my-auto inline w-fit text-left font-sans text-4xl font-bold`}
             >
               Good {time < 12 ? "Morning" : "Afternoon"},{" "}
-              {user_metadata.data?.firstname}
+              {user_metadata.firstname}
             </p>
           )}
         </div>
@@ -228,8 +231,8 @@ export default function Dashboard() {
               <div className="flex flex-1 flex-row items-center justify-between">
                 {user_data.isLoading ? (
                   <>
-                    <Skeleton className="h-8 w-1/4 rounded" />
-                    <Skeleton className="h-8 w-24 rounded" />
+                    <Skeleton className="h-8 w-1/4 rounded bg-card" />
+                    <Skeleton className="h-8 w-24 rounded bg-card" />
                   </>
                 ) : (
                   <>
@@ -257,7 +260,7 @@ export default function Dashboard() {
                             <form
                               className="flex flex-col space-y-4"
                               onSubmit={createClassForm.handleSubmit(
-                                createClass,
+                                createClass
                               )}
                             >
                               <FormField
@@ -337,16 +340,17 @@ export default function Dashboard() {
             <CardContent className="w-full">
               {class_data.isLoading || !class_data.isEnabled ? (
                 <div className="space-y-4">
-                  <Skeleton className="h-20 w-full rounded" />
+                  <Skeleton className="h-20 w-full rounded bg-card" />
                 </div>
               ) : (
                 <>
-                  {class_data.data !== undefined && class_data.data.length > 0 ? (
+                  {class_data.data !== undefined &&
+                  class_data.data.length > 0 ? (
                     class_data.data!.map((classData) => (
                       <Button
                         asChild
                         variant={"outline"}
-                        className="w-full py-10"
+                        className="w-full py-10 bg-card"
                         key={classData.id}
                       >
                         <Link href={`/dashboard/class/${classData.id}`}>

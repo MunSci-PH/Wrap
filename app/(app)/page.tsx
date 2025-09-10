@@ -47,7 +47,7 @@ export default async function Home() {
             </div>
           </div>
         </section>
-        <section id="features" className="bg-secondary py-20">
+        <section id="features" className="bg-background py-20">
           <div className="container mx-auto px-4">
             <h2 className="mb-12 text-center text-3xl font-bold">
               Key Features
@@ -96,7 +96,7 @@ export default async function Home() {
             </p>
           </div>
         </section>
-        <section className="bg-muted py-20">
+        <section className="bg-card py-20">
           <div className="container mx-auto px-4">
             <h2 className="mb-12 text-center text-3xl font-bold">
               How It Works
