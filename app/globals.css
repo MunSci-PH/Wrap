@@ -37,7 +37,7 @@
   --sidebar-border: oklch(0.85 0.02 240.75);
   --sidebar-ring: oklch(0.67 0.17 153.85);
 
-  --font-sans: Lato, sans-serif;
+  --font-sans: Montserrat, sans-serif;
   --font-serif: Merriweather, Geist, Geist Fallback, ui-serif, Georgia, Cambria,
     "Times New Roman", Times, serif;
   --font-mono: Roboto Mono, Geist Mono, Geist Mono Fallback, ui-monospace,
