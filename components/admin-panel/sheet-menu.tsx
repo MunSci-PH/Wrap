@@ -22,10 +22,7 @@ export function SheetMenu() {
         </Button>
       </SheetTrigger>
       <SheetContent
-        className={`
-        flex h-full flex-col px-3
-        sm:w-72 bg-sidebar 
-      `}
+        className={`flex h-full flex-col bg-sidebar px-3 sm:w-72`}
         side="left"
       >
         <SheetHeader>

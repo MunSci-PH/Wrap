@@ -2,16 +2,19 @@ import { TypedSupabaseClient } from "@/utils/types";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { Database } from "@/database.types";
 
-export async function getEnrolledClasses(client: TypedSupabaseClient, user_data: PostgrestSingleResponse<{
-  enrolled: string[] | null;
-  firstname: string;
-  id: string;
-  lastname: string;
-  lrn: string;
-  middlename: string | null;
-  picture: string;
-  role: Database["public"]["Enums"]["app_role"];
-}>) {
+export async function getEnrolledClasses(
+  client: TypedSupabaseClient,
+  user_data: PostgrestSingleResponse<{
+    enrolled: string[] | null;
+    firstname: string;
+    id: string;
+    lastname: string;
+    lrn: string;
+    middlename: string | null;
+    picture: string;
+    role: Database["public"]["Enums"]["app_role"];
+  }>,
+) {
   const temporary_data = [];
 
   if (user_data.error) {

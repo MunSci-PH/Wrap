@@ -20,7 +20,6 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useSupabaseBrowser from "@/utils/client";
 import { useQuery } from "@tanstack/react-query";
-import { getUserMetadata } from "@/queries/getUserMetadata";
 import { getUserData } from "@/queries/getUserData";
 import {
   Form,
@@ -260,7 +259,7 @@ export default function Dashboard() {
                             <form
                               className="flex flex-col space-y-4"
                               onSubmit={createClassForm.handleSubmit(
-                                createClass
+                                createClass,
                               )}
                             >
                               <FormField
@@ -350,7 +349,7 @@ export default function Dashboard() {
                       <Button
                         asChild
                         variant={"outline"}
-                        className="w-full py-10 bg-card"
+                        className="w-full bg-card py-10"
                         key={classData.id}
                       >
                         <Link href={`/dashboard/class/${classData.id}`}>

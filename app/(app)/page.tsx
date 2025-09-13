@@ -9,13 +9,7 @@ export default async function Home() {
         <section
           className={`bg-[url(/bg.png)] bg-cover bg-center bg-no-repeat py-32 text-white md:py-48`}
         >
-          <div
-            className={`
-            container mx-auto px-4
-            lg:px-12
-            xl:px-24
-          `}
-          >
+          <div className={`container mx-auto px-4 lg:px-12 xl:px-24`}>
             <div
               className={`flex flex-col items-center md:flex-row md:items-start md:justify-between`}
             >
@@ -27,11 +21,7 @@ export default async function Home() {
                 >
                   WELCOME TO <br />
                   <span
-                    className={`
-                    text-6xl font-black
-                    md:text-7xl
-                    lg:text-8xl
-                  `}
+                    className={`text-6xl font-black md:text-7xl lg:text-8xl`}
                   >
                     MUNSCI WRAP
                   </span>
@@ -52,12 +42,7 @@ export default async function Home() {
             <h2 className="mb-12 text-center text-3xl font-bold">
               Key Features
             </h2>
-            <div
-              className={`
-              grid gap-8
-              md:grid-cols-3
-            `}
-            >
+            <div className={`grid gap-8 md:grid-cols-3`}>
               <FeatureCard
                 icon={<Album className="size-10 text-primary" />}
                 title="Easy Information Access"
@@ -101,12 +86,7 @@ export default async function Home() {
             <h2 className="mb-12 text-center text-3xl font-bold">
               How It Works
             </h2>
-            <div
-              className={`
-              grid gap-8 text-center
-              md:grid-cols-3
-            `}
-            >
+            <div className={`grid gap-8 text-center md:grid-cols-3`}>
               <div>
                 <div
                   className={`mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground`}

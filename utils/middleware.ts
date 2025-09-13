@@ -59,8 +59,7 @@ export async function updateSession(request: NextRequest) {
 
       if (error) throw error;
       if (data) {
-        const isAdmin =
-          data.role == "teacher" ? true : false;
+        const isAdmin = data.role == "teacher" ? true : false;
         if (!isAdmin) {
           return NextResponse.redirect(new URL("/dashboard/", request.url));
         }

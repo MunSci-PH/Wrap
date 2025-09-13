@@ -41,10 +41,7 @@ export function UserNav() {
 
     const user_picture = await supabase.storage
       .from("idpics")
-      .createSignedUrl(
-        `${user_data.data.lrn}/${user_data.data.picture}`,
-        3600,
-      );
+      .createSignedUrl(`${user_data.data.lrn}/${user_data.data.picture}`, 3600);
 
     if (!user_picture.data) return "#";
 
@@ -54,7 +51,7 @@ export function UserNav() {
   const userPicture = useQuery({
     queryKey: ["user_picture"],
     queryFn: getUserPicture,
-    enabled: !!user.data
+    enabled: !!user.data,
   });
 
   return (

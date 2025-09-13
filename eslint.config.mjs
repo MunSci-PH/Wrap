@@ -44,7 +44,12 @@ export default defineConfig([
       ...eslintPluginBetterTailwindcss.configs["recommended-warn"].rules,
       "better-tailwindcss/enforce-consistent-line-wrapping": [
         "warn",
-        { preferSingleLine: true, lineBreakStyle: "windows", group: "never", printWidth: 0 },
+        {
+          preferSingleLine: true,
+          lineBreakStyle: "windows",
+          group: "never",
+          printWidth: 0,
+        },
       ],
     },
     settings: {
@@ -56,7 +61,7 @@ export default defineConfig([
   ...compat.extends(
     "next/core-web-vitals",
     "next/typescript",
-    "prettier",
+    "plugin:prettier/recommended",
   ),
   ...pluginQuery.configs["flat/recommended"],
 ]);

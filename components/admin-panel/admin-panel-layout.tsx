@@ -20,7 +20,7 @@ export default function AdminPanelLayout({
       <main
         className={cn(
           `min-h-[calc(100vh_-_56px)] bg-background transition-[margin-left] duration-300 ease-in-out`,
-          !settings.disabled && (!getOpenState() ? "lg:ml-[90px]" : "lg:ml-72")
+          !settings.disabled && (!getOpenState() ? "lg:ml-[90px]" : "lg:ml-72"),
         )}
       >
         {children}
@@ -28,7 +28,7 @@ export default function AdminPanelLayout({
       <footer
         className={cn(
           "transition-[margin-left] duration-300 ease-in-out",
-          !settings.disabled && (!getOpenState() ? "lg:ml-[90px]" : "lg:ml-72")
+          !settings.disabled && (!getOpenState() ? "lg:ml-[90px]" : "lg:ml-72"),
         )}
       >
         <Footer />
