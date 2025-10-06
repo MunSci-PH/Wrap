@@ -21,18 +21,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useSupabaseBrowser from "@/utils/client";
 import { useQuery } from "@tanstack/react-query";
 import { getUserData } from "@/queries/getUserData";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Skeleton } from "@/components/ui/skeleton";
 import { getEnrolledClasses } from "@/queries/getEnrolledClasses";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Form } from "@/components/ui/form";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 const createClassSchema = z.object({
   name: z.string().min(1, "Class name is required"),
@@ -102,9 +96,7 @@ export default function Dashboard() {
     const { error } = await supabase.from("classes").insert({
       id,
       name: data.name,
-      owner_name: `${user_metadata?.lastname}, ${
-        user_metadata?.firstname
-      } ${user_metadata?.middlename?.charAt(0)}${
+      owner_name: `${user_metadata?.lastname}, ${user_metadata?.firstname} ${user_metadata?.middlename?.charAt(0)}${
         user_metadata?.middlename ? "." : ""
       }`,
       metadata: {},
@@ -203,7 +195,7 @@ export default function Dashboard() {
 
     toast.dismiss(loadingtoast);
     toast.success("Joined the class successfully.");
-    createClassForm.reset();
+    joinClassForm.reset();
     setIsSubmitting(false);
   };
 
@@ -262,23 +254,22 @@ export default function Dashboard() {
                                 createClass,
                               )}
                             >
-                              <FormField
-                                control={createClassForm.control}
-                                name="name"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormLabel>Name</FormLabel>
-                                    <FormControl>
-                                      <Input
-                                        placeholder="Name"
-                                        {...field}
-                                        className="bg-muted"
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
+                              <Field>
+                                <FieldLabel htmlFor="name">Name</FieldLabel>
+                                <Input
+                                  id="name"
+                                  placeholder="Name"
+                                  {...createClassForm.register("name")}
+                                  className="bg-muted"
+                                />
+                                <FieldError
+                                  errors={
+                                    createClassForm.formState.errors.name
+                                      ? [createClassForm.formState.errors.name]
+                                      : undefined
+                                  }
+                                />
+                              </Field>
                               <Button type="submit" disabled={isSubmitting}>
                                 Create Class
                               </Button>
@@ -307,23 +298,24 @@ export default function Dashboard() {
                               className="flex flex-col space-y-4"
                               onSubmit={joinClassForm.handleSubmit(joinClass)}
                             >
-                              <FormField
-                                control={joinClassForm.control}
-                                name="code"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormLabel>Class Code</FormLabel>
-                                    <FormControl>
-                                      <Input
-                                        placeholder="abcde"
-                                        {...field}
-                                        className="bg-muted"
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
+                              <Field>
+                                <FieldLabel htmlFor="code">
+                                  Class Code
+                                </FieldLabel>
+                                <Input
+                                  id="code"
+                                  placeholder="abcde"
+                                  {...joinClassForm.register("code")}
+                                  className="bg-muted"
+                                />
+                                <FieldError
+                                  errors={
+                                    joinClassForm.formState.errors.code
+                                      ? [joinClassForm.formState.errors.code]
+                                      : undefined
+                                  }
+                                />
+                              </Field>
                               <Button type="submit" disabled={isSubmitting}>
                                 Join Class
                               </Button>

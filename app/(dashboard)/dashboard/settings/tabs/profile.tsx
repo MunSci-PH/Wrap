@@ -17,14 +17,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import useSupabaseBrowser from "@/utils/client";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -256,24 +250,23 @@ export function ProfileTab() {
           <Form {...form} control={form.control}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* LRN */}
-              <FormField
-                control={form.control}
-                name="lrn"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>LRN</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="LRN"
-                        {...field}
-                        disabled
-                        className="bg-muted"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Field>
+                <FieldLabel htmlFor="lrn">LRN</FieldLabel>
+                <Input
+                  id="lrn"
+                  placeholder="LRN"
+                  {...form.register("lrn")}
+                  disabled
+                  className="bg-muted"
+                />
+                <FieldError
+                  errors={
+                    form.formState.errors.lrn
+                      ? [form.formState.errors.lrn]
+                      : undefined
+                  }
+                />
+              </Field>
               {/* First Name, Middle Name, Last Name (inline) */}
               <div
                 className={`
@@ -281,67 +274,72 @@ export function ProfileTab() {
                 md:grid-cols-3
               `}
               >
-                <FormField
-                  control={form.control}
-                  name="firstname"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="First Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="middlename"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Middle Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Middle Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastname"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Last Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <Field>
+                  <FieldLabel htmlFor="firstname">First Name</FieldLabel>
+                  <Input
+                    id="firstname"
+                    placeholder="First Name"
+                    {...form.register("firstname")}
+                  />
+                  <FieldError
+                    errors={
+                      form.formState.errors.firstname
+                        ? [form.formState.errors.firstname]
+                        : undefined
+                    }
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="middlename">Middle Name</FieldLabel>
+                  <Input
+                    id="middlename"
+                    placeholder="Middle Name"
+                    {...form.register("middlename")}
+                  />
+                  <FieldError
+                    errors={
+                      form.formState.errors.middlename
+                        ? [form.formState.errors.middlename]
+                        : undefined
+                    }
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="lastname">Last Name</FieldLabel>
+                  <Input
+                    id="lastname"
+                    placeholder="Last Name"
+                    {...form.register("lastname")}
+                  />
+                  <FieldError
+                    errors={
+                      form.formState.errors.lastname
+                        ? [form.formState.errors.lastname]
+                        : undefined
+                    }
+                  />
+                </Field>
               </div>
 
               {/* Email */}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Email"
-                        {...field}
-                        disabled
-                        className="bg-muted"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  {...form.register("email")}
+                  disabled
+                  className="bg-muted"
+                />
+                <FieldError
+                  errors={
+                    form.formState.errors.email
+                      ? [form.formState.errors.email]
+                      : undefined
+                  }
+                />
+              </Field>
 
               {/* Grade and Section (inline) */}
               <div
@@ -350,91 +348,97 @@ export function ProfileTab() {
                 md:grid-cols-2
               `}
               >
-                <FormField
-                  control={form.control}
-                  name="grade"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Grade</FormLabel>
-                      <FormControl>
-                        <Input placeholder="7" disabled {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="section"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Section</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Ampere" disabled {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <Field>
+                  <FieldLabel htmlFor="grade">Grade</FieldLabel>
+                  <Input
+                    id="grade"
+                    placeholder="7"
+                    disabled
+                    {...form.register("grade")}
+                  />
+                  <FieldError
+                    errors={
+                      form.formState.errors.grade
+                        ? [form.formState.errors.grade]
+                        : undefined
+                    }
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="section">Section</FieldLabel>
+                  <Input
+                    id="section"
+                    placeholder="Ampere"
+                    disabled
+                    {...form.register("section")}
+                  />
+                  <FieldError
+                    errors={
+                      form.formState.errors.section
+                        ? [form.formState.errors.section]
+                        : undefined
+                    }
+                  />
+                </Field>
               </div>
 
               {/* Birthday */}
-              <FormField
-                control={form.control}
-                name="birthday"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Birthday</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-full justify-start text-left font-normal",
-                              !field.value && "text-muted-foreground",
-                            )}
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {field.value
-                              ? format(field.value, "PPP")
-                              : "Select your birthday"}
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) => date > new Date()}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Field className="flex flex-col">
+                <FieldLabel htmlFor="birthday">Birthday</FieldLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      id="birthday"
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !form.watch("birthday") && "text-muted-foreground",
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {form.watch("birthday")
+                        ? format(form.watch("birthday"), "PPP")
+                        : "Select your birthday"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={form.watch("birthday")}
+                      onSelect={(date) =>
+                        date && form.setValue("birthday", date)
+                      }
+                      disabled={(date) => date > new Date()}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FieldError
+                  errors={
+                    form.formState.errors.birthday
+                      ? [form.formState.errors.birthday]
+                      : undefined
+                  }
+                />
+              </Field>
 
               {/* Address */}
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Address</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Address"
-                        className={`field-sizing-content min-h-[80px] resize-none`}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Field>
+                <FieldLabel htmlFor="address">Address</FieldLabel>
+                <Textarea
+                  id="address"
+                  placeholder="Address"
+                  className={`field-sizing-content min-h-[80px] resize-none`}
+                  {...form.register("address")}
+                />
+                <FieldError
+                  errors={
+                    form.formState.errors.address
+                      ? [form.formState.errors.address]
+                      : undefined
+                  }
+                />
+              </Field>
 
               <div className="flex justify-end gap-4">
                 <Button

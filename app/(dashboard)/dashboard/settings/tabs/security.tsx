@@ -6,14 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Loader2, KeyRound } from "lucide-react";
 import useSupabaseBrowser from "@/utils/client";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -75,33 +69,25 @@ export function SecurityTab() {
 
       <Form {...form} control={form.control}>
         <form onSubmit={form.handleSubmit(tryLogin)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>New Password</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <Field>
+            <FieldLabel>New Password</FieldLabel>
+            <Input
+              type="password"
+              placeholder="••••••••"
+              {...form.register("password")}
+            />
+            <FieldError>{form.formState.errors.password?.message}</FieldError>
+          </Field>
 
-          <FormField
-            control={form.control}
-            name="confirm"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm New Password</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <Field>
+            <FieldLabel>Confirm New Password</FieldLabel>
+            <Input
+              type="password"
+              placeholder="••••••••"
+              {...form.register("confirm")}
+            />
+            <FieldError>{form.formState.errors.confirm?.message}</FieldError>
+          </Field>
 
           <div className="pt-2">
             <h3 className="mb-2 text-sm font-medium text-muted-foreground">

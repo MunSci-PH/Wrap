@@ -1,14 +1,7 @@
 "use client";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import useSupabaseBrowser from "@/utils/client";
-import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,6 +13,7 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import { Loader2, ShieldAlert } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { redirect } from "next/navigation";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 export type loginData = {
   email: string;
@@ -83,37 +77,40 @@ const LoginForm = () => {
               </AlertDescription>
             </Alert>
           )}
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="Email" required {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Password"
-                    required
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <Field>
+            <FieldLabel htmlFor="email">Email</FieldLabel>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Email"
+              required
+              {...form.register("email")}
+            />
+            <FieldError
+              errors={
+                form.formState.errors.email
+                  ? [form.formState.errors.email]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <Input
+              id="password"
+              type="password"
+              placeholder="Password"
+              required
+              {...form.register("password")}
+            />
+            <FieldError
+              errors={
+                form.formState.errors.password
+                  ? [form.formState.errors.password]
+                  : undefined
+              }
+            />
+          </Field>
           <div>
             <Link
               href="/auth/password/reset"

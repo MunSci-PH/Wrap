@@ -1,15 +1,15 @@
 "use client";
 
+import type React from "react";
+
 import { CardContent } from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +31,7 @@ import { format } from "date-fns";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import Image from "next/image";
 import {
   Select,
@@ -227,93 +227,87 @@ const RegisterForm = () => {
               </Alert>
             )}
             <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="lrn"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>LRN</FormLabel>
-                    <FormDescription>
-                      Your LRN is a 12 digit number assigned to you by your
-                      school.
-                    </FormDescription>
-                    <FormControl className="w-full">
-                      <Input
-                        type="string"
-                        inputMode="numeric"
-                        placeholder="LRN"
-                        required
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Field>
+                <FieldLabel htmlFor="lrn">LRN</FieldLabel>
+                <FieldDescription>
+                  Your LRN is a 12 digit number assigned to you by your school.
+                </FieldDescription>
+                <Input
+                  id="lrn"
+                  type="string"
+                  inputMode="numeric"
+                  placeholder="LRN"
+                  required
+                  {...form.register("lrn")}
+                />
+                <FieldError
+                  errors={
+                    form.formState.errors.lrn
+                      ? [form.formState.errors.lrn]
+                      : undefined
+                  }
+                />
+              </Field>
               <Separator />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormDescription>
-                      This email will be used for authenticating in the
-                      dashboard.
-                    </FormDescription>
-                    <FormControl>
-                      <Input
-                        type="string"
-                        placeholder="Email"
-                        required
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormDescription>
-                      Your password must be at least 8 characters long and
-                      include at least one uppercase letter, one lowercase
-                      letter, one number, and one special character.
-                    </FormDescription>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Password"
-                        required
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmp"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Confirm Password"
-                        required
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldDescription>
+                  This email will be used for authenticating in the dashboard.
+                </FieldDescription>
+                <Input
+                  id="email"
+                  type="string"
+                  placeholder="Email"
+                  required
+                  {...form.register("email")}
+                />
+                <FieldError
+                  errors={
+                    form.formState.errors.email
+                      ? [form.formState.errors.email]
+                      : undefined
+                  }
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <FieldDescription>
+                  Your password must be at least 8 characters long and include
+                  at least one uppercase letter, one lowercase letter, one
+                  number, and one special character.
+                </FieldDescription>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  required
+                  {...form.register("password")}
+                />
+                <FieldError
+                  errors={
+                    form.formState.errors.password
+                      ? [form.formState.errors.password]
+                      : undefined
+                  }
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="confirmp">Confirm Password</FieldLabel>
+                <Input
+                  id="confirmp"
+                  type="password"
+                  placeholder="Confirm Password"
+                  required
+                  {...form.register("confirmp")}
+                />
+                <FieldError
+                  errors={
+                    form.formState.errors.confirmp
+                      ? [form.formState.errors.confirmp]
+                      : undefined
+                  }
+                />
+              </Field>
               <Separator />
               <div
                 className={`
@@ -321,57 +315,54 @@ const RegisterForm = () => {
                 md:flex-row
               `}
               >
-                <FormField
-                  control={form.control}
-                  name="firstname"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="string"
-                          placeholder="First Name"
-                          required
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="middlename"
-                  render={({ field }) => (
-                    <FormItem className="mt-auto w-full">
-                      <FormControl>
-                        <Input
-                          type="string"
-                          placeholder="Middle Name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastname"
-                  render={({ field }) => (
-                    <FormItem className="mt-auto w-full">
-                      <FormControl>
-                        <Input
-                          type="string"
-                          placeholder="Last Name"
-                          required
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <Field className="w-full">
+                  <FieldLabel htmlFor="firstname">Name</FieldLabel>
+                  <Input
+                    id="firstname"
+                    type="string"
+                    placeholder="First Name"
+                    required
+                    {...form.register("firstname")}
+                  />
+                  <FieldError
+                    errors={
+                      form.formState.errors.firstname
+                        ? [form.formState.errors.firstname]
+                        : undefined
+                    }
+                  />
+                </Field>
+                <Field className="mt-auto w-full">
+                  <Input
+                    id="middlename"
+                    type="string"
+                    placeholder="Middle Name"
+                    {...form.register("middlename")}
+                  />
+                  <FieldError
+                    errors={
+                      form.formState.errors.middlename
+                        ? [form.formState.errors.middlename]
+                        : undefined
+                    }
+                  />
+                </Field>
+                <Field className="mt-auto w-full">
+                  <Input
+                    id="lastname"
+                    type="string"
+                    placeholder="Last Name"
+                    required
+                    {...form.register("lastname")}
+                  />
+                  <FieldError
+                    errors={
+                      form.formState.errors.lastname
+                        ? [form.formState.errors.lastname]
+                        : undefined
+                    }
+                  />
+                </Field>
               </div>
               <Separator />
               <div
@@ -380,103 +371,92 @@ const RegisterForm = () => {
                 md:flex-row
               `}
               >
-                <FormField
-                  control={form.control}
-                  name="grade"
-                  render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
-                      <FormLabel>Grade</FormLabel>
-                      <Select
-                        onValueChange={(value) => {
-                          field.onChange(value);
-                          onGradeChange(Number(value));
-                        }}
-                        defaultValue={field.value.toString()}
-                        required
-                      >
-                        <FormControl>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select your grade level" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {grades.map((grade) => (
-                            <SelectItem
-                              value={grade.value.toString()}
-                              key={grade.value}
-                            >
-                              {grade.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="section"
-                  render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
-                      <FormLabel>Section</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        disabled={!sectionList.length}
-                        required
-                      >
-                        <FormControl>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select your section." />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {sectionList.map((section) => (
-                            <SelectItem
-                              value={section.value}
-                              key={section.value}
-                            >
-                              {section.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <Field className="flex w-full flex-col">
+                  <FieldLabel htmlFor="grade">Grade</FieldLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      form.setValue("grade", Number(value));
+                      onGradeChange(Number(value));
+                    }}
+                    defaultValue={form.watch("grade").toString()}
+                    required
+                  >
+                    <SelectTrigger id="grade" className="w-full">
+                      <SelectValue placeholder="Select your grade level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {grades.map((grade) => (
+                        <SelectItem
+                          value={grade.value.toString()}
+                          key={grade.value}
+                        >
+                          {grade.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FieldError
+                    errors={
+                      form.formState.errors.grade
+                        ? [form.formState.errors.grade]
+                        : undefined
+                    }
+                  />
+                </Field>
+                <Field className="flex w-full flex-col">
+                  <FieldLabel htmlFor="section">Section</FieldLabel>
+                  <Select
+                    onValueChange={(value) => form.setValue("section", value)}
+                    defaultValue={form.watch("section")}
+                    disabled={!sectionList.length}
+                    required
+                  >
+                    <SelectTrigger id="section" className="w-full">
+                      <SelectValue placeholder="Select your section." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sectionList.map((section) => (
+                        <SelectItem value={section.value} key={section.value}>
+                          {section.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FieldError
+                    errors={
+                      form.formState.errors.section
+                        ? [form.formState.errors.section]
+                        : undefined
+                    }
+                  />
+                </Field>
               </div>
               <Separator className="xl:hidden" />
             </div>
             <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="idpic"
-                render={() => (
-                  <FormItem className="flex w-full flex-col">
-                    <FormLabel>Picture</FormLabel>
-                    <FormDescription>
-                      Please upload a recent and valid picture of yourself. The
-                      picture must have a plain background.
-                    </FormDescription>
-                    <Image
-                      src={
-                        idpic ? idpic : "https://avatar.iran.liara.run/public"
-                      }
-                      alt="ID Picture"
-                      width={200}
-                      height={200}
-                      draggable={false}
-                      className={`self-center rounded-full xl:size-60`}
-                    />
-                    <FormControl>
-                      <Input type="file" required {...fileRef} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Field className="flex w-full flex-col">
+                <FieldLabel htmlFor="idpic">Picture</FieldLabel>
+                <FieldDescription>
+                  Please upload a recent and valid picture of yourself. The
+                  picture must have a plain background.
+                </FieldDescription>
+                <Image
+                  src={idpic ? idpic : "https://avatar.iran.liara.run/public"}
+                  alt="ID Picture"
+                  width={200}
+                  height={200}
+                  draggable={false}
+                  className={`self-center rounded-full xl:size-60`}
+                />
+                <Input id="idpic" type="file" required {...fileRef} />
+                <FieldError
+                  errors={
+                    form.formState.errors.idpic
+                      ? [form.formState.errors.idpic]
+                      : undefined
+                  }
+                />
+              </Field>
               <Separator />
               <div
                 className={`
@@ -484,98 +464,92 @@ const RegisterForm = () => {
                 md:flex-row
               `}
               >
-                <FormField
-                  control={form.control}
-                  name="birthday"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Date of Birth</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-[240px] justify-start text-left font-normal",
-                                !field.value && "text-muted-foreground",
-                              )}
-                            >
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            startMonth={new Date("2000-01-01")}
-                            endMonth={new Date("2015-12-31")}
-                            yearFocus={false}
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date("2015-12-31") ||
-                              date < new Date("2000-01-01")
-                            }
-                            defaultMonth={field.value}
-                            autoFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Address</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="string"
-                        placeholder="Home Address"
-                        required
-                        {...field}
+                <Field className="w-full">
+                  <FieldLabel htmlFor="birthday">Date of Birth</FieldLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="birthday"
+                        variant={"outline"}
+                        className={cn(
+                          "w-[240px] justify-start text-left font-normal",
+                          !form.watch("birthday") && "text-muted-foreground",
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {form.watch("birthday") ? (
+                          format(form.watch("birthday"), "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        startMonth={new Date("2000-01-01")}
+                        endMonth={new Date("2015-12-31")}
+                        yearFocus={false}
+                        selected={form.watch("birthday")}
+                        onSelect={(date) =>
+                          date && form.setValue("birthday", date)
+                        }
+                        disabled={(date) =>
+                          date > new Date("2015-12-31") ||
+                          date < new Date("2000-01-01")
+                        }
+                        defaultMonth={form.watch("birthday")}
+                        autoFocus
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    </PopoverContent>
+                  </Popover>
+                  <FieldError
+                    errors={
+                      form.formState.errors.birthday
+                        ? [form.formState.errors.birthday]
+                        : undefined
+                    }
+                  />
+                </Field>
+              </div>
+              <Field className="w-full">
+                <FieldLabel htmlFor="address">Address</FieldLabel>
+                <Input
+                  id="address"
+                  type="string"
+                  placeholder="Home Address"
+                  required
+                  {...form.register("address")}
+                />
+                <FieldError
+                  errors={
+                    form.formState.errors.address
+                      ? [form.formState.errors.address]
+                      : undefined
+                  }
+                />
+              </Field>
               <div
                 className={`
                 flex flex-1 flex-col gap-2 align-bottom
                 md:flex-row
               `}
               >
-                <FormField
-                  control={form.control}
-                  name="pwd"
-                  render={({ field }) => (
-                    <FormItem
-                      className={`flex w-full flex-row items-start space-y-0 space-x-3 rounded-md border p-4 hover:bg-secondary`}
-                    >
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="cursor-pointer space-y-1 leading-none">
-                        <FormLabel className="cursor-pointer">
-                          Are you a person with disability?
-                        </FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                <Field
+                  className={`flex w-full flex-row items-start space-y-0 space-x-3 rounded-md border p-4 hover:bg-secondary`}
+                  orientation="horizontal"
+                >
+                  <Checkbox
+                    id="pwd"
+                    checked={form.watch("pwd")}
+                    onCheckedChange={(checked) =>
+                      form.setValue("pwd", checked as boolean)
+                    }
+                  />
+                  <FieldLabel htmlFor="pwd" className="cursor-pointer">
+                    Are you a person with disability?
+                  </FieldLabel>
+                </Field>
               </div>
             </div>
 

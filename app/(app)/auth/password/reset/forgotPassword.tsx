@@ -2,18 +2,12 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import useSupabaseBrowser from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -69,19 +63,22 @@ const ForgotPasswordForm = ({}: {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <Field>
+            <FieldLabel htmlFor="email">Email</FieldLabel>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Email"
+              {...form.register("email")}
+            />
+            <FieldError
+              errors={
+                form.formState.errors.email
+                  ? [form.formState.errors.email]
+                  : undefined
+              }
+            />
+          </Field>
           <div>
             <Link
               href="/auth/login"
