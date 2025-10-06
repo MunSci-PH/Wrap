@@ -2,14 +2,8 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import useSupabaseBrowser from "@/utils/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -76,42 +70,28 @@ const ResetPasswordForm = ({
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>New Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="New Password"
-                    required
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="confirm"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Re-enter Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Re-enter Password"
-                    required
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <Field data-invalid={!!form.formState.errors.password}>
+            <FieldLabel htmlFor="password">New Password</FieldLabel>
+            <Input
+              id="password"
+              type="password"
+              placeholder="New Password"
+              required
+              {...form.register("password")}
+            />
+            <FieldError>{form.formState.errors.password?.message}</FieldError>
+          </Field>
+          <Field data-invalid={!!form.formState.errors.confirm}>
+            <FieldLabel htmlFor="confirm">Re-enter Password</FieldLabel>
+            <Input
+              id="confirm"
+              type="password"
+              placeholder="Re-enter Password"
+              required
+              {...form.register("confirm")}
+            />
+            <FieldError>{form.formState.errors.confirm?.message}</FieldError>
+          </Field>
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isLoading} className="w-full">

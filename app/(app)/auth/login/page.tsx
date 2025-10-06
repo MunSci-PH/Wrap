@@ -20,34 +20,22 @@ export default async function Dashboard() {
   }
 
   return (
-    <>
-      <main className="container mx-auto flex flex-1">
-        <div className="m-auto">
-          <Card
-            className={`
-            w-[325px]
-            md:w-[350px]
-          `}
-          >
-            <CardHeader>
-              <CardTitle>Sign In</CardTitle>
-              <CardDescription>
-                Enter your credentials to access your account.{" "}
-                <Link
-                  href="/auth/register"
-                  className={`
-                    text-sm text-foreground
-                    hover:underline
-                  `}
-                >
-                  Don&apos;t have an account yet?
-                </Link>
-              </CardDescription>
-            </CardHeader>
-            <LoginForm />
-          </Card>
-        </div>
-      </main>
-    </>
+    <main className="container mx-auto flex min-h-[calc(100vh-4rem)] flex-1 items-center justify-center px-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl">Sign In</CardTitle>
+          <CardDescription className="text-balance">
+            Enter your credentials to access your account.{" "}
+            <Link
+              href="/auth/register"
+              className="text-foreground underline-offset-4 hover:underline"
+            >
+              Don&apos;t have an account yet?
+            </Link>
+          </CardDescription>
+        </CardHeader>
+        <LoginForm />
+      </Card>
+    </main>
   );
 }

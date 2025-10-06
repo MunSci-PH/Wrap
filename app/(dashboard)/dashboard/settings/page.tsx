@@ -16,51 +16,66 @@ export default function Settings() {
   return (
     <ContentLayout title="Settings">
       <main className="container mx-auto flex flex-1 px-4">
-        <div className="container mx-auto py-5">
-          <h1 className="mb-8 text-left text-3xl font-bold">
-            Account Settings
-          </h1>
+        <div className="container mx-auto py-8">
+          <h1 className="mb-8 text-3xl font-bold">Account Settings</h1>
 
-          <div
-            className={`
-                flex flex-col gap-4
-                md:flex-row
-              `}
-          >
-            {/* Left sidebar with tabs */}
-            <div className="md:w-1/4">
-              <nav
-                className={`flex flex-col overflow-hidden rounded-md bg-card text-card-foreground`}
-              >
+          <div className="flex flex-col gap-6 md:flex-row">
+            <nav
+              className="md:w-1/4"
+              role="tablist"
+              aria-label="Account settings"
+            >
+              <div className="flex flex-col overflow-hidden rounded-lg border bg-card">
                 <Button
                   onClick={() => setActiveTab("profile")}
                   className={cn(
-                    `flex items-center justify-start gap-2 rounded-b-none px-10 py-6 text-left font-medium transition-colors`,
-                    activeTab === "profile" && "bg-muted font-medium",
+                    "justify-start gap-3 rounded-none border-b px-6 py-6 text-left font-medium transition-colors",
+                    activeTab === "profile" && "bg-muted font-semibold",
                   )}
-                  variant={"outline"}
+                  variant="ghost"
+                  role="tab"
+                  aria-selected={activeTab === "profile"}
+                  aria-controls="profile-panel"
                 >
-                  <User className="size-4" />
+                  <User className="size-5" />
                   Profile
                 </Button>
                 <Button
                   onClick={() => setActiveTab("security")}
                   className={cn(
-                    `flex items-center justify-start gap-2 rounded-t-none px-10 py-6 text-left font-medium transition-colors`,
-                    activeTab === "security" && "bg-muted font-medium",
+                    "justify-start gap-3 rounded-none px-6 py-6 text-left font-medium transition-colors",
+                    activeTab === "security" && "bg-muted font-semibold",
                   )}
-                  variant={"outline"}
+                  variant="ghost"
+                  role="tab"
+                  aria-selected={activeTab === "security"}
+                  aria-controls="security-panel"
                 >
-                  <Shield className="size-4" />
+                  <Shield className="size-5" />
                   Security
                 </Button>
-              </nav>
-            </div>
+              </div>
+            </nav>
 
-            {/* Main content area */}
             <div className="md:w-3/4">
-              {activeTab === "profile" && <ProfileTab />}
-              {activeTab === "security" && <SecurityTab />}
+              {activeTab === "profile" && (
+                <div
+                  role="tabpanel"
+                  id="profile-panel"
+                  aria-labelledby="profile-tab"
+                >
+                  <ProfileTab />
+                </div>
+              )}
+              {activeTab === "security" && (
+                <div
+                  role="tabpanel"
+                  id="security-panel"
+                  aria-labelledby="security-tab"
+                >
+                  <SecurityTab />
+                </div>
+              )}
             </div>
           </div>
         </div>

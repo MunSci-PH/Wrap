@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const formSchema = z.object({
   lrn: z.coerce
@@ -39,6 +40,89 @@ const formSchema = z.object({
   birthday: z.date().min(new Date("2000-01-01")).max(new Date("2015-12-31")),
   address: z.string().trim().min(1).max(100),
 });
+
+function ProfileSkeleton() {
+  return (
+    <div className="flex flex-col gap-8 md:flex-row">
+      {/* Personal Information Skeleton */}
+      <div className="md:w-2/3">
+        <div className="rounded-md border bg-card p-6">
+          <Skeleton className="mb-6 h-7 w-48" />
+
+          <div className="space-y-6">
+            {/* LRN */}
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-12" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+
+            {/* Name fields */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+            </div>
+
+            {/* Email */}
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-12" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+
+            {/* Grade and Section */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-12" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-16" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+            </div>
+
+            {/* Birthday */}
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+
+            {/* Address */}
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-20 w-full" />
+            </div>
+
+            {/* Button */}
+            <div className="flex justify-end">
+              <Skeleton className="h-10 w-32" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Profile Picture Skeleton */}
+      <div className="md:w-1/3">
+        <div className="rounded-md border bg-card p-6">
+          <Skeleton className="mb-4 h-7 w-32" />
+          <div className="flex flex-col items-center">
+            <Skeleton className="mb-6 h-40 w-40 rounded-full" />
+            <Skeleton className="h-10 w-36" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function ProfileTab() {
   const supabase = useSupabaseBrowser();
@@ -227,12 +311,7 @@ export function ProfileTab() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex flex-row items-center justify-center py-8">
-        <Loader2 className="h-6 w-6 animate-spin text-primary" />
-        Loading User Data...
-      </div>
-    );
+    return <ProfileSkeleton />;
   }
 
   return (

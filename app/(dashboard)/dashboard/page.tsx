@@ -201,33 +201,30 @@ export default function Dashboard() {
 
   return (
     <ContentLayout title="Dashboard">
-      <main
-        className={`container mx-auto flex flex-1 flex-col items-center px-4 text-center`}
-      >
-        <div className="mt-12 flex w-full flex-nowrap justify-between">
+      <main className="container mx-auto flex flex-1 flex-col px-4">
+        <div className="mt-8 flex w-full items-center justify-between md:mt-12">
           {user.isLoading || !user_metadata ? (
-            <Skeleton className="h-12 w-1/2 rounded bg-card" />
+            <Skeleton className="h-10 w-64 rounded bg-muted" />
           ) : (
-            <p
-              className={`my-auto inline w-fit text-left font-sans text-4xl font-bold`}
-            >
+            <h1 className="text-3xl font-bold md:text-4xl">
               Good {time < 12 ? "Morning" : "Afternoon"},{" "}
               {user_metadata.firstname}
-            </p>
+            </h1>
           )}
         </div>
-        <div className="h-full w-11/12 py-10">
-          <Card className="h-full items-start">
-            <CardHeader className="w-full">
-              <div className="flex flex-1 flex-row items-center justify-between">
+
+        <div className="mt-8 w-full pb-10">
+          <Card className="h-full">
+            <CardHeader>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 {user_data.isLoading ? (
                   <>
-                    <Skeleton className="h-8 w-1/4 rounded bg-card" />
-                    <Skeleton className="h-8 w-24 rounded bg-card" />
+                    <Skeleton className="h-8 w-48 rounded bg-muted" />
+                    <Skeleton className="h-10 w-32 rounded bg-muted" />
                   </>
                 ) : (
                   <>
-                    <CardTitle className="text-2xl font-extrabold">
+                    <CardTitle className="text-2xl font-bold">
                       Enrolled Classes
                     </CardTitle>
                     {user_data.data?.data &&
@@ -255,10 +252,12 @@ export default function Dashboard() {
                               )}
                             >
                               <Field>
-                                <FieldLabel htmlFor="name">Name</FieldLabel>
+                                <FieldLabel htmlFor="name">
+                                  Class Name
+                                </FieldLabel>
                                 <Input
                                   id="name"
-                                  placeholder="Name"
+                                  placeholder="e.g. Mathematics 101"
                                   {...createClassForm.register("name")}
                                   className="bg-muted"
                                 />
@@ -331,44 +330,39 @@ export default function Dashboard() {
             <CardContent className="w-full">
               {class_data.isLoading || !class_data.isEnabled ? (
                 <div className="space-y-4">
-                  <Skeleton className="h-20 w-full rounded bg-card" />
+                  <Skeleton className="h-24 w-full rounded bg-muted" />
+                  <Skeleton className="h-24 w-full rounded bg-muted" />
                 </div>
               ) : (
                 <>
                   {class_data.data !== undefined &&
                   class_data.data.length > 0 ? (
-                    class_data.data!.map((classData) => (
-                      <Button
-                        asChild
-                        variant={"outline"}
-                        className="w-full bg-card py-10"
-                        key={classData.id}
-                      >
-                        <Link href={`/dashboard/class/${classData.id}`}>
-                          <div
-                            className={`flex flex-1 flex-row items-center justify-between`}
-                          >
-                            <p
-                              className={`w-1/3 text-start text-xl font-extrabold`}
-                            >
-                              {classData.name}
-                            </p>
-                            <p className="w-1/3 text-xl">{`${classData.owner_name}`}</p>
-                            <p
-                              className={`w-1/3 text-end text-xl text-muted-foreground`}
-                            >
-                              View{" "}
-                              <ChevronRight
-                                className="inline"
-                                size={64}
-                              ></ChevronRight>
-                            </p>
-                          </div>
-                        </Link>
-                      </Button>
-                    ))
+                    <div className="space-y-3">
+                      {class_data.data!.map((classData) => (
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="h-auto w-full justify-start bg-card py-6 transition-colors hover:bg-accent"
+                          key={classData.id}
+                        >
+                          <Link href={`/dashboard/class/${classData.id}`}>
+                            <div className="flex w-full flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+                              <p className="text-lg font-bold">
+                                {classData.name}
+                              </p>
+                              <p className="text-sm text-muted-foreground sm:text-base">
+                                {classData.owner_name}
+                              </p>
+                              <span className="flex items-center text-sm text-muted-foreground">
+                                View <ChevronRight className="ml-1 size-5" />
+                              </span>
+                            </div>
+                          </Link>
+                        </Button>
+                      ))}
+                    </div>
                   ) : (
-                    <p>
+                    <p className="py-8 text-center text-muted-foreground">
                       No classes enrolled.{" "}
                       {user_data.data?.data?.role == "teacher"
                         ? "Create a class to get started grading work."
