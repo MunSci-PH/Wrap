@@ -8,7 +8,7 @@ export async function getClassData(
     .from("classes")
     .select("*")
     .eq("id", classId)
-    .single();
+    .maybeSingle();
 
   if (classResponse.error) {
     throw new Error(
@@ -17,7 +17,7 @@ export async function getClassData(
   }
 
   if (!classResponse.data) {
-    throw new Error("Class not found");
+    console.log("Class not found");
   }
 
   return classResponse.data;

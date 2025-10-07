@@ -1,8 +1,8 @@
 import { getClassData } from "@/queries/getClassData";
 import createSupabaseServer from "@/utils/server";
-import { permanentRedirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
-export default async function Grade(props: {
+export default async function ClassPage(props: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await props.params;
@@ -10,14 +10,23 @@ export default async function Grade(props: {
   const classData = await getClassData(supabase, slug);
 
   if (!classData) {
-    return <div>Class not found</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">Class not found</h1>
+          <p className="mt-2 text-muted-foreground">
+            The class you&apos;re looking for doesn&apos;t exist.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   if (classData.owner == (await supabase.auth.getClaims()).data?.claims?.sub) {
-    permanentRedirect(`${slug}/home/`);
+    redirect(`${slug}/home/`);
     return null; // This line is necessary to satisfy the return type
   } else {
-    permanentRedirect(`${slug}/home/`);
+    redirect(`${slug}/home/`);
     return null; // This line is necessary to satisfy the return type
   }
 }
