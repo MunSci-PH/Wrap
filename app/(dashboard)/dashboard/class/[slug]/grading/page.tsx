@@ -302,11 +302,14 @@ export default function GradingPage() {
                                   min="0"
                                   max={currentAssignment.maxScore}
                                   placeholder="Score"
-                                  value={grades[student!.id] || ""}
+                                  value={
+                                    grades[student ? student.id : ""] || ""
+                                  }
                                   onChange={(e) =>
                                     setGrades((prev) => ({
                                       ...prev,
-                                      [student!.id]: e.target.value,
+                                      [student ? student.id : ""]:
+                                        e.target.value,
                                     }))
                                   }
                                   className="text-center"
