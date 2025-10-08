@@ -48,20 +48,13 @@ export function Menu({ isOpen }: MenuProps) {
                 {
                   href: `/dashboard/class/${classData.id}/home`,
                   label: "Home",
-                  active:
-                    pathname === `/dashboard/class/${classData.id}/classview`,
-                },
-                {
-                  href: `/dashboard/class/${classData.id}/grading`,
-                  label: "Grading",
-                  active:
-                    pathname === `/dashboard/class/${classData.id}/classview`,
+                  active: pathname === `/dashboard/class/${classData.id}/home`,
                 },
                 {
                   href: `/dashboard/class/${classData.id}/settings`,
                   label: "Settings",
                   active:
-                    pathname === `/dashboard/class/${classData.id}/classview`,
+                    pathname === `/dashboard/class/${classData.id}/settings`,
                 },
               ]
             : [],
