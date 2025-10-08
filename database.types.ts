@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4";
+    PostgrestVersion: "13.0.5";
   };
   graphql_public: {
     Tables: {
@@ -39,59 +39,129 @@ export type Database = {
   };
   public: {
     Tables: {
-      "1ukmk_class": {
+      assignments: {
         Row: {
-          grade_metadata: Json | null;
-          joined_at: string;
-          student_id: string;
+          class_id: string | null;
+          created_at: string;
+          description: string | null;
+          due_date: string | null;
+          id: number;
+          max_score: number;
+          title: string;
         };
         Insert: {
-          grade_metadata?: Json | null;
-          joined_at?: string;
-          student_id?: string;
+          class_id?: string | null;
+          created_at?: string;
+          description?: string | null;
+          due_date?: string | null;
+          id?: number;
+          max_score: number;
+          title: string;
         };
         Update: {
-          grade_metadata?: Json | null;
-          joined_at?: string;
-          student_id?: string;
+          class_id?: string | null;
+          created_at?: string;
+          description?: string | null;
+          due_date?: string | null;
+          id?: number;
+          max_score?: number;
+          title?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "assignments_class_id_fkey";
+            columns: ["class_id"];
+            isOneToOne: false;
+            referencedRelation: "classes";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       classes: {
         Row: {
-          asgmnt_group: Json[];
-          assignment: Json[] | null;
+          assignment: Json | null;
           created_at: string;
           enrolled: string[] | null;
+          gradePercentages: Json | null;
           id: string;
-          metadata: Json;
           name: string;
           owner: string;
           owner_name: string;
+          section: string | null;
+          type: Database["public"]["Enums"]["class_type"];
         };
         Insert: {
-          asgmnt_group?: Json[];
-          assignment?: Json[] | null;
+          assignment?: Json | null;
           created_at?: string;
           enrolled?: string[] | null;
+          gradePercentages?: Json | null;
           id: string;
-          metadata: Json;
           name: string;
           owner?: string;
           owner_name?: string;
+          section?: string | null;
+          type?: Database["public"]["Enums"]["class_type"];
         };
         Update: {
-          asgmnt_group?: Json[];
-          assignment?: Json[] | null;
+          assignment?: Json | null;
           created_at?: string;
           enrolled?: string[] | null;
+          gradePercentages?: Json | null;
           id?: string;
-          metadata?: Json;
           name?: string;
           owner?: string;
           owner_name?: string;
+          section?: string | null;
+          type?: Database["public"]["Enums"]["class_type"];
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "classes_section_fkey";
+            columns: ["section"];
+            isOneToOne: false;
+            referencedRelation: "sectionList";
+            referencedColumns: ["section"];
+          },
+        ];
+      };
+      grades: {
+        Row: {
+          class_id: string;
+          created_at: string;
+          grade: number;
+          id: string;
+          student_id: string;
+        };
+        Insert: {
+          class_id: string;
+          created_at?: string;
+          grade: number;
+          id: string;
+          student_id: string;
+        };
+        Update: {
+          class_id?: string;
+          created_at?: string;
+          grade?: number;
+          id?: string;
+          student_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "grades_class_id_fkey";
+            columns: ["class_id"];
+            isOneToOne: false;
+            referencedRelation: "classes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "grades_student_id_fkey";
+            columns: ["student_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       role_permissions: {
         Row: {
@@ -182,21 +252,13 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      authorize: {
-        Args: {
-          requested_permission: Database["public"]["Enums"]["app_permission"];
-        };
-        Returns: boolean;
-      };
-      custom_access_token_hook: {
-        Args: { event: Json };
-        Returns: Json;
-      };
+      [_ in never]: never;
     };
     Enums: {
       app_permission: "channels.delete" | "messages.delete";
       app_role: "teacher" | "student";
       assignment_group: "index" | "name";
+      class_type: "subject" | "section";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -333,6 +395,7 @@ export const Constants = {
       app_permission: ["channels.delete", "messages.delete"],
       app_role: ["teacher", "student"],
       assignment_group: ["index", "name"],
+      class_type: ["subject", "section"],
     },
   },
 } as const;

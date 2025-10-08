@@ -13,15 +13,15 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
 import useSupabaseBrowser from "@/utils/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getClassData } from "@/queries/getClassData";
 import { getUserData } from "@/queries/getUserData";
 import { useParams } from "next/navigation";
 import { ArrowLeft, Copy, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export default function ClassSettingsPage() {
   const params = useParams();
@@ -40,6 +40,55 @@ export default function ClassSettingsPage() {
 
   const isTeacher = userData?.data?.role === "teacher";
   const isOwner = classData?.owner === userData?.data?.id;
+
+  const queryClient = useQueryClient();
+
+  type GradePercentages = {
+    ww: number;
+    pt: number;
+    periodical: number;
+  };
+
+  const defaultPercentages: GradePercentages = {
+    ww: 25,
+    pt: 50,
+    periodical: 25,
+  };
+
+  const [gradePercentages, setGradePercentages] = useState<GradePercentages>(
+    () => {
+      const data = classData?.gradePercentages as
+        | Partial<GradePercentages>
+        | null
+        | undefined;
+      if (
+        data &&
+        typeof data.ww === "number" &&
+        typeof data.pt === "number" &&
+        typeof data.periodical === "number"
+      ) {
+        return data as GradePercentages;
+      }
+      return defaultPercentages;
+    },
+  );
+
+  const updateGradePercentagesMutation = useMutation({
+    mutationFn: async (newPercentages: GradePercentages) => {
+      const { error } = await supabase
+        .from("classes")
+        .update({ gradePercentages: newPercentages })
+        .eq("id", slug);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["class_data", slug] });
+      toast.success("Grading percentages updated");
+    },
+    onError: (error) => {
+      toast.error(`Failed to update: ${error.message}`);
+    },
+  });
 
   const copyClassCode = () => {
     navigator.clipboard.writeText(slug);
@@ -145,30 +194,6 @@ export default function ClassSettingsPage() {
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <FieldLabel>Allow Late Submissions</FieldLabel>
-                <p className="text-sm text-muted-foreground">
-                  Students can submit assignments after the due date
-                </p>
-              </div>
-              <Switch disabled />
-            </div>
-
-            <Separator />
-
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <FieldLabel>Show Grades to Students</FieldLabel>
-                <p className="text-sm text-muted-foreground">
-                  Students can view their grades immediately
-                </p>
-              </div>
-              <Switch disabled />
-            </div>
-
-            <Separator />
-
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
                 <FieldLabel>Email Notifications</FieldLabel>
                 <p className="text-sm text-muted-foreground">
                   Send email notifications for new assignments
@@ -188,26 +213,81 @@ export default function ClassSettingsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Field>
-              <FieldLabel htmlFor="gradingScale">Grading Scale</FieldLabel>
-              <Input
-                id="gradingScale"
-                placeholder="e.g. A: 90-100, B: 80-89..."
-                disabled
-              />
-              <p className="text-sm text-muted-foreground">
-                Define your grading scale (coming soon)
-              </p>
-            </Field>
+            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+              {["ww", "pt", "periodical"].map((key) => (
+                <Field key={key} className="w-full">
+                  <FieldLabel className="text-sm sm:text-base">
+                    {key === "ww"
+                      ? "Written Works (WW)"
+                      : key === "pt"
+                        ? "Performance Tasks (PT)"
+                        : "Periodical Exam"}
+                  </FieldLabel>
 
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <FieldLabel>Round Grades</FieldLabel>
-                <p className="text-sm text-muted-foreground">
-                  Automatically round grades to nearest whole number
-                </p>
-              </div>
-              <Switch disabled />
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      className="w-full text-sm sm:text-base"
+                      value={
+                        gradePercentages[key as keyof typeof gradePercentages]
+                      }
+                      onChange={(e) =>
+                        setGradePercentages({
+                          ...gradePercentages,
+                          [key]: Number(e.target.value),
+                        })
+                      }
+                      disabled={!isTeacher}
+                    />
+                    <span className="text-sm text-muted-foreground">%</span>
+                  </div>
+                </Field>
+              ))}
+            </div>
+
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p
+                className={`text-sm ${
+                  gradePercentages.ww +
+                    gradePercentages.pt +
+                    gradePercentages.periodical ===
+                  100
+                    ? "text-green-600"
+                    : "text-destructive"
+                }`}
+              >
+                Total:{" "}
+                {gradePercentages.ww +
+                  gradePercentages.pt +
+                  gradePercentages.periodical}
+                %
+              </p>
+
+              <Button
+                className="w-full sm:w-auto"
+                onClick={() => {
+                  const total =
+                    gradePercentages.ww +
+                    gradePercentages.pt +
+                    gradePercentages.periodical;
+
+                  if (total !== 100) {
+                    toast.error(
+                      `The total must equal 100%. It currently totals ${total}%.`,
+                    );
+                    return;
+                  }
+
+                  updateGradePercentagesMutation.mutate(gradePercentages);
+                }}
+                disabled={
+                  !isTeacher || updateGradePercentagesMutation.isPending
+                }
+              >
+                {updateGradePercentagesMutation.isPending
+                  ? "Saving..."
+                  : "Save Percentages"}
+              </Button>
             </div>
           </CardContent>
         </Card>

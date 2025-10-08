@@ -49,9 +49,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Student } from "../types";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const assignmentSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -74,6 +76,18 @@ type Assignment = {
     submittedAt?: string;
     status: "pending" | "graded";
   }[];
+};
+
+type GradePercentages = {
+  ww: number;
+  pt: number;
+  periodical: number;
+};
+
+const defaultGradePercentages: GradePercentages = {
+  ww: 25,
+  pt: 50,
+  periodical: 25,
 };
 
 export default function ClassHomePage() {
@@ -112,7 +126,10 @@ export default function ClassHomePage() {
   });
 
   const isTeacher = userData?.data?.role === "teacher";
-  const assignments = (classData?.assignment as Assignment[]) || [];
+  const assignments = useMemo(
+    () => (classData?.assignment as Assignment[]) || [],
+    [classData?.assignment],
+  );
 
   const form = useForm<z.infer<typeof assignmentSchema>>({
     resolver: zodResolver(assignmentSchema),
@@ -185,6 +202,267 @@ export default function ClassHomePage() {
   const onSubmit = (data: z.infer<typeof assignmentSchema>) => {
     createAssignmentMutation.mutate(data);
   };
+
+  // Transmutation scale based on DepEd table
+  const transmutationTable = useMemo(
+    () => [
+      { min: 98.4, grade: 100 },
+      { min: 96.4, grade: 99 },
+      { min: 94.4, grade: 98 },
+      { min: 92.4, grade: 97 },
+      { min: 90.4, grade: 96 },
+      { min: 88.4, grade: 95 },
+      { min: 86.4, grade: 94 },
+      { min: 84.4, grade: 93 },
+      { min: 82.4, grade: 92 },
+      { min: 80.4, grade: 91 },
+      { min: 78.4, grade: 90 },
+      { min: 76.4, grade: 89 },
+      { min: 74.4, grade: 88 },
+      { min: 72.4, grade: 87 },
+      { min: 70.4, grade: 86 },
+      { min: 68.4, grade: 85 },
+      { min: 66.4, grade: 84 },
+      { min: 64.4, grade: 83 },
+      { min: 62.4, grade: 82 },
+      { min: 60.4, grade: 81 },
+      { min: 58.4, grade: 80 },
+      { min: 56.4, grade: 79 },
+      { min: 54.4, grade: 78 },
+      { min: 52.4, grade: 77 },
+      { min: 50.4, grade: 76 },
+      { min: 48.4, grade: 75 },
+      { min: 46.4, grade: 74 },
+      { min: 44.4, grade: 73 },
+      { min: 42.4, grade: 72 },
+      { min: 40.4, grade: 71 },
+      { min: 38.4, grade: 70 },
+      { min: 36.4, grade: 69 },
+      { min: 34.4, grade: 68 },
+      { min: 32.4, grade: 67 },
+      { min: 30.4, grade: 66 },
+      { min: 28.4, grade: 65 },
+      { min: 26.4, grade: 64 },
+      { min: 24.4, grade: 63 },
+      { min: 22.4, grade: 62 },
+      { min: 20.4, grade: 61 },
+    ],
+    [],
+  );
+
+  const transmuteGrade = useCallback(
+    (percent: number): number => {
+      const found = transmutationTable.find((r) => percent >= r.min);
+      return found ? found.grade : 60;
+    },
+    [transmutationTable],
+  );
+
+  // Group assignments by type
+  const groupedAssignments = useMemo(
+    () => ({
+      ww: assignments.filter((a) => a.type === "ww"),
+      pt: assignments.filter((a) => a.type === "pt"),
+      periodical: assignments.filter((a) => a.type === "periodical"),
+    }),
+    [assignments],
+  );
+
+  const [showTransmuted, setShowTransmuted] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("showTransmuted") === "true";
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showTransmuted", String(showTransmuted));
+    }
+  }, [showTransmuted]);
+
+  const percentages: GradePercentages = (() => {
+    const data = classData?.gradePercentages as
+      | Partial<GradePercentages>
+      | null
+      | undefined;
+    if (
+      data &&
+      typeof data.ww === "number" &&
+      typeof data.pt === "number" &&
+      typeof data.periodical === "number"
+    ) {
+      return data as GradePercentages;
+    }
+    return defaultGradePercentages;
+  })();
+
+  // --- Compute current student's data if not a teacher ---
+  const studentSummary = useMemo(() => {
+    if (isTeacher || !students || !userData?.data?.id) return null;
+    const currentStudent = students.find((s) => s?.id === userData.data.id);
+    if (!currentStudent) return null;
+
+    const computeScores = (list: Assignment[]) => {
+      const scores = list.map((a) => {
+        const sub = a.submissions.find(
+          (s) => s.studentId === currentStudent.id,
+        );
+        return sub?.score ?? null;
+      });
+      const percentages = scores
+        .map((score, i) =>
+          score != null ? (score / list[i].maxScore) * 100 : null,
+        )
+        .filter((v): v is number => v !== null);
+
+      return {
+        scores,
+        average:
+          percentages.length > 0
+            ? percentages.reduce((a, b) => a + b, 0) / percentages.length
+            : 0,
+      };
+    };
+
+    const wwData = computeScores(groupedAssignments.ww);
+    const ptData = computeScores(groupedAssignments.pt);
+    const perData = computeScores(groupedAssignments.periodical);
+
+    const overall =
+      wwData.average * (percentages.ww / 100) +
+      ptData.average * (percentages.pt / 100) +
+      perData.average * (percentages.periodical / 100);
+
+    return { wwData, ptData, perData, overall };
+  }, [
+    isTeacher,
+    students,
+    userData?.data?.id,
+    groupedAssignments,
+    percentages,
+  ]);
+
+  const gradeTableRows = useMemo(() => {
+    if (!students || !assignments) return null;
+
+    const sortedStudents = isTeacher
+      ? students
+          .filter((s): s is Student => s !== null)
+          .sort(
+            (a, b) =>
+              a.lastname.localeCompare(b.lastname) ||
+              a.firstname.localeCompare(b.firstname),
+          )
+      : students.filter(
+          (s): s is Student => s !== null && s.id === userData?.data?.id,
+        );
+
+    const computeScores = (student: Student, list: Assignment[]) => {
+      const scores = list.map((a) => {
+        const sub = a.submissions.find((s) => s.studentId === student.id);
+        return sub?.score ?? null;
+      });
+
+      const percentages = scores
+        .map((score, i) =>
+          score != null ? (score / list[i].maxScore) * 100 : null,
+        )
+        .filter((v): v is number => v !== null);
+
+      return {
+        scores,
+        average:
+          percentages.length > 0
+            ? percentages.reduce((a, b) => a + b, 0) / percentages.length
+            : 0,
+      };
+    };
+
+    return sortedStudents.map((student) => {
+      const wwData = computeScores(student, groupedAssignments.ww);
+      const ptData = computeScores(student, groupedAssignments.pt);
+      const perData = computeScores(student, groupedAssignments.periodical);
+
+      const overall =
+        wwData.average * (percentages.ww / 100) +
+        ptData.average * (percentages.pt / 100) +
+        perData.average * (percentages.periodical / 100);
+
+      return (
+        <tr key={student.id} className="border-b hover:bg-muted/30">
+          <td className="p-2 font-medium">
+            {student.lastname}, {student.firstname}
+          </td>
+
+          {/* WW scores */}
+          {groupedAssignments.ww.map((a) => {
+            const sub = a.submissions.find((s) => s.studentId === student.id);
+            return (
+              <td key={a.id} className="p-2 text-center">
+                {sub?.score != null ? `${sub.score} / ${a.maxScore}` : "-"}
+              </td>
+            );
+          })}
+          <td className="p-2 text-center font-semibold">
+            {showTransmuted
+              ? transmuteGrade(wwData.average)
+              : `${wwData.average.toFixed(1)}%`}
+          </td>
+
+          {/* PT scores */}
+          {groupedAssignments.pt.map((a) => {
+            const sub = a.submissions.find((s) => s.studentId === student.id);
+            return (
+              <td key={a.id} className="p-2 text-center">
+                {sub?.score != null ? `${sub.score} / ${a.maxScore}` : "-"}
+              </td>
+            );
+          })}
+          <td className="p-2 text-center font-semibold">
+            {showTransmuted
+              ? transmuteGrade(ptData.average)
+              : `${ptData.average.toFixed(1)}%`}
+          </td>
+
+          {/* Periodical scores */}
+          {groupedAssignments.periodical.map((a) => {
+            const sub = a.submissions.find((s) => s.studentId === student.id);
+            return (
+              <td key={a.id} className="p-2 text-center">
+                {sub?.score != null ? `${sub.score} / ${a.maxScore}` : "-"}
+              </td>
+            );
+          })}
+          <td className="p-2 text-center font-semibold">
+            {showTransmuted
+              ? transmuteGrade(perData.average)
+              : `${perData.average.toFixed(1)}%`}
+          </td>
+
+          {/* Overall */}
+          <td className="p-2 text-center font-bold">
+            {showTransmuted
+              ? transmuteGrade(overall)
+              : `${overall.toFixed(1)}%`}
+          </td>
+        </tr>
+      );
+    });
+  }, [
+    students,
+    assignments,
+    isTeacher,
+    userData?.data?.id,
+    groupedAssignments.ww,
+    groupedAssignments.pt,
+    groupedAssignments.periodical,
+    percentages.ww,
+    percentages.pt,
+    percentages.periodical,
+    showTransmuted,
+    transmuteGrade,
+  ]);
 
   if (userLoading || classLoading) {
     return (
@@ -449,6 +727,7 @@ export default function ClassHomePage() {
         <Tabs defaultValue="assignments" className="space-y-4">
           <TabsList>
             <TabsTrigger value="assignments">Assignments</TabsTrigger>
+            <TabsTrigger value="grades">Grades</TabsTrigger>
             {isTeacher && <TabsTrigger value="students">Students</TabsTrigger>}
           </TabsList>
 
@@ -612,6 +891,129 @@ export default function ClassHomePage() {
                 })}
               </div>
             )}
+          </TabsContent>
+
+          <TabsContent value="grades" className="space-y-4 px-2 sm:px-4">
+            <Card>
+              <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <CardTitle className="text-base sm:text-lg">
+                    Grades Overview
+                  </CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
+                    {isTeacher
+                      ? "View all students and their scores by assignment type."
+                      : "View your grades by assignment type."}
+                  </CardDescription>
+                </div>
+
+                <div className="mt-2 flex items-center gap-2 sm:mt-0">
+                  <Label htmlFor="transmute" className="text-xs sm:text-sm">
+                    Transmuted Grades
+                  </Label>
+                  <Switch
+                    id="transmute"
+                    checked={showTransmuted}
+                    onCheckedChange={setShowTransmuted}
+                  />
+                </div>
+              </CardHeader>
+
+              {!isTeacher && studentSummary && (
+                <div className="mb-4 grid grid-cols-2 gap-2 px-4 text-center text-sm sm:grid-cols-4">
+                  <div className="rounded-lg bg-muted p-2">
+                    <p className="font-semibold">WW</p>
+                    <p>
+                      {showTransmuted
+                        ? transmuteGrade(studentSummary.wwData.average)
+                        : `${studentSummary.wwData.average.toFixed(1)}%`}
+                    </p>
+                  </div>
+
+                  <div className="rounded-lg bg-muted p-2">
+                    <p className="font-semibold">PT</p>
+                    <p>
+                      {showTransmuted
+                        ? transmuteGrade(studentSummary.ptData.average)
+                        : `${studentSummary.ptData.average.toFixed(1)}%`}
+                    </p>
+                  </div>
+
+                  <div className="rounded-lg bg-muted p-2">
+                    <p className="font-semibold">PER</p>
+                    <p>
+                      {showTransmuted
+                        ? transmuteGrade(studentSummary.perData.average)
+                        : `${studentSummary.perData.average.toFixed(1)}%`}
+                    </p>
+                  </div>
+
+                  <div className="rounded-lg bg-muted p-2">
+                    <p className="font-semibold">Overall</p>
+                    <p>
+                      {showTransmuted
+                        ? transmuteGrade(studentSummary.overall)
+                        : `${studentSummary.overall.toFixed(1)}%`}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <CardContent>
+                {!students || students.length === 0 ? (
+                  <div className="flex min-h-[200px] flex-col items-center justify-center py-10">
+                    <Users className="mb-4 size-12 text-muted-foreground" />
+                    <p className="text-center text-sm text-muted-foreground">
+                      No students enrolled yet.
+                    </p>
+                  </div>
+                ) : assignments.length === 0 ? (
+                  <div className="flex min-h-[200px] flex-col items-center justify-center py-10">
+                    <ClipboardList className="mb-4 size-12 text-muted-foreground" />
+                    <p className="text-center text-sm text-muted-foreground">
+                      No assignments available.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="w-full overflow-x-auto rounded-lg border">
+                    <table className="w-full min-w-[700px] border-collapse text-xs sm:text-sm">
+                      <thead>
+                        <tr className="border-b bg-muted/50">
+                          <th className="p-2">Student</th>
+
+                          {/* WW assignments */}
+                          {groupedAssignments.ww.map((a) => (
+                            <th key={a.id} className="p-2">
+                              {a.title}
+                            </th>
+                          ))}
+                          <th className="p-2 text-center">WW Avg</th>
+
+                          {/* PT assignments */}
+                          {groupedAssignments.pt.map((a) => (
+                            <th key={a.id} className="p-2">
+                              {a.title}
+                            </th>
+                          ))}
+                          <th className="p-2 text-center">PT Avg</th>
+
+                          {/* Periodical */}
+                          {groupedAssignments.periodical.map((a) => (
+                            <th key={a.id} className="p-2">
+                              {a.title}
+                            </th>
+                          ))}
+                          <th className="p-2 text-center">Periodical Avg</th>
+
+                          <th className="p-2 text-center">Overall</th>
+                        </tr>
+                      </thead>
+                      <tbody>{gradeTableRows}</tbody>
+                    </table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {isTeacher && (
