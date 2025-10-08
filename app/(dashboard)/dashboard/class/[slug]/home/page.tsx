@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -581,12 +582,11 @@ export default function ClassHomePage() {
                                       </DialogDescription>
                                     </DialogHeader>
                                     <div className="flex justify-end gap-2">
-                                      <Button
-                                        variant="outline"
-                                        onClick={() => {}}
-                                      >
-                                        Cancel
-                                      </Button>
+                                      <DialogClose asChild>
+                                        <Button variant="outline">
+                                          Cancel
+                                        </Button>
+                                      </DialogClose>
                                       <Button
                                         variant="destructive"
                                         onClick={() =>
