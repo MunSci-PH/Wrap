@@ -57,6 +57,7 @@ const assignmentSchema = z.object({
   description: z.string().min(1, "Description is required"),
   dueDate: z.string().min(1, "Due date is required"),
   maxScore: z.string().min(1, "Max score is required"),
+  type: z.enum(["ww", "pt", "periodical"]),
 });
 
 type Assignment = {
@@ -65,6 +66,7 @@ type Assignment = {
   description: string;
   dueDate: string;
   maxScore: number;
+  type: "ww" | "pt" | "periodical";
   submissions: {
     studentId: string;
     score?: number;
@@ -118,6 +120,7 @@ export default function ClassHomePage() {
       description: "",
       dueDate: "",
       maxScore: "",
+      type: "ww",
     },
   });
 
@@ -129,6 +132,7 @@ export default function ClassHomePage() {
         description: data.description,
         dueDate: data.dueDate,
         maxScore: Number.parseInt(data.maxScore),
+        type: data.type,
         submissions:
           classData?.enrolled?.map((studentId: string) => ({
             studentId,
@@ -305,6 +309,26 @@ export default function ClassHomePage() {
                         />
                       </Field>
 
+                      <Field>
+                        <FieldLabel htmlFor="type">Assignment Type</FieldLabel>
+                        <select
+                          id="type"
+                          {...form.register("type")}
+                          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
+                        >
+                          <option value="ww">Written Work</option>
+                          <option value="pt">Performance Task</option>
+                          <option value="periodical">Periodical Exam</option>
+                        </select>
+                        <FieldError
+                          errors={
+                            form.formState.errors.type
+                              ? [form.formState.errors.type]
+                              : undefined
+                          }
+                        />
+                      </Field>
+
                       <div className="grid gap-4 sm:grid-cols-2">
                         <Field>
                           <FieldLabel htmlFor="dueDate">Due Date</FieldLabel>
@@ -470,6 +494,15 @@ export default function ClassHomePage() {
                             <CardDescription className="mt-2">
                               {assignment.description}
                             </CardDescription>
+                            <p className="mt-1 text-sm font-medium text-muted-foreground">
+                              <Badge variant="outline">
+                                {assignment.type === "ww"
+                                  ? "Written Work"
+                                  : assignment.type === "pt"
+                                    ? "Performance Task"
+                                    : "Periodical Exam"}
+                              </Badge>
+                            </p>
                             <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                               <span className="flex items-center gap-1">
                                 <Calendar className="size-4" />
