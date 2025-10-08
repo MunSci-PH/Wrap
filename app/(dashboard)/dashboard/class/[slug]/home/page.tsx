@@ -39,6 +39,8 @@ import {
   CheckCircle2,
   Clock,
   XCircle,
+  Trash,
+  CheckCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -151,6 +153,27 @@ export default function ClassHomePage() {
     },
     onError: (error) => {
       toast.error(`Failed to create assignment: ${error.message}`);
+    },
+  });
+
+  const deleteAssignmentMutation = useMutation({
+    mutationFn: async (assignmentId: string) => {
+      const updatedAssignments = assignments.filter(
+        (a) => a.id !== assignmentId,
+      );
+      const { error } = await supabase
+        .from("classes")
+        .update({ assignment: updatedAssignments })
+        .eq("id", slug);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["class_data", slug] });
+      toast.success("Assignment deleted successfully");
+    },
+    onError: (error) => {
+      toast.error(`Failed to delete assignment: ${error.message}`);
     },
   });
 
@@ -496,14 +519,57 @@ export default function ClassHomePage() {
                               </>
                             )}
                             {isTeacher && (
-                              <Button asChild size="sm">
-                                <Link
-                                  href={`/dashboard/class/${slug}/grading?assignment=${assignment.id}`}
-                                >
-                                  Grade ({gradedCount}/
-                                  {assignment.submissions.length})
-                                </Link>
-                              </Button>
+                              <div className="flex flex-col items-end gap-2">
+                                <Button asChild size="sm" variant="default">
+                                  <Link
+                                    href={`/dashboard/class/${slug}/grading?assignment=${assignment.id}`}
+                                  >
+                                    <CheckCircle />
+                                    Grade ({gradedCount}/
+                                    {assignment.submissions.length})
+                                  </Link>
+                                </Button>
+
+                                <Dialog>
+                                  <DialogTrigger asChild>
+                                    <Button size="sm" variant="destructive">
+                                      <Trash className="mr-1 size-4" /> Delete
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent>
+                                    <DialogHeader>
+                                      <DialogTitle>
+                                        Delete Assignment
+                                      </DialogTitle>
+                                      <DialogDescription>
+                                        Are you sure you want to delete{" "}
+                                        <b>{assignment.title}</b>? This action
+                                        cannot be undone.
+                                      </DialogDescription>
+                                    </DialogHeader>
+                                    <div className="flex justify-end gap-2">
+                                      <Button
+                                        variant="outline"
+                                        onClick={() => {}}
+                                      >
+                                        Cancel
+                                      </Button>
+                                      <Button
+                                        variant="destructive"
+                                        onClick={() =>
+                                          deleteAssignmentMutation.mutate(
+                                            assignment.id,
+                                          )
+                                        }
+                                      >
+                                        {deleteAssignmentMutation.isPending
+                                          ? "Deleting..."
+                                          : "Delete"}
+                                      </Button>
+                                    </div>
+                                  </DialogContent>
+                                </Dialog>
+                              </div>
                             )}
                           </div>
                         </div>
