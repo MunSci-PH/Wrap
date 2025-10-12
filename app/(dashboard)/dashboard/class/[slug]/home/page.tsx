@@ -507,13 +507,15 @@ export default function ClassHomePage() {
     <ContentLayout title={classData.name}>
       <div className="space-y-6">
         {/* Class Header */}
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-balance md:text-4xl">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="text-center sm:text-left">
+            <h1 className="text-2xl font-bold break-words sm:text-3xl md:text-4xl">
               {classData.name}
             </h1>
-            <p className="mt-2 text-muted-foreground">{classData.owner_name}</p>
-            <div className="mt-2 flex items-center gap-4 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground">
+              {classData.owner_name}
+            </p>
+            <div className="mt-2 flex flex-wrap justify-center gap-3 text-sm text-muted-foreground sm:justify-start">
               <span className="flex items-center gap-1">
                 <Users className="size-4" />
                 {classData.enrolled?.length || 0} students
@@ -524,17 +526,24 @@ export default function ClassHomePage() {
               </span>
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button asChild variant="outline">
+
+          <div className="flex flex-wrap justify-center gap-2 sm:justify-end">
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="w-full sm:w-auto"
+            >
               <Link href={`/dashboard/class/${slug}/settings`}>
                 <Settings className="mr-2 size-4" />
                 Settings
               </Link>
             </Button>
+
             {isTeacher && (
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button>
+                  <Button size="sm" className="w-full sm:w-auto">
                     <Plus className="mr-2 size-4" />
                     New Assignment
                   </Button>
@@ -765,13 +774,13 @@ export default function ClassHomePage() {
                       key={assignment.id}
                       className="transition-shadow hover:shadow-md"
                     >
-                      <CardHeader>
-                        <div className="flex items-start justify-between">
+                      <CardHeader className="p-4 sm:p-6">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                           <div className="flex-1">
-                            <CardTitle className="text-xl">
+                            <CardTitle className="text-lg break-words sm:text-xl">
                               {assignment.title}
                             </CardTitle>
-                            <CardDescription className="mt-2">
+                            <CardDescription className="mt-2 text-sm sm:text-base">
                               {assignment.description}
                             </CardDescription>
                             <p className="mt-1 text-sm font-medium text-muted-foreground">
@@ -895,12 +904,12 @@ export default function ClassHomePage() {
 
           <TabsContent value="grades" className="space-y-4 px-2 sm:px-4">
             <Card>
-              <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <CardHeader className="flex flex-col gap-3 px-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6">
                 <div>
-                  <CardTitle className="text-base sm:text-lg">
+                  <CardTitle className="text-center text-base sm:text-left sm:text-lg">
                     Grades Overview
                   </CardTitle>
-                  <CardDescription className="text-xs sm:text-sm">
+                  <CardDescription className="text-center text-xs sm:text-left sm:text-sm">
                     {isTeacher
                       ? "View all students and their scores by assignment type."
                       : "View your grades by assignment type."}
