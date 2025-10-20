@@ -47,12 +47,12 @@ const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png"];
 const formSchema = z
   .object({
     lrn: z.coerce
-      .number()
+      .number<number>()
       .refine((v) => `${v}`.length, { message: "Must be 12 digits" }),
     firstname: z.string().trim().min(1).max(50),
     middlename: z.string().trim().max(50).optional(),
     lastname: z.string().min(1).max(50),
-    email: z.string().trim().email(),
+    email: z.email().trim(),
     password: z
       .string()
       .trim()
@@ -63,7 +63,7 @@ const formSchema = z
       .trim()
       .min(8)
       .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,}$/),
-    grade: z.coerce.number().min(7).max(12),
+    grade: z.coerce.number<number>().min(7).max(12),
     section: z.string(),
     pwd: z.boolean(),
     idpic:
